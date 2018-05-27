@@ -1,6 +1,8 @@
 apply plugin: 'kotlin-platform-jvm'
 
 dependencies {
+    expectedBy project(':collekt-common')
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testCompile "junit:junit:4.12"

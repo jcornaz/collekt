@@ -1,9 +1,9 @@
 rootProject.name = 'collect'
 
-include 'collect-common'
-include 'collect-jvm'
-include 'collect-js'
+include 'collekt-common'
+include 'collekt-jvm'
+include 'collekt-js'
 
-project(':collect-common').projectDir = file('common')
-project(':collect-jvm').projectDir = file('jvm')
-project(':collect-js').projectDir = file('js')
+project(':collekt-common').projectDir = file('common')
+project(':collekt-jvm').projectDir = file('jvm')
+project(':collekt-js').projectDir = file('js')
