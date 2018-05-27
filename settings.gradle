@@ -1,4 +1,4 @@
-rootProject.name = 'collect'
+rootProject.name = 'collekt'
 
 include 'collekt-common'
 include 'collekt-jvm'
