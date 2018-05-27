@@ -24,8 +24,7 @@ internal object EmptyImmutableList : ImmutableList<Nothing> {
     }
 
     override fun subList(fromIndex: Int, toIndex: Int): ImmutableList<Nothing> {
-        checkRangeInclusive(fromIndex, 0)
-        checkRangeInclusive(toIndex, 0)
+        checkSublistRange(fromIndex, toIndex, 0)
         return this
     }
 
