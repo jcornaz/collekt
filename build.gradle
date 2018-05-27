@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+subprojects {
+    group 'com.github.jcornaz'
+    version '0.0.1-SNAPSHOT'
+
+    repositories {
+        jcenter()
+    }
+}
