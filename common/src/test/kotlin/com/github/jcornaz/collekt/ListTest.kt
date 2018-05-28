@@ -42,10 +42,10 @@ abstract class ListTest : CollectionTest() {
     fun lastIndexOfShouldReturnTheLastIndex() {
         val list = create(1, 2, 2, 3)
 
-        assertEquals(0, list.indexOf(1))
-        assertEquals(2, list.indexOf(2))
-        assertEquals(3, list.indexOf(3))
-        assertEquals(-1, list.indexOf(4))
+        assertEquals(0, list.lastIndexOf(1))
+        assertEquals(2, list.lastIndexOf(2))
+        assertEquals(3, list.lastIndexOf(3))
+        assertEquals(-1, list.lastIndexOf(4))
     }
 
     @Test
@@ -80,11 +80,11 @@ abstract class ListTest : CollectionTest() {
         assertEquals(4, iterator.next())
 
         assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
+        assertFalse(iterator.hasNext())
         assertEquals(4, iterator.previous())
 
         assertTrue(iterator.hasPrevious())
-        assertFalse(iterator.hasNext())
+        assertTrue(iterator.hasNext())
         assertEquals(3, iterator.previous())
 
         assertTrue(iterator.hasPrevious())
@@ -126,8 +126,8 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(create(1, 2, 3, 4).hashCode(), listOf(1, 2, 3, 4).hashCode())
-        assertEquals(createEmpty().hashCode(), emptyList<Int>().hashCode())
+        assertEquals(listOf(1, 2, 3, 4).hashCode(), create(1, 2, 3, 4).hashCode())
+        assertEquals(emptyList<Int>().hashCode(), createEmpty().hashCode())
     }
 
     @Test
@@ -137,7 +137,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
-        val subList = create(1, 2, 3, 4).subList(1, 2)
+        val subList = create(1, 2, 3, 4).subList(1, 3)
 
         assertFalse(subList.isEmpty())
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
@@ -148,7 +148,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun subListShouldSupportContains() {
-        val subList = create(1, 2, 3, 4).subList(2, 3)
+        val subList = create(1, 2, 3, 4).subList(2, 4)
 
         assertTrue(subList.contains(3))
         assertTrue(subList.containsAll(listOf(3, 4)))

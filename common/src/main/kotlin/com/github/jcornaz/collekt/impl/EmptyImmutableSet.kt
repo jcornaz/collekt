@@ -19,5 +19,7 @@ internal object EmptyImmutableSet : ImmutableSet<Nothing> {
         return (other as Set<*>).isEmpty()
     }
 
-    override fun hashCode() = 1
+    override fun hashCode() = 0
+
+    override fun toString() = "[]"
 }

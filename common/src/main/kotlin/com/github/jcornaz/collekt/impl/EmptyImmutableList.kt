@@ -35,7 +35,7 @@ internal object EmptyImmutableList : ImmutableList<Nothing> {
         return (other as List<*>).isEmpty()
     }
 
-    override fun hashCode() = 0
+    override fun hashCode() = 1
 
     override fun toString() = "[]"
 }

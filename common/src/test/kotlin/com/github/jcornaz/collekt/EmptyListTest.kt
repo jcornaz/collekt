@@ -71,4 +71,15 @@ class EmptyListTest {
         assertEquals<List<Int>>(emptyList(), emptyImmutableList())
         assertEquals<List<Int>>(ArrayList(), emptyImmutableList())
     }
+
+    @Test
+    fun hashCodeShouldBeConsistentWithStdList() {
+        assertEquals(emptyList<Int>().hashCode(), emptyImmutableList<Int>().hashCode())
+    }
+
+    @Test
+    fun shouldReturnComprehensiveString() {
+        assertEquals("[]", emptyImmutableList<Int>().toString())
+        assertEquals(emptyList<Int>().toString(), emptyImmutableList<Int>().toString())
+    }
 }
