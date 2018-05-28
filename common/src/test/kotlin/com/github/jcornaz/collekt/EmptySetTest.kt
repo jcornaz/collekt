@@ -41,4 +41,14 @@ class EmptySetTest {
         assertEquals<Set<Int>>(emptySet(), emptyImmutableSet())
         assertEquals<Set<Int>>(HashSet(), emptyImmutableSet())
     }
+
+    @Test
+    fun hashCodeShouldBeConsistentWithStdList() {
+        assertEquals(emptySet<Int>().hashCode(), emptyImmutableSet<Int>().hashCode())
+    }
+
+    @Test
+    fun shouldReturnComprehensiveString() {
+        assertEquals(emptySet<Int>().toString(), emptyImmutableSet<Int>().toString())
+    }
 }

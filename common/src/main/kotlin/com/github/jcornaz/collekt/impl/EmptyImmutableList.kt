@@ -24,8 +24,7 @@ internal object EmptyImmutableList : ImmutableList<Nothing> {
     }
 
     override fun subList(fromIndex: Int, toIndex: Int): ImmutableList<Nothing> {
-        checkRangeInclusive(fromIndex, 0)
-        checkRangeInclusive(toIndex, 0)
+        checkSublistRange(fromIndex, toIndex, 0)
         return this
     }
 
@@ -36,7 +35,7 @@ internal object EmptyImmutableList : ImmutableList<Nothing> {
         return (other as List<*>).isEmpty()
     }
 
-    override fun hashCode() = 0
+    override fun hashCode() = 1
 
     override fun toString() = "[]"
 }
