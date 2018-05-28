@@ -32,6 +32,11 @@ public fun <E> Iterable<E>.toImmutableList(): ImmutableList<E> = when {
 }
 
 /**
+ * Returns a new immutable list all elements in this sequence.
+ */
+public fun <E> Sequence<E>.toImmutableList(): ImmutableList<E> = toList().asImmutableList()
+
+/**
  * Returns an immutable list backed by this list.
  *
  * No defensive copy will be made. By calling this function you promise to not update the source list.
