@@ -30,3 +30,16 @@ public fun <E> Iterable<E>.toImmutableList(): ImmutableList<E> = when {
     none() -> emptyImmutableList()
     else -> ImmutableListAdapter(toList())
 }
+
+/**
+ * Returns an immutable list backed by this list.
+ *
+ * No defensive copy will be made. By calling this function you promise to not update the source list.
+ *
+ * Mutating the source list after the call of this method will cause undefined behaviors.
+ */
+public fun <E> List<E>.asImmutableList(): ImmutableList<E> = when {
+    this is ImmutableList<E> -> this
+    none() -> emptyImmutableList()
+    else -> ImmutableListAdapter(this)
+}
