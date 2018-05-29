@@ -17,8 +17,9 @@ internal class ImmutableListAdapter<out E>(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other is ImmutableListAdapter<E>) return list == other.list
-        if (other.isEmpty()) return isEmpty()
+        if (other !is List<*>) return false
+        if (other.isEmpty()) return list.isEmpty()
+        if (other is ImmutableListAdapter<*>) return list == other.list
         
         return list == other
     }
