@@ -15,7 +15,13 @@ internal class ImmutableListAdapter<out E>(
         return ImmutableListAdapter(list.subList(fromIndex, toIndex))
     }
 
-    override fun equals(other: Any?) = list == other
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other is ImmutableListAdapter<E>) return list == other.list
+        if (other.isEmpty()) return isEmpty()
+        
+        return list == other
+    }
 
     override fun hashCode() = list.hashCode()
 
