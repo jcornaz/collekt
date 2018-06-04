@@ -5,6 +5,11 @@ import com.github.jcornaz.collekt.PersistentList
 import com.github.jcornaz.collekt.PersistentListFactory
 import com.github.jcornaz.collekt.asCollection
 
+/**
+ * Naive implementation using kotlin standard lists and operators.
+ *
+ * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
+ */
 internal class KotlinList<out E>(private val list: List<E>) : PersistentList<E> {
     override val size get() = list.size
     override val isEmpty get() = list.isEmpty()
@@ -33,8 +38,20 @@ internal class KotlinList<out E>(private val list: List<E>) : PersistentList<E> 
 
     override fun iterator() = list.iterator()
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other === this) return true
+
+        return other is KotlinList<*> && list == other.list
+    }
+
+    override fun hashCode() = list.hashCode()
+
+    override fun toString() = list.toString()
+
     companion object : PersistentListFactory {
-        override fun <E> empty() = EmptyPersistentList
+        override val empty = KotlinList<Nothing>(emptyList())
+
         override fun <E> from(iterable: Iterable<E>) = KotlinList(iterable.toList())
     }
 }

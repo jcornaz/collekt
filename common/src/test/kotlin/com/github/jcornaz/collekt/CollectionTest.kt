@@ -1,52 +1,53 @@
 package com.github.jcornaz.collekt
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
+import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 abstract class CollectionTest {
-    abstract fun create(v1: Int, v2: Int, v3: Int, v4: Int): PersistentCollection<Int>
-    abstract fun createEmpty(): PersistentList<Int>
+    internal abstract val factory: PersistentCollectionFactory
 
     @Test
     fun shouldContainsAllElements() {
-        val collection = create(1, 2, 3, 4)
+        val collection = factory.of(1, 2, 3, 4)
 
         assertTrue(1 in collection)
         assertTrue(2 in collection)
         assertTrue(3 in collection)
         assertTrue(4 in collection)
-        assertTrue(collection.containsAll(listOf(1, 2, 3)))
-        assertTrue(collection.containsAll(emptyList()))
     }
 
     @Test
     fun shouldNotContainsOtherElements() {
-        val collection = create(1, 2, 4, 5)
+        val collection = factory.of(1, 2, 4, 5)
 
         assertFalse(0 in collection)
         assertFalse(3 in collection)
         assertFalse(6 in collection)
         assertFalse(-1 in collection)
-        assertFalse(collection.containsAll(listOf(1, 2, 7)))
     }
 
     @Test
     fun sizeShouldReturnTheNumberOfElements() {
-        assertEquals(4, create(1, 2, 3, 4).size)
+        assertEquals(4, factory.of(1, 2, 3, 4).size)
     }
 
     @Test
     fun isEmptyShouldReturnsFalseIfThereIsElements() {
-        assertFalse(create(1, 2, 3, 4).isEmpty())
+        assertFalse(factory.of(1, 2, 3, 4).isEmpty)
     }
 
     @Test
     fun isEmptyShouldReturnTrueIfThereIsNoElement() {
-        assertTrue(createEmpty().isEmpty())
+        assertTrue(factory.empty<Int>().isEmpty)
     }
 
     @Test
     fun shouldBeIterable() {
-        val collection = create(1, 2, 3, 4)
+        val collection = factory.of(1, 2, 3, 4)
 
         val expected = mutableSetOf(1, 2, 3, 4)
 
@@ -59,30 +60,35 @@ abstract class CollectionTest {
 
     @Test
     fun differentEmptyCollectionShouldReturnTheSameInstance() {
-        assertSame(createEmpty(), createEmpty())
+        assertSame<Any>(factory.empty<Int>(), factory.empty<String>())
     }
 
     @Test
     fun shouldSupportEquals() {
-        assertEquals(create(1, 2, 3, 4), create(1, 2, 3, 4))
-        assertEquals(createEmpty(), createEmpty())
-        assertNotEquals(create(1, 2, 3, 4), create(4, 3, 2, 1))
-        assertNotEquals(create(1, 2, 3, 4), createEmpty())
-        assertNotEquals(create(1, 2, 3, 4), create(1, 2, 4, 5))
+        assertEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 3, 4))
+        assertEquals(factory.empty<Int>(), factory.empty())
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(4, 3, 2, 1))
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.empty())
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 4, 5))
     }
 
     @Test
     fun hashCodeShouldBeConsistent() {
-        assertEquals(create(1, 2, 3, 4).hashCode(), create(1, 2, 3, 4).hashCode())
-        assertEquals(createEmpty().hashCode(), createEmpty().hashCode())
+        assertEquals(factory.of(1, 2, 3, 4).hashCode(), factory.of(1, 2, 3, 4).hashCode())
+        assertEquals(factory.empty<Int>().hashCode(), factory.empty<Int>().hashCode())
     }
 
     @Test
     fun sameShouldBeEquals() {
-        val list = create(1, 2, 3, 4)
+        val list = factory.of(1, 2, 3, 4)
         assertEquals(list, list)
 
-        val empty = createEmpty()
+        val empty = factory.empty<Int>()
         assertEquals(empty, empty)
+    }
+
+    @Test
+    fun shouldHaveComprehensiveToString() {
+        assertEquals("[1, 2, 3, 4]", factory.of(1, 2, 3, 4).toString())
     }
 }

@@ -41,32 +41,31 @@ public interface PersistentList<out E> : PersistentCollection<E> {
     fun minusIndex(index: Int): PersistentList<E>
 }
 
-interface PersistentSet<out E> : PersistentCollection<E> {
-    override fun plus(element: @UnsafeVariance E): PersistentSet<E>
-    override fun plus(collection: PersistentCollection<@UnsafeVariance E>): PersistentSet<E>
-    override fun minus(element: @UnsafeVariance E): PersistentSet<E>
+public fun <E> PersistentCollection<E>.asCollection(): Collection<E> = object : AbstractCollection<E>() {
+    override val size get() = this@asCollection.size
+    override fun iterator() = this@asCollection.iterator()
 }
 
-public interface PersistentCollectionFactory {
-    fun <E> empty(): PersistentCollection<E>
+public fun <E> PersistentList<E>.asList(): List<E> = object : AbstractList<E>() {
+    override val size get() = this@asList.size
+    override fun get(index: Int) = this@asList[index]
+}
+
+internal interface PersistentCollectionFactory {
+    val empty: PersistentCollection<Nothing>
     fun <E> from(iterable: Iterable<E>): PersistentCollection<E>
 }
 
-public interface PersistentListFactory : PersistentCollectionFactory {
-    override fun <E> empty(): PersistentList<E>
+internal interface PersistentListFactory : PersistentCollectionFactory {
+    override val empty: PersistentList<Nothing>
     override fun <E> from(iterable: Iterable<E>): PersistentList<E>
 }
 
-public interface PersistentSetFactory : PersistentCollectionFactory {
-    override fun <E> empty(): PersistentSet<E>
-    override fun <E> from(iterable: Iterable<E>): PersistentSet<E>
-}
+internal fun <E> PersistentCollectionFactory.empty(): PersistentCollection<E> = empty
+internal fun <E> PersistentListFactory.empty(): PersistentList<E> = empty
 
-public fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentCollection<E> =
-        if (elements.isEmpty()) empty() else from(elements.asIterable())
+internal fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentCollection<E> =
+        if (elements.isEmpty()) empty else from(elements.asIterable())
 
-public fun <E> PersistentListFactory.of(vararg elements: E): PersistentList<E> =
-        if (elements.isEmpty()) empty() else from(elements.asIterable())
-
-public fun <E> PersistentSetFactory.of(vararg elements: E): PersistentSet<E> =
-        if (elements.isEmpty()) empty() else from(elements.asIterable())
+internal fun <E> PersistentListFactory.of(vararg elements: E): PersistentList<E> =
+        if (elements.isEmpty()) empty else from(elements.asIterable())
