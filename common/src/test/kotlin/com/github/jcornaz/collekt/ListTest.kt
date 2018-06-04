@@ -131,10 +131,20 @@ abstract class ListTest : CollectionTest() {
     fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)
-        val col3 = col1.plus(col2, 1)
+        val result = col1.plus(col2, 1)
 
         assertEquals(factory.of(1, 2, 3), col1)
         assertEquals(factory.of(4, 5, 6), col2)
-        assertEquals(factory.of(1, 4, 5, 6, 2, 3), col3)
+        assertEquals(factory.of(1, 4, 5, 6, 2, 3), result)
+    }
+
+    @Test
+    fun minusIndexShouldReturnACollectionWithoutTheUnderlingElement() {
+        val col = factory.of(1, 2, 3)
+        val result = col.minusIndex(1)
+
+        assertFalse(2 in result)
+        assertEquals(factory.of(1, 2, 3), col)
+        assertEquals(factory.of(1, 3), result)
     }
 }

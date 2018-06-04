@@ -110,10 +110,10 @@ abstract class CollectionTest {
         assertTrue(col1.isEmpty)
         assertEquals(factory.empty(), col1)
 
-        assertTrue(col2.contains(0))
+        assertTrue(0 in col2)
         assertEquals(factory.of(0), col2)
 
-        assertTrue(col3.contains(1))
+        assertTrue(1 in col3)
         assertEquals(factory.of(0, 1), col3)
     }
 
@@ -128,10 +128,20 @@ abstract class CollectionTest {
     fun plusCollectionShouldReturnACollectionContainingBothCollections() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)
-        val col3 = col1 + col2
+        val result = col1 + col2
 
         assertEquals(factory.of(1, 2, 3), col1)
         assertEquals(factory.of(4, 5, 6), col2)
-        assertEquals(factory.of(1, 2, 3, 4, 5, 6), col3)
+        assertEquals(factory.of(1, 2, 3, 4, 5, 6), result)
+    }
+
+    @Test
+    fun minusElementShouldReturnACollectionWithoutTheUnderlingElement() {
+        val col = factory.of(1, 2, 3)
+        val result = col - 2
+
+        assertFalse(2 in result)
+        assertEquals(factory.of(1, 2, 3), col)
+        assertEquals(factory.of(1, 3), result)
     }
 }
