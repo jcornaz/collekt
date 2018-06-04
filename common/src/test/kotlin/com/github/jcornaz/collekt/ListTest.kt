@@ -1,12 +1,6 @@
 package com.github.jcornaz.collekt
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertSame
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 abstract class ListTest : CollectionTest() {
     abstract override val factory: PersistentListFactory
@@ -73,18 +67,15 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun shouldSupportEqualsWithStdList() {
-        assertEquals(factory.of(1, 2, 3, 4).asList(), listOf(1, 2, 3, 4))
-        assertEquals(factory.empty<Int>().asList(), emptyList())
-        assertNotEquals(factory.of(1, 2, 3, 4).asList(), listOf(4, 3, 2, 1))
-        assertNotEquals(factory.of(1, 2, 3, 4).asList(), emptyList())
-        assertNotEquals(factory.of(1, 2, 3, 4).asList(), listOf(1, 2, 4))
+    fun elementsInDifferentOrderShouldNotBeEquals() {
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 4, 3, 2))
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(4, 3, 2, 1))
     }
 
     @Test
-    fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(listOf(1, 2, 3, 4).hashCode(), factory.of(1, 2, 3, 4).asList().hashCode())
-        assertEquals(emptyList<Int>().hashCode(), factory.empty<Int>().asList().hashCode())
+    fun differentOccurenceCountOfElementShouldNotBeEquals() {
+        assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 3))
+        assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 2, 3))
     }
 
     @Test
@@ -112,5 +103,38 @@ abstract class ListTest : CollectionTest() {
 
         assertTrue(subList.isEmpty)
         assertEquals(subList, factory.empty())
+    }
+
+    @Test
+    fun plusAtIndexShouldReturnCollectionWithTheElement() {
+        val list1 = factory.empty<Int>()
+        val list2 = list1.plus(0, index = 0)
+        val list3 = list2.plus(1, index = 0)
+        val list4 = list3.plus(2, index = 1)
+
+        assertTrue(list1.isEmpty)
+
+        assertEquals(0, list2[0])
+        assertEquals(0, list3[1])
+        assertEquals(0, list4[2])
+        assertEquals(1, list3[0])
+        assertEquals(1, list4[0])
+        assertEquals(2, list4[1])
+
+        assertEquals(factory.empty(), list1)
+        assertEquals(factory.of(0), list2)
+        assertEquals(factory.of(1, 0), list3)
+        assertEquals(factory.of(1, 2, 0), list4)
+    }
+
+    @Test
+    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
+        val col1 = factory.of(1, 2, 3)
+        val col2 = factory.of(4, 5, 6)
+        val col3 = col1.plus(col2, 1)
+
+        assertEquals(factory.of(1, 2, 3), col1)
+        assertEquals(factory.of(4, 5, 6), col2)
+        assertEquals(factory.of(1, 4, 5, 6, 2, 3), col3)
     }
 }

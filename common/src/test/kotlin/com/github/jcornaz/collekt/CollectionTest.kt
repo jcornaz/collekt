@@ -1,14 +1,17 @@
 package com.github.jcornaz.collekt
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertSame
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 abstract class CollectionTest {
     internal abstract val factory: PersistentCollectionFactory
+
+    @Test
+    fun emptyShouldNotContainsElement() {
+        assertTrue(factory.empty<Int>().isEmpty)
+        assertEquals(0, factory.empty<Int>().size)
+        assertFalse(factory.empty<Int>().contains(0))
+        assertFalse(factory.empty<Int>().iterator().hasNext())
+    }
 
     @Test
     fun shouldContainsAllElements() {
@@ -64,12 +67,18 @@ abstract class CollectionTest {
     }
 
     @Test
-    fun shouldSupportEquals() {
-        assertEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 3, 4))
+    fun equivalentCollectionShouldBeEquals() {
         assertEquals(factory.empty<Int>(), factory.empty())
-        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(4, 3, 2, 1))
+        assertEquals(factory.of(1), factory.of(1))
+        assertEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 3, 4))
+    }
+
+    @Test
+    fun collectionWithDifferentElementsShouldNotBeEquals() {
         assertNotEquals(factory.of(1, 2, 3, 4), factory.empty())
         assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 4, 5))
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 2, 4))
+        assertNotEquals(factory.of(0), factory.of(1))
     }
 
     @Test
@@ -90,5 +99,39 @@ abstract class CollectionTest {
     @Test
     fun shouldHaveComprehensiveToString() {
         assertEquals("[1, 2, 3, 4]", factory.of(1, 2, 3, 4).toString())
+    }
+
+    @Test
+    fun plusShouldReturnCollectionWithTheElement() {
+        val col1 = factory.empty<Int>()
+        val col2 = col1 + 0
+        val col3 = col2 + 1
+
+        assertTrue(col1.isEmpty)
+        assertEquals(factory.empty(), col1)
+
+        assertTrue(col2.contains(0))
+        assertEquals(factory.of(0), col2)
+
+        assertTrue(col3.contains(1))
+        assertEquals(factory.of(0, 1), col3)
+    }
+
+    @Test
+    fun plusEmptyCollectionShouldReturnThis() {
+        val col = factory.of(1, 2, 3)
+
+        assertSame(col, col + factory.empty())
+    }
+
+    @Test
+    fun plusCollectionShouldReturnACollectionContainingBothCollections() {
+        val col1 = factory.of(1, 2, 3)
+        val col2 = factory.of(4, 5, 6)
+        val col3 = col1 + col2
+
+        assertEquals(factory.of(1, 2, 3), col1)
+        assertEquals(factory.of(4, 5, 6), col2)
+        assertEquals(factory.of(1, 2, 3, 4, 5, 6), col3)
     }
 }
