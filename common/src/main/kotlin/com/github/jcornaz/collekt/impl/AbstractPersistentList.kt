@@ -1,8 +1,11 @@
 package com.github.jcornaz.collekt.impl
 
-import com.github.jcornaz.collekt.*
+import com.github.jcornaz.collekt.PersistentCollection
+import com.github.jcornaz.collekt.PersistentList
+import com.github.jcornaz.collekt.PersistentListFactory
+import com.github.jcornaz.collekt.first
 
-internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
+internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
 
     protected abstract val factory: PersistentListFactory
 
@@ -17,14 +20,14 @@ internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
     protected abstract fun insert(element: @UnsafeVariance E, index: Int): PersistentList<E>
 
     /**
-     * called by [plus] if the result is known to be a new collection (not this one)
-     */
-    protected abstract fun add(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E>
-
-    /**
      * called by [plus] if the result is known to be a new collection (not this one) and the index is not at the end of the list
      */
-    protected abstract fun add(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E>
+    protected abstract fun insert(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E>
+
+    /**
+     * called by [plus] if the result is known to be a new collection (not this one)
+     */
+    protected abstract fun concat(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E>
 
     /**
      * called by [minus] if the result is known to not be an empty list or this list
@@ -40,12 +43,12 @@ internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
             if (index == size) plus(element) else insert(element, index)
 
     final override fun plus(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E> =
-            if (collection.isEmpty) this else add(collection)
+            if (collection.isEmpty) this else concat(collection)
 
     final override fun plus(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E> = when {
         collection.isEmpty -> this
-        index == size -> add(collection)
-        else -> add(collection, index)
+        index == size -> concat(collection)
+        else -> insert(collection, index)
     }
 
     final override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> = when {
@@ -69,7 +72,7 @@ internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
         else -> removeIndex(index)
     }
 
-    override fun equals(other: Any?): Boolean {
+    final override fun equals(other: Any?): Boolean {
         if (other == null) return false
         if (other === this) return true
         if (other !is PersistentList<*>) return false
@@ -88,7 +91,7 @@ internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
         return !(e1.hasNext() || e2.hasNext())
     }
 
-    override fun hashCode(): Int {
+    final override fun hashCode(): Int {
         if (isEmpty) return 1
 
         var hash = 1
@@ -99,6 +102,4 @@ internal abstract class AbstractPersistentList<out E> : PersistentList<E> {
 
         return hash
     }
-
-    override fun toString() = joinToString(prefix = "[", separator = ", ", postfix = "]")
 }

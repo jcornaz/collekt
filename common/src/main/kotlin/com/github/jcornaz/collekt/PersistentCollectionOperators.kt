@@ -1,6 +1,6 @@
 package com.github.jcornaz.collekt
 
-public fun <E> PersistentList<E>.first(): E = get(0)
+public fun <E> PersistentList<E>.first(): E = iterator().next()
 
 public fun <E> PersistentCollection<E>.joinToString(
         separator: String = "",
