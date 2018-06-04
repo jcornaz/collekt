@@ -3,8 +3,8 @@ package com.github.jcornaz.collekt
 import kotlin.test.*
 
 abstract class ListTest : CollectionTest() {
-    abstract override fun create(v1: Int, v2: Int, v3: Int, v4: Int): ImmutableList<Int>
-    abstract override fun createEmpty(): ImmutableList<Int>
+    abstract override fun create(v1: Int, v2: Int, v3: Int, v4: Int): PersistentList<Int>
+    abstract override fun createEmpty(): PersistentList<Int>
 
     @Test
     fun shouldSupportDuplicateElements() {

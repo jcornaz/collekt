@@ -7,48 +7,48 @@ class EmptySetTest {
 
     @Test
     fun manyInvocationOfEmptyImmutableSetShouldReturnTheSameInstance() {
-        assertSame<ImmutableSet<Any>>(emptyImmutableSet<Int>(), emptyImmutableSet<String>())
+        assertSame<PersistentSet<Any>>(emptyPersistentSet<Int>(), emptyPersistentSet<String>())
     }
 
     @Test
     fun emptySetShouldBeEmpty() {
-        assertTrue(emptyImmutableSet<Int>().isEmpty())
+        assertTrue(emptyPersistentSet<Int>().isEmpty())
     }
 
     @Test
     fun emptySetSizeShouldBeZero() {
-        assertEquals(0, emptyImmutableSet<Int>().size)
+        assertEquals(0, emptyPersistentSet<Int>().size)
     }
 
     @Test
     fun emptySetShouldContainsNothing() {
-        assertFalse(emptyImmutableSet<Int>().contains(0))
-        assertFalse(emptyImmutableSet<Int>().containsAll(listOf(0, 1, 2)))
+        assertFalse(emptyPersistentSet<Int>().contains(0))
+        assertFalse(emptyPersistentSet<Int>().containsAll(listOf(0, 1, 2)))
     }
 
     @Test
     fun emptySetShouldContainsEmptyList() {
-        assertTrue(emptyImmutableSet<Int>().containsAll(emptyImmutableSet()))
+        assertTrue(emptyPersistentSet<Int>().containsAll(emptyPersistentSet()))
     }
 
     @Test
     fun iteratorShouldReturnFalseForHasNextAndHasPrevious() {
-        assertFalse(emptyImmutableSet<Int>().iterator().hasNext())
+        assertFalse(emptyPersistentSet<Int>().iterator().hasNext())
     }
 
     @Test
     fun emptyImmutableSetShouldEqualAnyOtherEmptyList() {
-        assertEquals<Set<Int>>(emptySet(), emptyImmutableSet())
-        assertEquals<Set<Int>>(HashSet(), emptyImmutableSet())
+        assertEquals<Set<Int>>(emptySet(), emptyPersistentSet())
+        assertEquals<Set<Int>>(HashSet(), emptyPersistentSet())
     }
 
     @Test
     fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(emptySet<Int>().hashCode(), emptyImmutableSet<Int>().hashCode())
+        assertEquals(emptySet<Int>().hashCode(), emptyPersistentSet<Int>().hashCode())
     }
 
     @Test
     fun shouldReturnComprehensiveString() {
-        assertEquals(emptySet<Int>().toString(), emptyImmutableSet<Int>().toString())
+        assertEquals(emptySet<Int>().toString(), emptyPersistentSet<Int>().toString())
     }
 }

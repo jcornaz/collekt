@@ -7,38 +7,38 @@ class EmptyListTest {
 
     @Test
     fun manyInvocationOfEmptyImmutableListShouldReturnTheSameInstance() {
-        assertSame<ImmutableList<Any>>(emptyImmutableList<Int>(), emptyImmutableList<String>())
+        assertSame<PersistentList<Any>>(emptyPersistentList<Int>(), emptyPersistentList<String>())
     }
 
     @Test
     fun emptyListShouldBeEmpty() {
-        assertTrue(emptyImmutableList<Int>().isEmpty())
+        assertTrue(emptyPersistentList<Int>().isEmpty())
     }
 
     @Test
     fun emptyListSizeShouldBeZero() {
-        assertEquals(0, emptyImmutableList<Int>().size)
+        assertEquals(0, emptyPersistentList<Int>().size)
     }
 
     @Test
     fun emptyListShouldContainsNothing() {
-        assertFalse(emptyImmutableList<Int>().contains(0))
-        assertFalse(emptyImmutableList<Int>().containsAll(listOf(0, 1, 2)))
+        assertFalse(emptyPersistentList<Int>().contains(0))
+        assertFalse(emptyPersistentList<Int>().containsAll(listOf(0, 1, 2)))
     }
 
     @Test
     fun emptyListShouldContainsEmptyList() {
-        assertTrue(emptyImmutableList<Int>().containsAll(emptyImmutableList()))
+        assertTrue(emptyPersistentList<Int>().containsAll(emptyPersistentList()))
     }
 
     @Test
     fun getShouldThrowIndexOutOfBoundException() {
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>()[0] }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>()[0] }
     }
 
     @Test
     fun iteratorShouldReturnFalseForHasNextAndHasPrevious() {
-        val list = emptyImmutableList<Int>()
+        val list = emptyPersistentList<Int>()
 
         assertFalse(list.iterator().hasNext())
         assertFalse(list.listIterator().hasNext())
@@ -49,37 +49,37 @@ class EmptyListTest {
 
     @Test
     fun listIteratorAtIndexShouldThrowForIndexDifferentThanZero() {
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().listIterator(1) }
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().listIterator(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().listIterator(1) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().listIterator(-1) }
     }
 
     @Test
     fun subListShouldReturnSameInstance() {
-        assertSame(emptyImmutableList(), emptyImmutableList<Int>().subList(0, 0))
+        assertSame(emptyPersistentList(), emptyPersistentList<Int>().subList(0, 0))
     }
 
     @Test
     fun subListShouldThrowIndexOutOfBoundExceptionForBadIndexes() {
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().subList(0, 2) }
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().subList(2, 2) }
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().subList(-1, 0) }
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<Int>().subList(-1, 1) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().subList(0, 2) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().subList(2, 2) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().subList(-1, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { emptyPersistentList<Int>().subList(-1, 1) }
     }
 
     @Test
     fun emptyImmutableListShouldEqualAnyOtherEmptyList() {
-        assertEquals<List<Int>>(emptyList(), emptyImmutableList())
-        assertEquals<List<Int>>(ArrayList(), emptyImmutableList())
+        assertEquals<List<Int>>(emptyList(), emptyPersistentList())
+        assertEquals<List<Int>>(ArrayList(), emptyPersistentList())
     }
 
     @Test
     fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(emptyList<Int>().hashCode(), emptyImmutableList<Int>().hashCode())
+        assertEquals(emptyList<Int>().hashCode(), emptyPersistentList<Int>().hashCode())
     }
 
     @Test
     fun shouldReturnComprehensiveString() {
-        assertEquals("[]", emptyImmutableList<Int>().toString())
-        assertEquals(emptyList<Int>().toString(), emptyImmutableList<Int>().toString())
+        assertEquals("[]", emptyPersistentList<Int>().toString())
+        assertEquals(emptyList<Int>().toString(), emptyPersistentList<Int>().toString())
     }
 }

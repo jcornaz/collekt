@@ -3,8 +3,8 @@ package com.github.jcornaz.collekt
 import kotlin.test.*
 
 abstract class CollectionTest {
-    abstract fun create(v1: Int, v2: Int, v3: Int, v4: Int): ImmutableCollection<Int>
-    abstract fun createEmpty(): ImmutableList<Int>
+    abstract fun create(v1: Int, v2: Int, v3: Int, v4: Int): PersistentCollection<Int>
+    abstract fun createEmpty(): PersistentList<Int>
 
     @Test
     fun shouldContainsAllElements() {
