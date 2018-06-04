@@ -3,17 +3,16 @@ package com.github.jcornaz.collekt
 import kotlin.test.*
 
 abstract class ListTest : CollectionTest() {
-    abstract override fun create(v1: Int, v2: Int, v3: Int, v4: Int): ImmutableList<Int>
-    abstract override fun createEmpty(): ImmutableList<Int>
+    abstract override val factory: PersistentListFactory
 
     @Test
     fun shouldSupportDuplicateElements() {
-        assertEquals(4, create(1, 2, 2, 3).size)
+        assertEquals(4, factory.of(1, 2, 2, 3).size)
     }
 
     @Test
     fun shouldBeAccessibleByIndex() {
-        val list = create(1, 2, 2, 3)
+        val list = factory.of(1, 2, 2, 3)
         assertEquals(1, list[0])
         assertEquals(2, list[1])
         assertEquals(2, list[2])
@@ -22,7 +21,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun wrongIndexShouldThrowIndexOutOfBoundException() {
-        val list = create(1, 2, 2, 3)
+        val list = factory.of(1, 2, 2, 3)
 
         assertFailsWith<IndexOutOfBoundsException> { list[-1] }
         assertFailsWith<IndexOutOfBoundsException> { list[4] }
@@ -30,7 +29,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun indexOfShouldReturnTheFirstIndex() {
-        val list = create(1, 2, 2, 3)
+        val list = factory.of(1, 2, 2, 3)
 
         assertEquals(0, list.indexOf(1))
         assertEquals(1, list.indexOf(2))
@@ -40,7 +39,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun lastIndexOfShouldReturnTheLastIndex() {
-        val list = create(1, 2, 2, 3)
+        val list = factory.of(1, 2, 2, 3)
 
         assertEquals(0, list.lastIndexOf(1))
         assertEquals(2, list.lastIndexOf(2))
@@ -50,7 +49,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun iterationShouldPreserveOrder() {
-        val iterator = create(1, 2, 3, 4).iterator()
+        val iterator = factory.of(1, 2, 3, 4).iterator()
 
         assertTrue(iterator.hasNext())
         assertEquals(1, iterator.next())
@@ -68,78 +67,22 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun shouldSupportListIterator() {
-        val iterator = create(1, 2, 3, 4).listIterator(2)
-
-        assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
-        assertEquals(3, iterator.next())
-
-        assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
-        assertEquals(4, iterator.next())
-
-        assertTrue(iterator.hasPrevious())
-        assertFalse(iterator.hasNext())
-        assertEquals(4, iterator.previous())
-
-        assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
-        assertEquals(3, iterator.previous())
-
-        assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
-        assertEquals(2, iterator.previous())
-
-        assertTrue(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
-        assertEquals(1, iterator.previous())
-
-        assertFalse(iterator.hasPrevious())
-        assertTrue(iterator.hasNext())
+    fun elementsInDifferentOrderShouldNotBeEquals() {
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 4, 3, 2))
+        assertNotEquals(factory.of(1, 2, 3, 4), factory.of(4, 3, 2, 1))
     }
 
     @Test
-    fun listIteratorShouldThrowIndexOutOfBoundExceptionForWrongIndexes() {
-        val list = create(1, 2, 3, 4)
-
-        assertFailsWith<IndexOutOfBoundsException> { list.listIterator(-1) }
-        assertFailsWith<IndexOutOfBoundsException> { list.listIterator(5) }
-    }
-
-    @Test
-    fun listIteratorFromTheEndShouldBeValid() {
-        val list = create(1, 2, 3, 4).listIterator(4)
-
-        assertTrue(list.hasPrevious())
-        assertFalse(list.hasNext())
-    }
-
-    @Test
-    fun shouldSupportEqualsWithStdList() {
-        assertEquals(create(1, 2, 3, 4), listOf(1, 2, 3, 4))
-        assertEquals(createEmpty(), emptyList<Int>())
-        assertNotEquals(create(1, 2, 3, 4), listOf(4, 3, 2, 1))
-        assertNotEquals(create(1, 2, 3, 4), emptyList<Int>())
-        assertNotEquals(create(1, 2, 3, 4), listOf(1, 2, 4))
-    }
-
-    @Test
-    fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(listOf(1, 2, 3, 4).hashCode(), create(1, 2, 3, 4).hashCode())
-        assertEquals(emptyList<Int>().hashCode(), createEmpty().hashCode())
-    }
-
-    @Test
-    fun shouldHaveComprehensiveToString() {
-        assertEquals("[1, 2, 3, 4]", create(1, 2, 3, 4).toString())
+    fun differentOccurenceCountOfElementShouldNotBeEquals() {
+        assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 3))
+        assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 2, 3))
     }
 
     @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
-        val subList = create(1, 2, 3, 4).subList(1, 3)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 3)
 
-        assertFalse(subList.isEmpty())
+        assertFalse(subList.isEmpty)
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
         assertEquals(2, subList[0])
         assertEquals(3, subList[1])
@@ -148,20 +91,60 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun subListShouldSupportContains() {
-        val subList = create(1, 2, 3, 4).subList(2, 4)
+        val subList = factory.of(1, 2, 3, 4).subList(2, 4)
 
         assertTrue(subList.contains(3))
-        assertTrue(subList.containsAll(listOf(3, 4)))
         assertFalse(subList.contains(2))
-        assertFalse(subList.containsAll(listOf(1, 3)))
     }
 
     @Test
     fun emptySubListShouldReturnEmptyList() {
-        val subList = create(1, 2, 3, 4).subList(1, 1)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
-        assertTrue(subList.isEmpty())
-        assertEquals(subList, createEmpty())
-        assertSame(createEmpty(), subList)
+        assertTrue(subList.isEmpty)
+        assertEquals(subList, factory.empty())
+    }
+
+    @Test
+    fun plusAtIndexShouldReturnCollectionWithTheElement() {
+        val list1 = factory.empty<Int>()
+        val list2 = list1.plus(0, index = 0)
+        val list3 = list2.plus(1, index = 0)
+        val list4 = list3.plus(2, index = 1)
+
+        assertTrue(list1.isEmpty)
+
+        assertEquals(0, list2[0])
+        assertEquals(0, list3[1])
+        assertEquals(0, list4[2])
+        assertEquals(1, list3[0])
+        assertEquals(1, list4[0])
+        assertEquals(2, list4[1])
+
+        assertEquals(factory.empty(), list1)
+        assertEquals(factory.of(0), list2)
+        assertEquals(factory.of(1, 0), list3)
+        assertEquals(factory.of(1, 2, 0), list4)
+    }
+
+    @Test
+    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
+        val col1 = factory.of(1, 2, 3)
+        val col2 = factory.of(4, 5, 6)
+        val result = col1.plus(col2, 1)
+
+        assertEquals(factory.of(1, 2, 3), col1)
+        assertEquals(factory.of(4, 5, 6), col2)
+        assertEquals(factory.of(1, 4, 5, 6, 2, 3), result)
+    }
+
+    @Test
+    fun minusIndexShouldReturnACollectionWithoutTheUnderlingElement() {
+        val col = factory.of(1, 2, 3)
+        val result = col.minusIndex(1)
+
+        assertFalse(2 in result)
+        assertEquals(factory.of(1, 2, 3), col)
+        assertEquals(factory.of(1, 3), result)
     }
 }
