@@ -69,3 +69,19 @@ internal fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentC
 
 internal fun <E> PersistentListFactory.of(vararg elements: E): PersistentList<E> =
         if (elements.isEmpty()) empty else from(elements.asIterable())
+
+public fun <E> PersistentCollection<E>.joinToString(
+        separator: String = "",
+        prefix: String = "",
+        postfix: String = "",
+        transform: (E) -> String = { it as? String ?: it.toString() }
+): String = buildString {
+    var hasPrevious = false
+    append(prefix)
+    for (element in this@joinToString) {
+        if (hasPrevious) append(separator)
+        append(transform(element))
+        hasPrevious = true
+    }
+    append(postfix)
+}
