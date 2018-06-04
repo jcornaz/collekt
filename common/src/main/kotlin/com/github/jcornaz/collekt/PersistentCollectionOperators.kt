@@ -1,6 +1,19 @@
 package com.github.jcornaz.collekt
 
-public fun <E> PersistentList<E>.first(): E = iterator().next()
+public inline fun <E> PersistentCollection<E>.forEach(action: (E) -> Unit) {
+    for (element in this) action(element)
+}
+
+public fun <E> PersistentCollection<E>.first(): E =
+        if (this is PersistentList<E> && !isEmpty) this[0] else iterator().next()
+
+public fun <E> PersistentCollection<E>.firstOrNull(): E? {
+    return if (this is PersistentList<E>) {
+        if (isEmpty) null else this[0]
+    } else {
+        iterator().let { if (it.hasNext()) null else it.next() }
+    }
+}
 
 public fun <E> PersistentCollection<E>.joinToString(
         separator: String = "",
