@@ -6,6 +6,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    jmh "org.organicdesign:Paguro:3.0.18"
+
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
@@ -14,11 +16,11 @@ dependencies {
 jmh {
     fork = 3
 
-    warmup = '500ms'
+    warmup = '1s'
     warmupIterations = 3
 
     iterations = 10
-    timeOnIteration = '500ms'
+    timeOnIteration = '1s'
 
     forceGC = true
 
