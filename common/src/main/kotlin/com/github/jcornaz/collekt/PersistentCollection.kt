@@ -103,18 +103,18 @@ public fun <E> PersistentList<E>.asList(): List<E> = object : AbstractList<E>() 
     override fun iterator() = this@asList.iterator()
 }
 
-internal interface PersistentCollectionFactory {
+public interface PersistentCollectionFactory {
     val empty: PersistentCollection<Nothing>
     fun <E> from(iterable: Iterable<E>): PersistentCollection<E>
 }
 
-internal interface PersistentListFactory : PersistentCollectionFactory {
+public interface PersistentListFactory : PersistentCollectionFactory {
     override val empty: PersistentList<Nothing>
     override fun <E> from(iterable: Iterable<E>): PersistentList<E>
 }
 
-internal fun <E> PersistentCollectionFactory.empty(): PersistentCollection<E> = empty
-internal fun <E> PersistentListFactory.empty(): PersistentList<E> = empty
+public fun <E> PersistentCollectionFactory.empty(): PersistentCollection<E> = empty
+public fun <E> PersistentListFactory.empty(): PersistentList<E> = empty
 
 internal fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentCollection<E> =
         if (elements.isEmpty()) empty else from(elements.asIterable())

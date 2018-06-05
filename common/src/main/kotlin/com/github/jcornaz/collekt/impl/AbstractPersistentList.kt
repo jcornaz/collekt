@@ -5,7 +5,7 @@ import com.github.jcornaz.collekt.PersistentList
 import com.github.jcornaz.collekt.PersistentListFactory
 import com.github.jcornaz.collekt.first
 
-internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
+public abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
 
     protected abstract val factory: PersistentListFactory
 

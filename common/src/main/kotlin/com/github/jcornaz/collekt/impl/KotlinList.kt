@@ -10,7 +10,7 @@ import com.github.jcornaz.collekt.asCollection
  *
  * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
  */
-internal class KotlinList<out E>(private val list: List<E>) : AbstractPersistentList<E>() {
+public class KotlinList<out E>(private val list: List<E>) : AbstractPersistentList<E>() {
     override val size get() = list.size
     override val isEmpty get() = list.isEmpty()
     override val factory get() = Factory
