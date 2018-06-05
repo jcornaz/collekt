@@ -10,3 +10,19 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
+
+jmh {
+    jvmArgs = ['-Xmx2g']
+
+    fork = 3
+
+    warmup = '1s'
+    warmupIterations = 1
+
+    forceGC = true
+
+    iterations = 6
+    timeOnIteration = '1s'
+
+    timeUnit = 'ms'
+}
