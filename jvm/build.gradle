@@ -12,15 +12,17 @@ dependencies {
 }
 
 jmh {
-    fork = 1
+    fork = 3
 
     warmup = '500ms'
-    warmupIterations = 1
+    warmupIterations = 3
 
-    iterations = 3 // 10
-    timeOnIteration = '200ms'
+    iterations = 10
+    timeOnIteration = '500ms'
 
     forceGC = true
+
+    resultFormat = 'json'
 
     timeUnit = 'ms'
 }
