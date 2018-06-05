@@ -2,10 +2,9 @@ package com.github.jcornaz.collekt
 
 enum class CollectionSize(private val size: Int) : Iterable<Int> {
 
-    HUNDRED(100),
-    TEN_THOUSAND(10_000),
-    ONE_MILLION(1_000_000),
-    HUNDRED_MILLION(100_000_000),
+    THOUSAND(1000),
+    HUNDRED_THOUSAND(100_000),
+    TEN_MILLION(10_000_000),
 
     ;
 

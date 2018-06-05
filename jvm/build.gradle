@@ -12,17 +12,15 @@ dependencies {
 }
 
 jmh {
-    jvmArgs = ['-Xmx2g']
+    fork = 1
 
-    fork = 3
-
-    warmup = '1s'
+    warmup = '500ms'
     warmupIterations = 1
 
-    forceGC = true
+    iterations = 3 // 10
+    timeOnIteration = '200ms'
 
-    iterations = 6
-    timeOnIteration = '1s'
+    forceGC = true
 
     timeUnit = 'ms'
 }
