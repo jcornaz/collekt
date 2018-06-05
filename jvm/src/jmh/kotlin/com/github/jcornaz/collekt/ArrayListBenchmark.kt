@@ -6,26 +6,22 @@ import java.util.*
 open class ArrayListBenchmark {
 
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    fun measureBaseline(input: ArrayListInput) = Unit
-
-    @Benchmark
-    fun measureAppendElement(input: ArrayListInput) {
+    fun appendElement(input: ArrayListInput) {
         input.list.add(0)
     }
 
     @Benchmark
-    fun measureInsertElement(input: ArrayListInput) {
+    fun insertElement(input: ArrayListInput) {
         input.list.add(index = input.randomIndex, element = 0)
     }
 
     @Benchmark
-    fun measureAppendCollection(input: ArrayListInput) {
+    fun appendCollection(input: ArrayListInput) {
         input.list.addAll(input.source)
     }
 
     @Benchmark
-    fun measureInsertCollection(input: ArrayListInput) {
+    fun insertCollection(input: ArrayListInput) {
         input.list.addAll(input.randomIndex, input.source)
     }
 
