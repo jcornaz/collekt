@@ -2,6 +2,7 @@ package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.impl.KotlinList
 import com.github.jcornaz.collekt.impl.PaguroRRBTree
+import com.github.jcornaz.collekt.impl.VavrList
 
 enum class ListImplementation(protected val factory: PersistentListFactory) : PersistentListFactory by factory {
     KOTLIN_LIST(KotlinList) {

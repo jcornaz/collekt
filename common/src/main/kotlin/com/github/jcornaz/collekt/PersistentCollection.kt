@@ -57,7 +57,7 @@ public interface PersistentList<out E> : PersistentCollection<E> {
     public fun subList(fromIndex: Int, toIndex: Int): PersistentList<E>
 
     /** Returns a new list containing the same elements plus the given [element] appended at the end */
-    public override fun plus(element: @UnsafeVariance E): PersistentList<E> = plus(element, size)
+    public override fun plus(element: @UnsafeVariance E): PersistentList<E>
 
     /** Returns a new list containing the same elements plus the given [element] inserted at the given [index] */
     public fun plus(element: @UnsafeVariance E, index: Int): PersistentList<E>
@@ -65,7 +65,7 @@ public interface PersistentList<out E> : PersistentCollection<E> {
     /** Returns a new list containing the same elements plus the given [collection] appended at the end */
     public override fun plus(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E> = plus(collection, size)
 
-    /** Returns a new list containing the same elements plus                                                    wr*/
+    /** Returns a new list containing the same elements plus [collection] inserted at [index] */
     public fun plus(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E>
 
     /**

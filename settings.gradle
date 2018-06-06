@@ -1,9 +1,11 @@
 rootProject.name = 'collekt'
 
 include 'collekt-common'
-include 'collekt-jvm'
+include 'collekt-jvm6'
+include 'collekt-jvm8'
 include 'collekt-js'
 
 project(':collekt-common').projectDir = file('common')
-project(':collekt-jvm').projectDir = file('jvm')
+project(':collekt-jvm6').projectDir = file('jvm6')
+project(':collekt-jvm8').projectDir = file('jvm8')
 project(':collekt-js').projectDir = file('js')

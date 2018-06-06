@@ -4,6 +4,7 @@ import com.github.jcornaz.collekt.PersistentCollection
 import com.github.jcornaz.collekt.PersistentList
 import com.github.jcornaz.collekt.PersistentListFactory
 import com.github.jcornaz.collekt.fold
+import io.vavr.collection.List
 import org.organicdesign.fp.StaticImports
 import org.organicdesign.fp.collections.RrbTree
 
@@ -13,8 +14,15 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
     override val size: Int get() = tree.size
     override val isEmpty: Boolean get() = tree.isEmpty()
 
+    init {
+        List.empty<Nothing>()
+    }
+
     override fun createSubList(fromIndex: Int, toIndex: Int): PersistentList<E> =
             PaguroRRBTree(tree.split(fromIndex)._2().join(tree.split(toIndex)._1()))
+
+    override fun plus(element: E): PersistentList<E> =
+            PaguroRRBTree(tree.append(element))
 
     override fun insert(element: E, index: Int): PersistentList<E> =
             PaguroRRBTree(tree.insert(index, element))
@@ -48,12 +56,10 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
     companion object Factory : PersistentListFactory {
         override val empty = PaguroRRBTree(StaticImports.rrb<Nothing>())
 
-        override fun <E> from(iterable: Iterable<E>): PersistentList<E> {
-            var result = StaticImports.rrb<E>()
-
-            iterable.forEach { result = result.append(it) }
-
-            return if (result.isEmpty()) empty else PaguroRRBTree(result)
-        }
+        override fun <E> from(iterable: Iterable<E>): PersistentList<E> =
+                iterable.fold(StaticImports.rrb<E>()) { acc, elt -> acc.append(elt) }
+                        .takeUnless { it.isEmpty() }
+                        ?.let { PaguroRRBTree(it) }
+                        ?: empty
     }
 }

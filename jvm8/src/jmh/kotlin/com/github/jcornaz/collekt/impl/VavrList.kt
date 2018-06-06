@@ -1,6 +1,9 @@
-package com.github.jcornaz.collekt
+package com.github.jcornaz.collekt.impl
 
-import com.github.jcornaz.collekt.impl.AbstractPersistentList
+import com.github.jcornaz.collekt.PersistentCollection
+import com.github.jcornaz.collekt.PersistentList
+import com.github.jcornaz.collekt.PersistentListFactory
+import com.github.jcornaz.collekt.asCollection
 import io.vavr.collection.List
 
 class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
@@ -11,6 +14,9 @@ class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
 
     override fun createSubList(fromIndex: Int, toIndex: Int): PersistentList<E> =
             VavrList(list.subSequence(fromIndex, toIndex))
+
+    override fun plus(element: E): PersistentList<E> =
+            VavrList(list.append(element))
 
     override fun insert(element: E, index: Int): PersistentList<E> =
             VavrList(list.insert(index, element))
@@ -42,8 +48,10 @@ class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
     companion object Factory : PersistentListFactory {
         override val empty = VavrList(List.empty<Nothing>())
 
-        override fun <E> from(iterable: Iterable<E>): PersistentList<E> {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        override fun <E> from(iterable: Iterable<E>): PersistentList<E> =
+                List.ofAll(iterable)
+                        .takeUnless { it.isEmpty }
+                        ?.let { VavrList(it) }
+                        ?: empty
     }
 }
