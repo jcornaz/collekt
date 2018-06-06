@@ -7,7 +7,7 @@ import com.github.jcornaz.collekt.asCollection
 import io.vavr.collection.List
 
 class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
-    override val factory get() = Factory
+    override val factory get() = VavrList
 
     override val size get() = list.size()
     override val isEmpty get() = list.isEmpty

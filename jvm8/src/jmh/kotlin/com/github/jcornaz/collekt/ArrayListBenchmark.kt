@@ -6,6 +6,9 @@ import java.util.*
 open class ArrayListBenchmark {
 
     @Benchmark
+    fun baseline(input: ArrayListInput) = input.list
+
+    @Benchmark
     fun appendElement(input: ArrayListInput) {
         input.list.add(0)
     }

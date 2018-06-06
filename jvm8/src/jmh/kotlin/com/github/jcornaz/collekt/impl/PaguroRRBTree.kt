@@ -9,7 +9,7 @@ import org.organicdesign.fp.StaticImports
 import org.organicdesign.fp.collections.RrbTree
 
 class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>() {
-    override val factory get() = Factory
+    override val factory get() = PaguroRRBTree
 
     override val size: Int get() = tree.size
     override val isEmpty: Boolean get() = tree.isEmpty()
