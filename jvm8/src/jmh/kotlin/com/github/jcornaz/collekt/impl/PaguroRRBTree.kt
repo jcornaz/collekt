@@ -19,7 +19,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
     }
 
     override fun createSubList(fromIndex: Int, toIndex: Int): PersistentList<E> =
-            PaguroRRBTree(tree.split(fromIndex)._2().join(tree.split(toIndex)._1()))
+            PaguroRRBTree(tree.split(toIndex)._1().split(fromIndex)._2())
 
     override fun plus(element: E): PersistentList<E> =
             PaguroRRBTree(tree.append(element))

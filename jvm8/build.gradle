@@ -27,8 +27,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    jmh "org.organicdesign:Paguro:3.0.18"
-    compile 'io.vavr:vavr:0.9.2'
+    jmh 'org.organicdesign:Paguro:3.0.18'
+    jmh 'io.vavr:vavr:0.9.2'
 
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

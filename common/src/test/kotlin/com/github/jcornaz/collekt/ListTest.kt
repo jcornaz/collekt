@@ -82,6 +82,7 @@ abstract class ListTest : CollectionTest() {
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
         val subList = factory.of(1, 2, 3, 4).subList(1, 3)
 
+        assertEquals(factory.of(2, 3), subList)
         assertFalse(subList.isEmpty)
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
         assertEquals(2, subList[0])
