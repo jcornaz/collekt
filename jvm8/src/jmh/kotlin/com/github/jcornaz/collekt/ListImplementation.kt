@@ -1,10 +1,8 @@
 package com.github.jcornaz.collekt
 
-import com.github.jcornaz.collekt.impl.KotlinList
-import com.github.jcornaz.collekt.impl.PaguroRRBTree
-import com.github.jcornaz.collekt.impl.VavrList
+import com.github.jcornaz.collekt.impl.*
 
-enum class ListImplementation(protected val factory: PersistentListFactory) : PersistentListFactory by factory {
+enum class ListImplementation(val factory: PersistentListFactory) : PersistentListFactory by factory {
     KOTLIN_LIST(KotlinList) {
         override fun <E> from(iterable: Iterable<E>): PersistentList<E> =
                 factory.from(iterable) // faster creation as KotlinList cannot be unbalanced
@@ -13,6 +11,10 @@ enum class ListImplementation(protected val factory: PersistentListFactory) : Pe
     PAGURO_RRB_TREE(PaguroRRBTree),
 
     VAVR_LIST(VavrList),
+
+    PCOLLECTION_VECTOR(PCollectionVector),
+
+    DEXX_VECTOR(DexxVector),
 
     ;
 

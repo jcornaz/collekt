@@ -25,6 +25,8 @@ open class PersistentInput {
 
     private val rng = Random()
 
+    val factory get() = implementation.factory
+
     @Setup(Level.Trial)
     fun createSource() {
         list = implementation.from(size)
