@@ -7,6 +7,12 @@ public inline fun <E> PersistentCollection<E>.forEach(action: (E) -> Unit) {
     for (element in this) action(element)
 }
 
+public inline fun <E, R> PersistentCollection<E>.fold(seed: R, operation: (R, E) -> R): R {
+    var result = seed
+    forEach { result = operation(result, it) }
+    return result
+}
+
 /**
  * Returns the first element of the collection (first element return by the iterator in case of un-ordered collection)
  *

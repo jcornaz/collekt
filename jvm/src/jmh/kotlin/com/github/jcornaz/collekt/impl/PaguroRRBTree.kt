@@ -3,7 +3,7 @@ package com.github.jcornaz.collekt.impl
 import com.github.jcornaz.collekt.PersistentCollection
 import com.github.jcornaz.collekt.PersistentList
 import com.github.jcornaz.collekt.PersistentListFactory
-import com.github.jcornaz.collekt.forEach
+import com.github.jcornaz.collekt.fold
 import org.organicdesign.fp.StaticImports
 import org.organicdesign.fp.collections.RrbTree
 
@@ -23,23 +23,13 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
         val split = tree.split(index)
         if (collection is PaguroRRBTree<E>) return PaguroRRBTree(split._1().join(collection.tree).join(split._2()))
 
-        var result = split._1()
-
-        // FIXME fold instead
-        collection.forEach { result = result.append(it) }
-
-        return PaguroRRBTree(result.join(split._2()))
+        return PaguroRRBTree(collection.fold(split._1()) { acc, elt -> acc.append(elt) }.join(split._2()))
     }
 
     override fun concat(collection: PersistentCollection<E>): PersistentList<E> {
         if (collection is PaguroRRBTree<E>) return PaguroRRBTree(tree.join(collection.tree))
 
-        var result = tree
-
-        // FIXME fold instead
-        collection.forEach { result = result.append(it) }
-
-        return PaguroRRBTree(result)
+        return PaguroRRBTree(collection.fold(tree) { acc, elt -> acc.append(elt) })
     }
 
     override fun remove(element: E): PersistentList<E> =

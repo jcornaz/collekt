@@ -1,12 +1,22 @@
 apply plugin: 'kotlin-platform-jvm'
 apply plugin: "me.champeau.gradle.jmh"
 
+compileKotlin {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 dependencies {
     expectedBy project(':collekt-common')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     jmh "org.organicdesign:Paguro:3.0.18"
+    compile 'io.vavr:vavr:0.9.2'
 
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

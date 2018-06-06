@@ -25,6 +25,11 @@ open class ArrayListBenchmark {
         input.list.addAll(input.randomIndex, input.source)
     }
 
+    @Benchmark
+    fun removeIndex(input: ArrayListInput) {
+        input.list.removeAt(input.randomIndex)
+    }
+
     @State(Scope.Benchmark)
     open class ArrayListInput {
 

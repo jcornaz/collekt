@@ -9,7 +9,9 @@ enum class ListImplementation(protected val factory: PersistentListFactory) : Pe
                 factory.from(iterable) // faster creation as KotlinList cannot be unbalanced
     },
 
-    PAGURO_RRB_TREE(PaguroRRBTree)
+    PAGURO_RRB_TREE(PaguroRRBTree),
+
+    VAVR_LIST(VavrList),
 
     ;
 

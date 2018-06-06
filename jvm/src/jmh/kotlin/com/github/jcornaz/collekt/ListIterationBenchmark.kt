@@ -3,7 +3,7 @@ package com.github.jcornaz.collekt
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.infra.Blackhole
 
-class ListIterationBenchmark {
+open class ListIterationBenchmark {
 
     @Benchmark
     fun indexOfContained(input: PersistentInput) = input.list.indexOf(input.randomIndex)
