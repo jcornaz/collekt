@@ -33,7 +33,7 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistentList<E>()
             DexxVector(collection.fold(vector) { acc, elt -> acc.append(elt) })
 
     override fun remove(element: E): PersistentList<E> =
-            DexxVector(vector.append(element))
+            removeIndex(vector.indexOf(element))
 
     override fun removeIndex(index: Int): PersistentList<E> {
         val (left, right) = vector.split(index)
