@@ -24,6 +24,14 @@ public fun <E> Iterable<E>.toPersistentList(): PersistentList<E> = when {
 }
 
 /**
- * Returns a new immutable list all elements in this sequence.
+ * Returns a new immutable list with all elements in this sequence (in the same order).
  */
-public fun <E> Sequence<E>.toPersistentList(): PersistentList<E> = DefaultListFactory.from(asIterable())
+public fun <E> Sequence<E>.toPersistentList(): PersistentList<E> =
+        DefaultListFactory.from(asIterable())
+
+
+/**
+ * Returns an immutable list with all elements in this [Traversable].
+ */
+public fun <E> Traversable<E>.toPersistentList(): PersistentList<E> =
+        this as? PersistentList<E> ?: DefaultListFactory.from(asIterable())

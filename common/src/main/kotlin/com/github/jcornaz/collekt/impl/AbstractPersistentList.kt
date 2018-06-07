@@ -1,9 +1,6 @@
 package com.github.jcornaz.collekt.impl
 
-import com.github.jcornaz.collekt.PersistentCollection
-import com.github.jcornaz.collekt.PersistentList
-import com.github.jcornaz.collekt.PersistentListFactory
-import com.github.jcornaz.collekt.first
+import com.github.jcornaz.collekt.*
 
 internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
 
@@ -22,31 +19,33 @@ internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollec
     /**
      * called by [plus] if the result is known to be a new collection (not this one) and the index is not at the end of the list
      */
-    protected abstract fun insert(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E>
+    protected abstract fun insert(collection: Traversable<@UnsafeVariance E>, index: Int): PersistentList<E>
 
     /**
      * called by [plus] if the result is known to be a new collection (not this one)
      */
-    protected abstract fun concat(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E>
+    protected abstract fun concat(collection: Traversable<@UnsafeVariance E>): PersistentList<E>
 
     /**
      * called by [minus] if the result is known to not be an empty list or this list
      */
     protected abstract fun remove(element: @UnsafeVariance E): PersistentList<E>
 
+    protected abstract fun remove(collection: Traversable<@UnsafeVariance E>): PersistentList<E>
+
     /**
      * called by [minusIndex] if the index is valid and it is known that the result is not an empty list or this list
      */
     protected abstract fun removeIndex(index: Int): PersistentList<E>
 
-    final override fun plus(element: @UnsafeVariance E, index: Int): PersistentList<E> =
+    final override fun plus(index: Int, element: @UnsafeVariance E): PersistentList<E> =
             if (index == size) plus(element) else insert(element, index)
 
-    final override fun plus(collection: PersistentCollection<@UnsafeVariance E>): PersistentList<E> =
-            if (collection.isEmpty) this else concat(collection)
+    final override fun plus(collection: Traversable<@UnsafeVariance E>): PersistentList<E> =
+            if (collection.none()) this else concat(collection)
 
-    final override fun plus(collection: PersistentCollection<@UnsafeVariance E>, index: Int): PersistentList<E> = when {
-        collection.isEmpty -> this
+    final override fun plus(index: Int, collection: Traversable<@UnsafeVariance E>): PersistentList<E> = when {
+        collection.none() -> this
         index == size -> concat(collection)
         else -> insert(collection, index)
     }
@@ -64,6 +63,14 @@ internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollec
         isEmpty -> this
         size == 1 -> if (first() == element) factory.empty else this
         else -> remove(element)
+    }
+
+
+    final override fun minus(collection: Traversable<@UnsafeVariance E>): PersistentList<E> = when {
+        collection.none() -> this
+        collection is KotlinList<E> -> collection
+        isEmpty -> factory.from(collection.asIterable())
+        else -> remove(collection)
     }
 
     final override fun minusIndex(index: Int): PersistentList<E> = when {

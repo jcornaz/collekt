@@ -108,9 +108,9 @@ abstract class ListTest : CollectionTest() {
     @Test
     fun plusAtIndexShouldReturnCollectionWithTheElement() {
         val list1 = factory.empty<Int>()
-        val list2 = list1.plus(0, index = 0)
-        val list3 = list2.plus(1, index = 0)
-        val list4 = list3.plus(2, index = 1)
+        val list2 = list1.plus(index = 0, element = 0)
+        val list3 = list2.plus(index = 0, element = 1)
+        val list4 = list3.plus(index = 1, element = 2)
 
         assertTrue(list1.isEmpty)
 
@@ -131,7 +131,7 @@ abstract class ListTest : CollectionTest() {
     fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)
-        val result = col1.plus(col2, 1)
+        val result = col1.plus(1, col2)
 
         assertEquals(factory.of(1, 2, 3), col1)
         assertEquals(factory.of(4, 5, 6), col2)
