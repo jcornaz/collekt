@@ -13,7 +13,7 @@ class BooleanQueryTest {
 
     @Test
     fun anyShouldReturnTrueIfManyElementsMatches() {
-        assertTrue(persistentListOf(1, 1, 1).any { it == 2 })
+        assertTrue(persistentListOf(1, 1, 1).any { it == 1 })
     }
 
     @Test
@@ -38,7 +38,7 @@ class BooleanQueryTest {
 
     @Test
     fun noneShouldReturnFalseIfManyElementsMatches() {
-        assertFalse(persistentListOf(1, 1, 1).none { it == 2 })
+        assertFalse(persistentListOf(1, 1, 1).none { it == 1 })
     }
 
     @Test
@@ -63,7 +63,7 @@ class BooleanQueryTest {
 
     @Test
     fun allShouldReturnTrueIfAllElementsMatch() {
-        assertFalse(persistentListOf(1, 1, 1, 1, 1).all { it == 1 })
+        assertTrue(persistentListOf(1, 1, 1, 1, 1).all { it == 1 })
     }
 
     @Test

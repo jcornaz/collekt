@@ -31,6 +31,24 @@ class TraversableOperatorTest {
     }
 
     @Test
+    fun foldShouldCallOperationForEachElement() {
+        var expectAcc = 0
+        var expectElt = 0
+
+        persistentListOf(0, 1, 2, 3).fold(0) { acc, elt ->
+            assertEquals(expectAcc, acc)
+            assertEquals(expectElt, elt)
+            ++expectElt
+            expectAcc += elt
+
+            return@fold acc + elt // sum
+        }
+
+        assertEquals(4, expectElt)
+        assertEquals(6, expectAcc)
+    }
+
+    @Test
     fun firstShouldThrowNoSuchElementExceptionForEmptyCollection() {
         assertFailsWith<NoSuchElementException> { emptyPersistentList<Int>().first() }
     }

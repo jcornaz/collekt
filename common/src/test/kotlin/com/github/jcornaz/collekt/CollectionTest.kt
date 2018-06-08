@@ -126,6 +126,13 @@ abstract class CollectionTest {
     }
 
     @Test
+    fun minusEmptyCollectionShouldReturnThis() {
+        val col = factory.of(1, 2, 3)
+
+        assertSame(col, col - factory.empty())
+    }
+
+    @Test
     fun plusCollectionShouldReturnACollectionContainingBothCollections() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)

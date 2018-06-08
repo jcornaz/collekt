@@ -120,7 +120,7 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
+    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtIndex() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)
         val result = col1.plus(1, col2)
@@ -128,6 +128,13 @@ abstract class ListTest : CollectionTest() {
         assertEquals(factory.of(1, 2, 3), col1)
         assertEquals(factory.of(4, 5, 6), col2)
         assertEquals(factory.of(1, 4, 5, 6, 2, 3), result)
+    }
+
+    @Test
+    fun plusEmpyCollectionAtIndexShouldReturnThis() {
+        val col = factory.of(1, 2, 3)
+
+        assertSame(col, col.plus(1, factory.empty<Int>()))
     }
 
     @Test

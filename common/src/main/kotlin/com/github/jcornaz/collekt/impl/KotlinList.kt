@@ -7,7 +7,7 @@ import com.github.jcornaz.collekt.*
  *
  * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
  */
-public class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
+internal class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
 
     companion object Factory : PersistentListFactory {
         private val empty = KotlinList(emptyList<Nothing>())
@@ -33,19 +33,19 @@ public class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E
             wrap(list + element)
 
     override fun plus(elements: Traversable<E>): PersistentList<E> =
-            wrap(list + elements.unwrap())
+            if (elements.none()) this else wrap(list + elements.unwrap())
 
     override fun plus(index: Int, element: E): PersistentList<E> =
             wrap(list.subList(0, index) + element + list.subList(index, list.size))
 
     override fun plus(index: Int, elements: Traversable<E>): PersistentList<E> =
-            wrap(list.subList(0, index) + elements.unwrap())
+            if (elements.none()) this else wrap(list.subList(0, index) + elements.unwrap() + list.subList(index, list.size))
 
     override fun minus(element: E): PersistentList<E> =
             wrap(list - element)
 
     override fun minus(elements: Traversable<E>): PersistentList<E> =
-            wrap(list - elements.unwrap())
+            if (elements.none()) this else wrap(list - elements.unwrap())
 
     override fun minusIndex(index: Int): PersistentList<E> =
             wrap(list.subList(0, index) + list.subList(index + 1, list.size))
