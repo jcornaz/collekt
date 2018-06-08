@@ -9,7 +9,6 @@ abstract class CollectionTest {
     fun emptyShouldNotContainsElement() {
         assertTrue(factory.empty<Int>().isEmpty)
         assertEquals(0, factory.empty<Int>().size)
-        assertFalse(factory.empty<Int>().contains(0))
         assertFalse(factory.empty<Int>().iterator().hasNext())
     }
 
@@ -17,20 +16,20 @@ abstract class CollectionTest {
     fun shouldContainsAllElements() {
         val collection = factory.of(1, 2, 3, 4)
 
-        assertTrue(1 in collection)
-        assertTrue(2 in collection)
-        assertTrue(3 in collection)
-        assertTrue(4 in collection)
+        assertTrue(collection.any { it == 1 })
+        assertTrue(collection.any { it == 2 })
+        assertTrue(collection.any { it == 3 })
+        assertTrue(collection.any { it == 4 })
     }
 
     @Test
     fun shouldNotContainsOtherElements() {
         val collection = factory.of(1, 2, 4, 5)
 
-        assertFalse(0 in collection)
-        assertFalse(3 in collection)
-        assertFalse(6 in collection)
-        assertFalse(-1 in collection)
+        assertFalse(collection.any { it == 0 })
+        assertFalse(collection.any { it == 3 })
+        assertFalse(collection.any { it == 6 })
+        assertFalse(collection.any { it == -1 })
     }
 
     @Test
@@ -110,10 +109,12 @@ abstract class CollectionTest {
         assertTrue(col1.isEmpty)
         assertEquals(factory.empty(), col1)
 
-        assertTrue(0 in col2)
+        assertTrue(col2.any { it == 0 })
+        assertFalse(col2.any { it == 1 })
         assertEquals(factory.of(0), col2)
 
-        assertTrue(1 in col3)
+        assertTrue(col3.any { it == 0 })
+        assertTrue(col3.any { it == 1 })
         assertEquals(factory.of(0, 1), col3)
     }
 
@@ -140,7 +141,8 @@ abstract class CollectionTest {
         val col = factory.of(1, 2, 3)
         val result = col - 2
 
-        assertFalse(2 in result)
+        assertTrue(col.any { it == 2 })
+        assertFalse(result.any { it == 2 })
         assertEquals(factory.of(1, 2, 3), col)
         assertEquals(factory.of(1, 3), result)
     }

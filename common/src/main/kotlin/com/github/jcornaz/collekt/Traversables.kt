@@ -43,17 +43,6 @@ public inline fun <T, R> Traversable<T>.fold(initial: R, operation: (acc: R, elt
     return result
 }
 
-public inline fun <T> Traversable<T>.reduce(operation: (T, T) -> T): T {
-    val iterator = iterator()
-    var result = iterator.next()
-
-    while (iterator.hasNext()) {
-        result = operation(result, iterator.next())
-    }
-
-    return result
-}
-
 /**
  * Returns the first element of the collection (first element return by the iterator in case of un-ordered collection)
  *
