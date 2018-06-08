@@ -14,6 +14,22 @@ public interface Traversable<out E> {
     public operator fun iterator(): Iterator<E>
 }
 
+public inline fun <E> Traversable(crossinline iterator: () -> Iterator<E>): Traversable<E> = object : Traversable<E> {
+    override fun iterator(): Iterator<E> = iterator()
+}
+
+public interface SizedTraversable<out E> : Traversable<E> {
+    public val size: Int
+    public val isEmpty: Boolean
+}
+
+public val SizedTraversable<*>.isNotEmpty: Boolean get() = !isEmpty
+
+public fun <E> Traversable<E>.asIterable(): Iterable<E> = Iterable { iterator() }
+public fun <E> Traversable<E>.asSequence(): Sequence<E> = Sequence { iterator() }
+public fun <E> Iterable<E>.asTraversable(): Traversable<E> = Traversable { iterator() }
+public fun <E> Sequence<E>.asTraversable(): Traversable<E> = Traversable { iterator() }
+
 /**
  * Execute [action] for each element in the collection
  */
@@ -21,18 +37,21 @@ public inline fun <E> Traversable<E>.forEach(action: (E) -> Unit) {
     for (element in this) action(element)
 }
 
-public inline fun <E> Traversable<E>.forEachIndexed(action: (index: Int, element: E) -> Unit) {
-    var index = 0
-    forEach {
-        action(index, it)
-        ++index
-    }
+public inline fun <T, R> Traversable<T>.fold(initial: R, operation: (acc: R, elt: T) -> R): R {
+    var result = initial
+
+    forEach { result = operation(result, it) }
+
+    return result
 }
 
-public inline fun <E, R> Traversable<E>.fold(seed: R, action: (acc: R, elt: E) -> R): R {
-    var result = seed
+public inline fun <T> Traversable<T>.reduce(operation: (T, T) -> T): T {
+    val iterator = iterator()
+    var result = iterator.next()
 
-    forEach { result = action(result, it) }
+    while (iterator.hasNext()) {
+        result = operation(result, iterator.next())
+    }
 
     return result
 }
@@ -56,7 +75,7 @@ public fun <E> Traversable<E>.firstOrNull(): E? {
 }
 
 public inline fun <E> Traversable<E>.any(predicate: (E) -> Boolean = { true }): Boolean {
-    if (this is PersistentCollection<E> && isEmpty) return false
+    if (this is SizedTraversable && isEmpty) return false
 
     for (element in this) {
         if (predicate(element)) return true
