@@ -1,8 +1,14 @@
 package com.github.jcornaz.collekt.impl
 
+import com.github.jcornaz.collekt.PersistentCollection
 import com.github.jcornaz.collekt.PersistentList
+import com.github.jcornaz.collekt.joinToString
 
-internal abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
+public abstract class AbstractPersistentCollection<out E> : PersistentCollection<E> {
+    final override fun toString() = joinToString(prefix = "[", separator = ", ", postfix = "]")
+}
+
+public abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
 
     final override fun equals(other: Any?): Boolean {
         if (other == null) return false

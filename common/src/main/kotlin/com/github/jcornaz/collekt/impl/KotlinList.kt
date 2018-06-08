@@ -1,51 +1,58 @@
 package com.github.jcornaz.collekt.impl
 
-import com.github.jcornaz.collekt.PersistentList
-import com.github.jcornaz.collekt.PersistentListFactory
-import com.github.jcornaz.collekt.Traversable
-import com.github.jcornaz.collekt.asIterable
+import com.github.jcornaz.collekt.*
 
 /**
  * Naive implementation using kotlin standard lists and operators.
  *
  * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
  */
-internal class KotlinList<out E>(private val list: List<E>) : AbstractPersistentList<E>() {
-    override val size get() = list.size
-    override val isEmpty get() = list.isEmpty()
-    override val factory get() = Factory
+public class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
+
+    companion object Factory : PersistentListFactory {
+        private val empty = KotlinList(emptyList<Nothing>())
+
+        override fun <E> empty(): PersistentList<E> = empty
+        override fun <E> from(iterable: Iterable<E>) = KotlinList(iterable.toList())
+    }
+
+    override val size: Int get() = list.size
+    override val isEmpty: Boolean get() = list.isEmpty()
 
     override fun get(index: Int): E = list[index]
 
-    override fun listIterator(index: Int) = list.listIterator(index)
+    override fun iterator(index: Int): ListIterator<E> = list.listIterator(index)
 
-    override fun createSubList(fromIndex: Int, toIndex: Int) =
-            KotlinList(list.subList(fromIndex, toIndex))
+    override fun range(fromIndex: Int, toIndex: Int): PersistentList<E> =
+            wrap(list.subList(fromIndex, toIndex))
 
-    override fun plus(element: @UnsafeVariance E) =
-            KotlinList(list + element)
+    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+            wrap(list.subList(0, index)) to wrap(list.subList(index, list.size))
 
-    override fun insert(element: @UnsafeVariance E, index: Int): PersistentList<E> =
-            KotlinList(list.subList(0, index) + element + list.subList(index, size))
+    override fun plus(element: E): PersistentList<E> =
+            wrap(list + element)
 
-    override fun concat(collection: Traversable<@UnsafeVariance E>): PersistentList<E> =
-            KotlinList(list + collection.asIterable())
+    override fun plus(elements: Traversable<E>): PersistentList<E> =
+            wrap(list + elements.unwrap())
 
-    override fun insert(collection: Traversable<@UnsafeVariance E>, index: Int): PersistentList<E> =
-            KotlinList(list.subList(0, index) + collection.asIterable() + list.subList(index, size))
+    override fun plus(index: Int, element: E): PersistentList<E> =
+            wrap(list.subList(0, index) + element + list.subList(index, list.size))
 
-    override fun remove(element: @UnsafeVariance E) =
-            KotlinList(list - element)
+    override fun plus(index: Int, elements: Traversable<E>): PersistentList<E> =
+            wrap(list.subList(0, index) + elements.unwrap())
 
-    override fun remove(collection: Traversable<@UnsafeVariance E>): PersistentList<E> =
-            KotlinList(list - collection.asIterable())
+    override fun minus(element: E): PersistentList<E> =
+            wrap(list - element)
 
-    override fun removeIndex(index: Int) =
-            KotlinList(list.subList(0, index) + list.subList(index + 1, size))
+    override fun minus(elements: Traversable<E>): PersistentList<E> =
+            wrap(list - elements.unwrap())
 
-    companion object Factory : PersistentListFactory {
-        override val empty = KotlinList<Nothing>(emptyList())
+    override fun minusIndex(index: Int): PersistentList<E> =
+            wrap(list.subList(0, index) + list.subList(index + 1, list.size))
 
-        override fun <E> from(iterable: Iterable<E>) = KotlinList(iterable.toList())
-    }
+    private fun Traversable<E>.unwrap(): Iterable<E> =
+            (this as? KotlinList<E>)?.list ?: asIterable()
+
+    private fun wrap(list: List<E>): PersistentList<E> =
+            list.takeUnless(List<E>::isEmpty)?.let(::KotlinList) ?: KotlinList.empty()
 }

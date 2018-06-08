@@ -27,8 +27,6 @@ public val SizedTraversable<*>.isNotEmpty: Boolean get() = !isEmpty
 
 public fun <E> Traversable<E>.asIterable(): Iterable<E> = Iterable { iterator() }
 public fun <E> Traversable<E>.asSequence(): Sequence<E> = Sequence { iterator() }
-public fun <E> Iterable<E>.asTraversable(): Traversable<E> = Traversable { iterator() }
-public fun <E> Sequence<E>.asTraversable(): Traversable<E> = Traversable { iterator() }
 
 /**
  * Execute [action] for each element in the collection
