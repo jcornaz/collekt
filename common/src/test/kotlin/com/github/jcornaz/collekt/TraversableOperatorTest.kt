@@ -2,7 +2,7 @@ package com.github.jcornaz.collekt
 
 import kotlin.test.*
 
-class OperatorTest {
+class TraversableOperatorTest {
 
     @Test
     fun forEachActionShouldNotBeCalledForEmptyCollection() {
@@ -17,6 +17,35 @@ class OperatorTest {
             ++expect
         }
         assertEquals(5, expect)
+    }
+
+    @Test
+    fun forEachIndexedShouldPassIndexInOrder() {
+        var expect = 0
+        persistentListOf(0, 1, 2, 3, 4).forEachIndexed { index, element ->
+            assertEquals(expect, index)
+            assertEquals(expect, element)
+            ++expect
+        }
+        assertEquals(5, expect)
+    }
+
+    @Test
+    fun foldShouldCallOperationForEachElement() {
+        var expectAcc = 0
+        var expectElt = 0
+
+        persistentListOf(0, 1, 2, 3).fold(0) { acc, elt ->
+            assertEquals(expectAcc, acc)
+            assertEquals(expectElt, elt)
+            ++expectElt
+            expectAcc += elt
+
+            return@fold acc + elt // sum
+        }
+
+        assertEquals(4, expectElt)
+        assertEquals(6, expectAcc)
     }
 
     @Test
