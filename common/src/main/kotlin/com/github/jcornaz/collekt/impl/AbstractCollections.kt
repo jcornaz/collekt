@@ -2,7 +2,6 @@ package com.github.jcornaz.collekt.impl
 
 import com.github.jcornaz.collekt.PersistentCollection
 import com.github.jcornaz.collekt.PersistentList
-import com.github.jcornaz.collekt.Traversable
 import com.github.jcornaz.collekt.joinToString
 
 /**

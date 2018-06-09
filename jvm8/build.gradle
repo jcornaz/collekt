@@ -38,19 +38,6 @@ dependencies {
 }
 
 jmh {
-    fork = 3
-
-    warmup = '2s'
-    warmupIterations = 3
-
-    iterations = 10
-    timeOnIteration = '2s'
-
-    forceGC = true
-
     resultFormat = 'json'
-
-    timeUnit = 's'
-
     includeTests = false
 }
