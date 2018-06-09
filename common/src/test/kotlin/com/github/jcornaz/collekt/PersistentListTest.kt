@@ -2,7 +2,7 @@ package com.github.jcornaz.collekt
 
 import kotlin.test.*
 
-abstract class ListTest : CollectionTest() {
+abstract class PersistentListTest : PersistentCollectionTest() {
     abstract override val factory: PersistentListFactory
 
     @Test
@@ -28,7 +28,7 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun indexOfShouldReturnTheFirstIndex() {
+    fun indexOfFirstShouldReturnTheFirstIndex() {
         val list = factory.of(1, 2, 2, 3)
 
         assertEquals(0, list.indexOf(1))
@@ -90,14 +90,6 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun subListShouldSupportContains() {
-        val subList = factory.of(1, 2, 3, 4).subList(2, 4)
-
-        assertTrue(subList.contains(3))
-        assertFalse(subList.contains(2))
-    }
-
-    @Test
     fun emptySubListShouldReturnEmptyList() {
         val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
@@ -108,9 +100,9 @@ abstract class ListTest : CollectionTest() {
     @Test
     fun plusAtIndexShouldReturnCollectionWithTheElement() {
         val list1 = factory.empty<Int>()
-        val list2 = list1.plus(0, index = 0)
-        val list3 = list2.plus(1, index = 0)
-        val list4 = list3.plus(2, index = 1)
+        val list2 = list1.plus(index = 0, element = 0)
+        val list3 = list2.plus(index = 0, element = 1)
+        val list4 = list3.plus(index = 1, element = 2)
 
         assertTrue(list1.isEmpty)
 
@@ -128,10 +120,10 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
-    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtTheIndex() {
+    fun plusCollectionAtIndexShouldReturnACollectionWithTheGivenCollectionInsertedAtIndex() {
         val col1 = factory.of(1, 2, 3)
         val col2 = factory.of(4, 5, 6)
-        val result = col1.plus(col2, 1)
+        val result = col1.plus(1, col2)
 
         assertEquals(factory.of(1, 2, 3), col1)
         assertEquals(factory.of(4, 5, 6), col2)
@@ -139,11 +131,18 @@ abstract class ListTest : CollectionTest() {
     }
 
     @Test
+    fun plusEmpyCollectionAtIndexShouldReturnThis() {
+        val col = factory.of(1, 2, 3)
+
+        assertSame(col, col.plus(1, factory.empty<Int>()))
+    }
+
+    @Test
     fun minusIndexShouldReturnACollectionWithoutTheUnderlingElement() {
         val col = factory.of(1, 2, 3)
         val result = col.minusIndex(1)
 
-        assertFalse(2 in result)
+        assertEquals(-1, result.indexOf(2))
         assertEquals(factory.of(1, 2, 3), col)
         assertEquals(factory.of(1, 3), result)
     }
