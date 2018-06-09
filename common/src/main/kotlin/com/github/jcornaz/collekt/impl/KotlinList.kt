@@ -7,7 +7,7 @@ import com.github.jcornaz.collekt.*
  *
  * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
  */
-internal class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
+public class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
 
     companion object Factory : PersistentListFactory {
         private val empty = KotlinList(emptyList<Nothing>())

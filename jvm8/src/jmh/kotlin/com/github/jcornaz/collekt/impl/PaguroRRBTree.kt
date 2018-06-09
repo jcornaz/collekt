@@ -57,7 +57,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
             tree.indexOf(element).let { if (it < 0) this else minusIndex(it) }
 
     override fun minus(elements: Traversable<E>): PersistentList<E> =
-            wrap(elements.fold(tree) { acc, elt ->
+            if (elements.none()) this else wrap(elements.fold(tree) { acc, elt ->
                 val index = acc.indexOf(elt)
                 if (index < 0) acc else acc.without(index)
             })

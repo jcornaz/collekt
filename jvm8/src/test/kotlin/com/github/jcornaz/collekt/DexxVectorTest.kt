@@ -2,6 +2,6 @@ package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.impl.DexxVector
 
-class DexxVectorTest : ListTest() {
+class DexxVectorTest : PersistentListTest() {
     override val factory get() = DexxVector
 }

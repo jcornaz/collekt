@@ -10,10 +10,7 @@ class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
         override fun <E> empty(): PersistentList<E> = empty
 
         override fun <E> from(elements: Iterable<E>): PersistentList<E> =
-                List.ofAll(elements)
-                        .takeUnless { it.isEmpty }
-                        ?.let { VavrList(it) }
-                        ?: empty
+                wrap(List.ofAll(elements))
 
         private fun <E> wrap(list: List<E>): PersistentList<E> =
                 list.takeUnless(List<E>::isEmpty)?.let(::VavrList) ?: empty

@@ -67,6 +67,25 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
+    fun reverseIterationShouldReturnElementsFromTheLastToTheFirst() {
+        val iterator = factory.of(1, 2, 3, 4).iterator(4)
+
+        assertTrue(iterator.hasPrevious())
+        assertEquals(4, iterator.previous())
+
+        assertTrue(iterator.hasPrevious())
+        assertEquals(3, iterator.previous())
+
+        assertTrue(iterator.hasPrevious())
+        assertEquals(2, iterator.previous())
+
+        assertTrue(iterator.hasPrevious())
+        assertEquals(1, iterator.previous())
+
+        assertFalse(iterator.hasPrevious())
+    }
+
+    @Test
     fun elementsInDifferentOrderShouldNotBeEquals() {
         assertNotEquals(factory.of(1, 2, 3, 4), factory.of(1, 4, 3, 2))
         assertNotEquals(factory.of(1, 2, 3, 4), factory.of(4, 3, 2, 1))

@@ -3,7 +3,7 @@ package com.github.jcornaz.collekt.impl
 import com.github.andrewoma.dexx.collection.Vector
 import com.github.jcornaz.collekt.*
 
-internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistentList<E>() {
+class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistentList<E>() {
 
     companion object Factory : PersistentListFactory {
         private val empty = DexxVector(Vector.empty<Nothing>())
@@ -36,7 +36,7 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
             wrap(vector.append(element))
 
     override fun plus(elements: Traversable<E>): PersistentList<E> =
-            if (elements.none()) empty() else wrap(elements.fold(vector) { acc, elt -> acc.append(elt) })
+            if (elements.none()) this else wrap(elements.fold(vector) { acc, elt -> acc.append(elt) })
 
     override fun plus(index: Int, element: E): PersistentList<E> {
         val (left, right) = vector.split(index)

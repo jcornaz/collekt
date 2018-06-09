@@ -1,7 +1,10 @@
 package com.github.jcornaz.collekt.impl
 
-class RandomAccessIterator<out E>(initialIndex: Int, val size: Int, val get: (Int) -> E) : ListIterator<E> {
-    var index = 0
+/**
+ * Random access iterator
+ */
+public class RandomAccessIterator<out E>(initialIndex: Int, val size: Int, val get: (Int) -> E) : ListIterator<E> {
+    var index = initialIndex
 
     init {
         if (initialIndex < 0 || initialIndex > size) throw IndexOutOfBoundsException()

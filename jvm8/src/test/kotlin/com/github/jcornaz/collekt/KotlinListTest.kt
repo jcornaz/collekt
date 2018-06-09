@@ -2,6 +2,6 @@ package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.impl.KotlinList
 
-class KotlinListTest : ListTest() {
+class KotlinListTest : PersistentListTest() {
     override val factory get() = KotlinList
 }
