@@ -4,10 +4,16 @@ import com.github.jcornaz.collekt.PersistentCollection
 import com.github.jcornaz.collekt.PersistentList
 import com.github.jcornaz.collekt.joinToString
 
+/**
+ * Abstract [PersistentCollection] implementing `toString`
+ */
 public abstract class AbstractPersistentCollection<out E> : PersistentCollection<E> {
     final override fun toString() = joinToString(prefix = "[", separator = ", ", postfix = "]")
 }
 
+/**
+ * Abstract [PersistentList] implementing `toString`, `equals` and `hasCode`
+ */
 public abstract class AbstractPersistentList<out E> : AbstractPersistentCollection<E>(), PersistentList<E> {
 
     final override fun equals(other: Any?): Boolean {

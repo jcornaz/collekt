@@ -1,5 +1,10 @@
 package com.github.jcornaz.collekt
 
+/**
+ * An immutable collection. Users of this interfaces can safely assumes that the content will never change.
+ *
+ * It is for instance never needed to create a "defensive copy".
+ */
 public interface ImmutableCollection<out E> : SizedTraversable<E>
 
 /**

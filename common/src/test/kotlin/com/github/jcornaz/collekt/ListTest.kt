@@ -31,20 +31,20 @@ abstract class ListTest : CollectionTest() {
     fun indexOfFirstShouldReturnTheFirstIndex() {
         val list = factory.of(1, 2, 2, 3)
 
-        assertEquals(0, list.indexOfFirst(1))
-        assertEquals(1, list.indexOfFirst(2))
-        assertEquals(3, list.indexOfFirst(3))
-        assertEquals(-1, list.indexOfFirst(4))
+        assertEquals(0, list.indexOf(1))
+        assertEquals(1, list.indexOf(2))
+        assertEquals(3, list.indexOf(3))
+        assertEquals(-1, list.indexOf(4))
     }
 
     @Test
     fun lastIndexOfShouldReturnTheLastIndex() {
         val list = factory.of(1, 2, 2, 3)
 
-        assertEquals(0, list.indexOfLast(1))
-        assertEquals(2, list.indexOfLast(2))
-        assertEquals(3, list.indexOfLast(3))
-        assertEquals(-1, list.indexOfLast(4))
+        assertEquals(0, list.lastIndexOf(1))
+        assertEquals(2, list.lastIndexOf(2))
+        assertEquals(3, list.lastIndexOf(3))
+        assertEquals(-1, list.lastIndexOf(4))
     }
 
     @Test
@@ -80,7 +80,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
-        val subList = factory.of(1, 2, 3, 4).range(1, 3)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 3)
 
         assertFalse(subList.isEmpty)
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
@@ -91,7 +91,7 @@ abstract class ListTest : CollectionTest() {
 
     @Test
     fun emptySubListShouldReturnEmptyList() {
-        val subList = factory.of(1, 2, 3, 4).range(1, 1)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
         assertTrue(subList.isEmpty)
         assertEquals(subList, factory.empty())
@@ -142,7 +142,7 @@ abstract class ListTest : CollectionTest() {
         val col = factory.of(1, 2, 3)
         val result = col.minusIndex(1)
 
-        assertEquals(-1, result.indexOfFirst(2))
+        assertEquals(-1, result.indexOf(2))
         assertEquals(factory.of(1, 2, 3), col)
         assertEquals(factory.of(1, 3), result)
     }

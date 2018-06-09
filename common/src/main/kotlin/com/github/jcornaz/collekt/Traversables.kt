@@ -1,10 +1,10 @@
 package com.github.jcornaz.collekt
 
 /**
- * Immutable data structure which may be traversed.
+ * Immutable data structure which may be iterated.
  *
  * It is analogous to [Iterable] except a [Traversable] is *immutable* by contract,
- * which means that different iteration will always return the same result.
+ * which means that different iteration will always return the same elements in the same order.
  *
  * Usages of [Traversable] may take profit of this contract by caching the element iterated for example.
  */
@@ -14,18 +14,31 @@ public interface Traversable<out E> {
     public operator fun iterator(): Iterator<E>
 }
 
-public inline fun <E> Traversable(crossinline iterator: () -> Iterator<E>): Traversable<E> = object : Traversable<E> {
-    override fun iterator(): Iterator<E> = iterator()
-}
-
+/**
+ * A [Traversable] from which it is possible to query the [size] without iterating
+ */
 public interface SizedTraversable<out E> : Traversable<E> {
+
+    /** The number of elements which would be returned by [iterator] */
     public val size: Int
+
+    /** Returns true if, and only if, [size] == 0 */
     public val isEmpty: Boolean
 }
 
+/**
+ * Returns true if, and only if, [SizedTraversable.isEmpty] == false
+ */
 public val SizedTraversable<*>.isNotEmpty: Boolean get() = !isEmpty
 
+/**
+ * Returns an [Iterable] adapter fo [Traversable]
+ */
 public fun <E> Traversable<E>.asIterable(): Iterable<E> = Iterable { iterator() }
+
+/**
+ * Returns an [Sequence] adapter fo [Traversable]
+ */
 public fun <E> Traversable<E>.asSequence(): Sequence<E> = Sequence { iterator() }
 
 /**
@@ -35,6 +48,9 @@ public inline fun <E> Traversable<E>.forEach(action: (E) -> Unit) {
     for (element in this) action(element)
 }
 
+/**
+ * Accumulates value starting with [initial] value and applying [operation] from left to right to current accumulator value and each element.
+ */
 public inline fun <T, R> Traversable<T>.fold(initial: R, operation: (acc: R, elt: T) -> R): R {
     var result = initial
 
@@ -61,6 +77,11 @@ public fun <E> Traversable<E>.firstOrNull(): E? {
     return iterator().let { if (it.hasNext()) null else it.next() }
 }
 
+/**
+ * Returns true if, and only if, [predicate] returns true for at least one element in this [Traversable]
+ *
+ * Returns false if the [Traversable] is empty
+ */
 public inline fun <E> Traversable<E>.any(predicate: (E) -> Boolean = { true }): Boolean {
     if (this is SizedTraversable && isEmpty) return false
 
@@ -71,7 +92,18 @@ public inline fun <E> Traversable<E>.any(predicate: (E) -> Boolean = { true }): 
     return false
 }
 
+/**
+ * Returns true if, and only if, [predicate] returns false for all elements in this [Traversable]
+ *
+ * Returns true if the [Traversable] is empty
+ */
 public inline fun <E> Traversable<E>.none(predicate: (E) -> Boolean = { true }): Boolean = !any(predicate)
+
+/**
+ * Returns true if, and only if, [predicate] returns true for all elemens in this [Traversable]
+ *
+ * Returns true if the [Traversable] is empty
+ */
 public inline fun <E> Traversable<E>.all(predicate: (E) -> Boolean): Boolean = none { !predicate(it) }
 
 /**

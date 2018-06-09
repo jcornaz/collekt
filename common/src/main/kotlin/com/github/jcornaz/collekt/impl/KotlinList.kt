@@ -13,7 +13,7 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractPersistentList
         private val empty = KotlinList(emptyList<Nothing>())
 
         override fun <E> empty(): PersistentList<E> = empty
-        override fun <E> from(iterable: Iterable<E>) = KotlinList(iterable.toList())
+        override fun <E> from(elements: Iterable<E>) = KotlinList(elements.toList())
     }
 
     override val size: Int get() = list.size
@@ -23,7 +23,7 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractPersistentList
 
     override fun iterator(index: Int): ListIterator<E> = list.listIterator(index)
 
-    override fun range(fromIndex: Int, toIndex: Int): PersistentList<E> =
+    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(list.subList(fromIndex, toIndex))
 
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
