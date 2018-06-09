@@ -11,7 +11,10 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
         override fun <E> empty(): PersistentList<E> = empty
 
         override fun <E> from(elements: Iterable<E>): PersistentList<E> =
-                if (elements.none()) empty() else wrap(Vector.factory<E>().newBuilder().addAll(elements).build())
+                wrap(Vector.factory<E>().newBuilder().addAll(elements).build())
+
+        private fun <E> wrap(vector: Vector<E>): PersistentList<E> =
+                vector.takeUnless(Vector<E>::isEmpty)?.let(::DexxVector) ?: empty()
     }
 
     override val size: Int get() = vector.size()
@@ -49,7 +52,8 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
         return wrap(elements.fold(left) { acc, elt -> acc.append(elt) } + right)
     }
 
-    override fun minus(element: E): PersistentList<E> = minusIndex(vector.indexOf(element))
+    override fun minus(element: E): PersistentList<E> =
+            vector.indexOf(element).let { if (it < 0) this else minusIndex(it) }
 
     override fun minus(elements: Traversable<E>): PersistentList<E> {
         if (elements.none()) return this
@@ -67,9 +71,6 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
         return wrap(left + right.range(0, false, right.size(), false))
     }
 }
-
-private fun <E> wrap(vector: Vector<E>): PersistentList<E> =
-        vector.takeUnless(Vector<E>::isEmpty)?.let(::DexxVector) ?: DexxVector.empty()
 
 private fun <E> Vector<E>.split(index: Int): Pair<Vector<E>, Vector<E>> =
         range(0, true, index, false) to range(index, true, size(), false)
