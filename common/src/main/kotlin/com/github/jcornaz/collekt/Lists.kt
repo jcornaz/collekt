@@ -103,7 +103,7 @@ public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<
 /**
  * Returns a [List] adapter for this [PersistentCollection]
  */
-public fun <E> PersistentList<E>.asList(): List<E> = object : AbstractList<E>() {
+public fun <E> ImmutableList<E>.asList(): List<E> = object : AbstractList<E>() {
     override val size get() = this@asList.size
     override fun isEmpty() = this@asList.isEmpty
     override fun get(index: Int) = this@asList[index]

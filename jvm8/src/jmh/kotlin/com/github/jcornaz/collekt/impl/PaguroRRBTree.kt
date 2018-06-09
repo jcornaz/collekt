@@ -14,7 +14,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
                 wrap(elements.fold(StaticImports.rrb<E>()) { acc, elt -> acc.append(elt) })
 
         private fun <E> wrap(tree: RrbTree<E>): PersistentList<E> =
-                tree.takeUnless(RrbTree<E>::isEmpty)?.let(::PaguroRRBTree) ?: empty()
+                tree.takeUnless(RrbTree<E>::isEmpty)?.let(::PaguroRRBTree) ?: empty
     }
 
     override val size: Int get() = tree.size

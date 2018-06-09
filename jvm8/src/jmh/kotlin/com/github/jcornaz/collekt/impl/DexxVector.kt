@@ -14,7 +14,7 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
                 wrap(Vector.factory<E>().newBuilder().addAll(elements).build())
 
         private fun <E> wrap(vector: Vector<E>): PersistentList<E> =
-                vector.takeUnless(Vector<E>::isEmpty)?.let(::DexxVector) ?: empty()
+                vector.takeUnless(Vector<E>::isEmpty)?.let(::DexxVector) ?: empty
     }
 
     override val size: Int get() = vector.size()
