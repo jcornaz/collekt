@@ -22,12 +22,3 @@ public interface PersistentCollection<out E> : ImmutableCollection<E> {
     /** Returns a new collection containing the same elements minus the given [elements] */
     public operator fun minus(elements: Traversable<@UnsafeVariance E>): PersistentCollection<E>
 }
-
-/**
- * Returns a [Collection] adapter for this [PersistentCollection]
- */
-public fun <E> PersistentCollection<E>.asCollection(): Collection<E> = object : AbstractCollection<E>() {
-    override val size get() = this@asCollection.size
-    override fun isEmpty() = this@asCollection.isEmpty
-    override fun iterator() = this@asCollection.iterator()
-}

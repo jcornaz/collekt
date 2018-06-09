@@ -8,6 +8,7 @@ abstract class CollectionTest {
     @Test
     fun emptyShouldNotContainsElement() {
         assertTrue(factory.empty<Int>().isEmpty)
+        assertFalse(factory.empty<Int>().isNotEmpty)
         assertEquals(0, factory.empty<Int>().size)
         assertFalse(factory.empty<Int>().iterator().hasNext())
     }
@@ -40,11 +41,13 @@ abstract class CollectionTest {
     @Test
     fun isEmptyShouldReturnsFalseIfThereIsElements() {
         assertFalse(factory.of(1, 2, 3, 4).isEmpty)
+        assertTrue(factory.of(1, 2, 3, 4).isNotEmpty)
     }
 
     @Test
     fun isEmptyShouldReturnTrueIfThereIsNoElement() {
         assertTrue(factory.empty<Int>().isEmpty)
+        assertFalse(factory.empty<Int>().isNotEmpty)
     }
 
     @Test

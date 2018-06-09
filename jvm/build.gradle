@@ -1,4 +1,5 @@
 apply plugin: 'kotlin-platform-jvm'
+apply plugin: "jacoco"
 
 dependencies {
     expectedBy project(':collekt-common')
