@@ -23,7 +23,7 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractPersistentList
 
     override fun iterator(index: Int): ListIterator<E> = list.listIterator(index)
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
+    override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(list.subList(fromIndex, toIndex))
 
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =

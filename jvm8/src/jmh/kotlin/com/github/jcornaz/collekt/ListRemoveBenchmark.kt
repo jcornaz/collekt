@@ -8,6 +8,6 @@ open class ListRemoveBenchmark {
     fun removeIndex(input: PersistentInput) = input.list.minusIndex(input.randomIndex)
 
     @Benchmark
-    fun subList(input: PersistentInput) = input.list.subList(input.middleRange.first, input.middleRange.endInclusive)
+    fun subList(input: PersistentInput) = input.list.slice(input.middleRange.first, input.middleRange.endInclusive)
 }
 

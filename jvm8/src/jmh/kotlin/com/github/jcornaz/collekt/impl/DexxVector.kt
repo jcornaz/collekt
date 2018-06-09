@@ -26,11 +26,11 @@ internal class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistent
 
     override fun iterator(index: Int): ListIterator<E> = RandomAccessIterator(index, vector.size(), vector::get)
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
+    override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(vector.range(fromIndex, true, toIndex, false))
 
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
-            subList(0, index) to subList(index, vector.size())
+            slice(0, index) to slice(index, vector.size())
 
     override fun plus(element: E): PersistentList<E> =
             wrap(vector.append(element))

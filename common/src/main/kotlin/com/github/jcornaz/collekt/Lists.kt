@@ -15,11 +15,11 @@ public interface ImmutableList<out E> : ImmutableCollection<E> {
     public operator fun get(index: Int): E
 
     /**
-     * Returns the sublist from [fromIndex] (inclusive) to [toIndex] (exclusive)
+     * Returns the slice from [fromIndex] (inclusive) to [toIndex] (exclusive)
      *
      * @throws kotlin.IndexOutOfBoundsException if [fromIndex] < 0 || [toIndex] > [size] || [toIndex] < [fromIndex]
      */
-    public fun subList(fromIndex: Int, toIndex: Int): ImmutableList<E>
+    public fun slice(fromIndex: Int, toIndex: Int): ImmutableList<E>
 
     /**
      * Returns two sublists. The first from 0 (inclusive) and [index] (exclusive). The second from [index] (inclusive) and [size] (exclusive)
@@ -56,7 +56,7 @@ public interface ImmutableList<out E> : ImmutableCollection<E> {
  */
 public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<E> {
 
-    public override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E>
+    public override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E>
     public override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>>
 
     /** Returns a new list containing the same elements plus the given [element] appended at the end */

@@ -1,57 +1,64 @@
 package com.github.jcornaz.collekt.impl
 
-import com.github.jcornaz.collekt.PersistentCollection
-import com.github.jcornaz.collekt.PersistentList
-import com.github.jcornaz.collekt.PersistentListFactory
-import com.github.jcornaz.collekt.asCollection
+import com.github.jcornaz.collekt.*
 import io.vavr.collection.List
 
 class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
-    override val factory get() = VavrList
+
+    companion object Factory : PersistentListFactory {
+        private val empty = VavrList(List.empty<Nothing>())
+        override fun <E> empty(): PersistentList<E> = empty
+
+        override fun <E> from(elements: Iterable<E>): PersistentList<E> =
+                List.ofAll(elements)
+                        .takeUnless { it.isEmpty }
+                        ?.let { VavrList(it) }
+                        ?: empty
+
+        private fun <E> wrap(list: List<E>): PersistentList<E> =
+                list.takeUnless(List<E>::isEmpty)?.let(::VavrList) ?: empty
+    }
 
     override val size get() = list.size()
     override val isEmpty get() = list.isEmpty
 
-    override fun createSubList(fromIndex: Int, toIndex: Int): PersistentList<E> =
-            VavrList(list.subSequence(fromIndex, toIndex))
-
-    override fun plus(element: E): PersistentList<E> =
-            VavrList(list.append(element))
-
-    override fun insert(element: E, index: Int): PersistentList<E> =
-            VavrList(list.insert(index, element))
-
-    override fun insert(collection: PersistentCollection<E>, index: Int): PersistentList<E> =
-            VavrList(list.insertAll(index, (collection as? VavrList<E>)?.list
-                    ?: collection.asCollection()))
-
-    override fun concat(collection: PersistentCollection<E>): PersistentList<E> =
-            VavrList(list.appendAll((collection as? VavrList<E>)?.list
-                    ?: collection.asCollection()))
-
-    override fun remove(element: E): PersistentList<E> =
-            VavrList(list.remove(element))
-
-    override fun removeIndex(index: Int): PersistentList<E> =
-            VavrList(list.removeAt(index))
-
-    override fun contains(element: E): Boolean = list.contains(element)
-
-    override fun iterator(): Iterator<E> = list.iterator()
-
     override fun get(index: Int): E = list[index]
 
-    override fun indexOf(element: E): Int = list.indexOf(element)
+    override fun iterator(index: Int) = RandomAccessIterator(index, list.size(), list::get)
 
-    override fun lastIndexOf(element: E): Int = list.lastIndexOf(element)
+    override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
+            wrap(list.slice(fromIndex, toIndex))
 
-    companion object Factory : PersistentListFactory {
-        override val empty = VavrList(List.empty<Nothing>())
+    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+            list.splitAt(index).let { wrap(it._1) to wrap(it._2) }
 
-        override fun <E> from(iterable: Iterable<E>): PersistentList<E> =
-                List.ofAll(iterable)
-                        .takeUnless { it.isEmpty }
-                        ?.let { VavrList(it) }
-                        ?: empty
+    override fun plus(element: E): PersistentList<E> =
+            wrap(list.append(element))
+
+    override fun plus(elements: Traversable<E>): PersistentList<E> {
+        if (elements.none()) return this
+
+        return wrap(list.appendAll((elements as? VavrList<E>)?.list ?: elements.asIterable()))
     }
+
+    override fun plus(index: Int, element: E): PersistentList<E> =
+            wrap(list.insert(index, element))
+
+    override fun plus(index: Int, elements: Traversable<E>): PersistentList<E> {
+        if (elements.none()) return this
+
+        return wrap(list.insertAll(index, (elements as? VavrList<E>)?.list ?: elements.asIterable()))
+    }
+
+    override fun minus(element: E): PersistentList<E> =
+            wrap(list.remove(element))
+
+    override fun minus(elements: Traversable<E>): PersistentList<E> {
+        if (elements.none()) return this
+
+        return wrap(list.removeAll((elements as? VavrList<E>)?.list ?: elements.asIterable()))
+    }
+
+    override fun minusIndex(index: Int): PersistentList<E> =
+            wrap(list.removeAt(index))
 }

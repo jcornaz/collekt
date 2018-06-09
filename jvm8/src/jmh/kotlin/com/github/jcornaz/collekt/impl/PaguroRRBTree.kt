@@ -24,7 +24,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
 
     override fun iterator(index: Int): ListIterator<E> = tree.listIterator(index)
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
+    override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(tree.split(toIndex)._1().split(fromIndex)._2())
 
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =

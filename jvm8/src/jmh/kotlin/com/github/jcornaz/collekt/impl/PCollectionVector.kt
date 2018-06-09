@@ -4,9 +4,6 @@ import com.github.jcornaz.collekt.*
 import org.pcollections.TreePVector
 
 class PCollectionVector<E>(private val vector: TreePVector<E>) : AbstractPersistentList<E>() {
-    override val size get() = vector.size
-    override val isEmpty get() = vector.isEmpty()
-
     companion object Factory : PersistentListFactory {
         private val empty = PCollectionVector(TreePVector.empty<Nothing>())
 
@@ -24,15 +21,18 @@ class PCollectionVector<E>(private val vector: TreePVector<E>) : AbstractPersist
                 vector.takeUnless(TreePVector<E>::isEmpty)?.let(::PCollectionVector) ?: empty
     }
 
+    override val size get() = vector.size
+    override val isEmpty get() = vector.isEmpty()
+
     override fun get(index: Int): E = vector[index]
 
     override fun iterator(index: Int): ListIterator<E> = vector.listIterator(index)
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
+    override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(vector.subList(fromIndex, toIndex))
 
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
-            subList(0, index) to subList(index, vector.size)
+            slice(0, index) to slice(index, vector.size)
 
     override fun plus(element: E): PersistentList<E> =
             wrap(vector.plus(element))
