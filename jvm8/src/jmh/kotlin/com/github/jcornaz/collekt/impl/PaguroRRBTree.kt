@@ -14,7 +14,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
                 wrap(elements.fold(StaticImports.rrb<E>()) { acc, elt -> acc.append(elt) })
 
         private fun <E> wrap(tree: RrbTree<E>): PersistentList<E> =
-                tree.takeUnless(RrbTree<E>::isEmpty)?.let(::PaguroRRBTree) ?: empty
+                if (tree.isEmpty()) empty else PaguroRRBTree(tree)
     }
 
     override val size: Int get() = tree.size
@@ -27,7 +27,7 @@ class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractPersistentList<E>
     override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(tree.split(toIndex)._1().split(fromIndex)._2())
 
-    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
             tree.split(index).let { wrap(it._1()) to wrap(it._2()) }
 
     override fun plus(element: E): PersistentList<E> =

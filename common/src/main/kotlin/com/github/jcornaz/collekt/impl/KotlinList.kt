@@ -26,7 +26,7 @@ public class KotlinList<E>(private val list: List<E>) : AbstractPersistentList<E
     override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(list.subList(fromIndex, toIndex))
 
-    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
             wrap(list.subList(0, index)) to wrap(list.subList(index, list.size))
 
     override fun plus(element: E): PersistentList<E> =

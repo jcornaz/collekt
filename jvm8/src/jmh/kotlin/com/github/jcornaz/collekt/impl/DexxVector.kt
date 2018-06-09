@@ -14,7 +14,7 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistentList<E>()
                 wrap(Vector.factory<E>().newBuilder().addAll(elements).build())
 
         private fun <E> wrap(vector: Vector<E>): PersistentList<E> =
-                vector.takeUnless(Vector<E>::isEmpty)?.let(::DexxVector) ?: empty
+                if (vector.isEmpty) empty else DexxVector(vector)
     }
 
     override val size: Int get() = vector.size()
@@ -29,7 +29,7 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractPersistentList<E>()
     override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(vector.range(fromIndex, true, toIndex, false))
 
-    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
             slice(0, index) to slice(index, vector.size())
 
     override fun plus(element: E): PersistentList<E> =

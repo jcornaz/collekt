@@ -57,7 +57,7 @@ public interface ImmutableList<out E> : ImmutableCollection<E> {
 public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<E> {
 
     public override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E>
-    public override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>>
+    public override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>>
 
     /** Returns a new list containing the same elements plus the given [element] appended at the end */
     public override fun plus(element: @UnsafeVariance E): PersistentList<E>

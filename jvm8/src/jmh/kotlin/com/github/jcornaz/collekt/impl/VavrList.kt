@@ -13,7 +13,7 @@ class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
                 wrap(List.ofAll(elements))
 
         private fun <E> wrap(list: List<E>): PersistentList<E> =
-                list.takeUnless(List<E>::isEmpty)?.let(::VavrList) ?: empty
+                if (list.isEmpty) empty else VavrList(list)
     }
 
     override val size get() = list.size()
@@ -26,7 +26,7 @@ class VavrList<E>(private val list: List<E>) : AbstractPersistentList<E>() {
     override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(list.slice(fromIndex, toIndex))
 
-    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
             list.splitAt(index).let { wrap(it._1) to wrap(it._2) }
 
     override fun plus(element: E): PersistentList<E> =

@@ -1,6 +1,7 @@
 package com.github.jcornaz.collekt.impl
 
 import com.github.jcornaz.collekt.*
+import com.sun.scenario.effect.impl.prism.ps.PPSBlend_COLOR_BURNPeer
 import org.pcollections.TreePVector
 
 class PCollectionVector<E>(private val vector: TreePVector<E>) : AbstractPersistentList<E>() {
@@ -18,7 +19,7 @@ class PCollectionVector<E>(private val vector: TreePVector<E>) : AbstractPersist
         }
 
         private fun <E> wrap(vector: TreePVector<E>): PersistentList<E> =
-                vector.takeUnless(TreePVector<E>::isEmpty)?.let(::PCollectionVector) ?: empty
+                if (vector.isEmpty()) empty else PCollectionVector(vector)
     }
 
     override val size get() = vector.size
@@ -31,7 +32,7 @@ class PCollectionVector<E>(private val vector: TreePVector<E>) : AbstractPersist
     override fun slice(fromIndex: Int, toIndex: Int): PersistentList<E> =
             wrap(vector.subList(fromIndex, toIndex))
 
-    override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
             slice(0, index) to slice(index, vector.size)
 
     override fun plus(element: E): PersistentList<E> =
