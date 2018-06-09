@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class StandardCollectionAdapterTest {
+class StandardListAdapterTest {
 
     @Test
     fun equivalentListShouldBeEqualsStdList() {

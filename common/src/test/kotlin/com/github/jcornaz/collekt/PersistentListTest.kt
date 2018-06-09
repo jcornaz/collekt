@@ -2,7 +2,7 @@ package com.github.jcornaz.collekt
 
 import kotlin.test.*
 
-abstract class ListTest : CollectionTest() {
+abstract class PersistentListTest : PersistentCollectionTest() {
     abstract override val factory: PersistentListFactory
 
     @Test

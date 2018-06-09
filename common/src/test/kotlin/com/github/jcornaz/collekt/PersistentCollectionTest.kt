@@ -2,7 +2,7 @@ package com.github.jcornaz.collekt
 
 import kotlin.test.*
 
-abstract class CollectionTest {
+abstract class PersistentCollectionTest {
     internal abstract val factory: PersistentCollectionFactory
 
     @Test
