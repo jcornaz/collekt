@@ -49,7 +49,7 @@ public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<
     public fun minusIndex(index: Int): PersistentList<E>
 
     public override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E>
-    public override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>>
+    public override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>>
 
     public override fun plus(element: @UnsafeVariance E): PersistentList<E>
     public override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
