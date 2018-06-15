@@ -14,7 +14,7 @@ Unlike [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collect
 ### Always get the fastest implementation available, without the need to refactor your code
 collekt don't implement the persistent datastructure itself. It is always delegated to an open-source 3rd party.
 
-In order to choose the actual implemntation collekt perform performance tests. The fastest is always choosen.
+In order to choose the actual implementation collekt do performance tests an choose the fastest implementation.
 
 If performance tests show that an new implementation is faster, then the actual implementation will be delegated to the new faster one. That way, as a user of collekt, you only have to update the version of collekt to get the fastest state-of-the-art persistent collection. And as the api stay the same, swaping to a faster implementation do not incur any refactoring overhead.
 
