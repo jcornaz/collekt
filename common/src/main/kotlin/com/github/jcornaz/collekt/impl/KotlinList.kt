@@ -32,11 +32,13 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractList<E>(), Per
     override fun iterator(): Iterator<E> = list.iterator()
     override fun listIterator(index: Int): ListIterator<E> = list.listIterator(index)
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
-            wrap(list.subList(fromIndex, toIndex))
+    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> {
+        if (fromIndex < 0 || toIndex > list.size || fromIndex > toIndex) throw IndexOutOfBoundsException("fromIndex: $fromIndex, toIndex: $toIndex, size: ${list.size}")
+        return wrap(list.subList(fromIndex, toIndex))
+    }
 
     override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
-            wrap(list.subList(0, index)) to wrap(list.subList(index, list.size))
+            subList(0, index) to subList(index, list.size)
 
     override fun with(index: Int, element: @UnsafeVariance E): PersistentList<E> =
             wrap(list.toMutableList().apply { set(index, element) })
@@ -59,6 +61,9 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractList<E>(), Per
     override fun minus(elements: Iterable<E>): PersistentList<E> =
             wrap(list - elements.unwrap())
 
-    override fun minusIndex(index: Int): PersistentList<E> =
-            wrap(list.subList(0, index) + list.subList(index + 1, list.size))
+    override fun minusIndex(index: Int): PersistentList<E> {
+        if (index < 0 || index >= list.size) throw IndexOutOfBoundsException("index: $index, size: ${list.size}")
+
+        return wrap(list.subList(0, index) + list.subList(index + 1, list.size))
+    }
 }

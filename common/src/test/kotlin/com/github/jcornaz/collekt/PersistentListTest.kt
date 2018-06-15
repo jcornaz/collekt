@@ -134,6 +134,47 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
+    fun subListShouldReturnEmptyListWhenToIndexAndFromIndexAreEquals() {
+        assertEquals(factory.empty(), factory.empty<Int>().subList(0, 0))
+        assertEquals(factory.empty(), factory.of(1, 2, 3).subList(1, 1))
+    }
+
+    @Test
+    fun subListShouldReturnEquivalentListForIndexBetween0AndSize() {
+        assertEquals(factory.of(1, 2, 3), factory.of(1, 2, 3).subList(0, 3))
+    }
+
+    @Test
+    fun subListShouldThrowIndexOutOfBoundExceptionForWrongIndexes() {
+        assertFailsWith<IndexOutOfBoundsException> { factory.empty<Int>().subList(-1, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.empty<Int>().subList(0, 1) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).subList(-1, 2) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).subList(2, 4) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).subList(2, 1) }
+    }
+
+    @Test
+    fun splitShouldReturnTwoLists() {
+        val source = factory.of(1, 2, 3, 4)
+
+        assertEquals(factory.of(1, 2) to factory.of(3, 4), source.split(2))
+        assertEquals(factory.empty<Int>() to factory.of(1, 2, 3, 4), source.split(0))
+        assertEquals(factory.of(1, 2, 3, 4) to factory.empty(), source.split(4))
+    }
+
+    @Test
+    fun splitShouldReturnTwoEmptyListsIfTheSourceIsEmpty() {
+        assertEquals(factory.empty<Int>() to factory.empty(), factory.empty<Int>().split(0))
+    }
+
+    @Test
+    fun splitShouldThrowIndexOutOfBoundExceptionForWrongIndexes() {
+        assertFailsWith<IndexOutOfBoundsException> { factory.empty<Int>().split(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).split(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).split(4) }
+    }
+
+    @Test
     fun emptySubListShouldReturnEmptyList() {
         val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
@@ -216,5 +257,13 @@ abstract class PersistentListTest : PersistentCollectionTest() {
         assertEquals(-1, result.indexOf(2))
         assertEquals(factory.of(1, 2, 3), col)
         assertEquals(factory.of(1, 3), result)
+    }
+
+    @Test
+    fun minusIndexShouldThrowIndexOutOfBoundForWrongIndexes() {
+        assertFailsWith<IndexOutOfBoundsException> { factory.empty<Int>().minusIndex(0) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.empty<Int>().minusIndex(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).minusIndex(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { factory.of(1, 2, 3).minusIndex(3) }
     }
 }

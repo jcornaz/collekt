@@ -30,7 +30,7 @@ class VavrList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList
             list.splitAt(index).let { wrap(it._1) to wrap(it._2) }
 
     override fun with(index: Int, element: E): PersistentList<E> =
-            wrap(list.removeAt(index).insert(index, element))
+            minusIndex(index) + element
 
     override fun plus(element: E): PersistentList<E> =
             wrap(list.append(element))
@@ -50,8 +50,11 @@ class VavrList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList
     override fun minus(elements: Iterable<E>): PersistentList<E> =
             wrap(list.removeAll((elements as? VavrList<E>)?.list ?: elements))
 
-    override fun minusIndex(index: Int): PersistentList<E> =
-            wrap(list.removeAt(index))
+    override fun minusIndex(index: Int): PersistentList<E> {
+        if (index < 0 || index >= list.size()) throw IndexOutOfBoundsException("index: $index, size: ${list.size()}")
+
+        return wrap(list.removeAt(index))
+    }
 
     private fun wrap(newList: List<E>): PersistentList<E> = when {
         newList === list -> this

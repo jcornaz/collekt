@@ -81,8 +81,10 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), Persiste
     }
 }
 
-private fun <E> Vector<E>.split(index: Int): Pair<Vector<E>, Vector<E>> =
-        range(0, true, index, false) to range(index, true, size(), false)
+private fun <E> Vector<E>.split(index: Int): Pair<Vector<E>, Vector<E>> {
+    if (index < 0 || index >= size()) throw IndexOutOfBoundsException("index: $index, size: ${size()}")
+    return range(0, true, index, false) to range(index, true, size(), false)
+}
 
 private operator fun <E> Vector<E>.plus(elements: Vector<E>): Vector<E> =
         elements.fold(this) { acc, elt -> acc.append(elt) }
