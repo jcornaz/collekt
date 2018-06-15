@@ -98,11 +98,35 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
+    fun equivalentListShouldBeEqualsStdList() {
+        assertEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 3, 4))
+        assertEquals(persistentListOf(1), listOf(1))
+        assertEquals(persistentListOf(), listOf<Int>())
+        assertEquals(emptyPersistentList(), emptyList<Int>())
+    }
+
+    @Test
+    fun differentListShouldNotEqualsStdList() {
+        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(4, 3, 2, 1))
+        assertNotEquals(persistentListOf(1, 2, 2, 3), listOf(1, 2, 3))
+        assertNotEquals(persistentListOf(1, 2, 3), listOf(1, 2, 3, 3))
+        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 4))
+        assertNotEquals(persistentListOf(1, 2, 3, 4), emptyList<Int>())
+        assertNotEquals(emptyPersistentList(), listOf(1))
+    }
+
+    @Test
+    fun hashCodeShouldBeConsistentWithStdList() {
+        assertEquals(listOf(1, 2, 3, 4).hashCode(), persistentListOf(1, 2, 3, 4).hashCode())
+        assertEquals(emptyList<Int>().hashCode(), emptyPersistentList<Int>().hashCode())
+    }
+
+    @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
         val subList = factory.of(1, 2, 3, 4).slice(1, 3)
 
         assertEquals(factory.of(2, 3), subList)
-        assertFalse(subList.isEmpty)
+        assertFalse(subList.isEmpty())
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
         assertEquals(2, subList[0])
         assertEquals(3, subList[1])
@@ -113,8 +137,35 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     fun emptySubListShouldReturnEmptyList() {
         val subList = factory.of(1, 2, 3, 4).slice(1, 1)
 
-        assertTrue(subList.isEmpty)
+        assertTrue(subList.isEmpty())
         assertEquals(subList, factory.empty())
+    }
+
+    @Test
+    fun withShouldReturnCollectionWithTheElementReplaced() {
+        val source = factory.of(1, 2, 3)
+        val result = source.with(1, 4)
+
+        assertEquals(4, result[1])
+        assertEquals(result, factory.of(1, 4, 3))
+
+        assertEquals(2, source[1])
+        assertEquals(source, factory.of(1, 2, 3))
+    }
+
+    @Test
+    fun withShouldThrowIndexOutOfBoundIfIndexIsOutOfBound() {
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.empty<Int>().with(0, 1)
+        }
+
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.of(1, 2, 3).with(-1, 0)
+        }
+
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.of(1, 2, 3).with(3, 0)
+        }
     }
 
     @Test
@@ -124,7 +175,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
         val list3 = list2.plus(index = 0, element = 1)
         val list4 = list3.plus(index = 1, element = 2)
 
-        assertTrue(list1.isEmpty)
+        assertTrue(list1.isEmpty())
 
         assertEquals(0, list2[0])
         assertEquals(0, list3[1])
