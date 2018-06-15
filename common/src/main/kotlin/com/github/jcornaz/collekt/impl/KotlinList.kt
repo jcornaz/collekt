@@ -39,6 +39,9 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractList<E>(), Per
     override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>> =
             wrap(list.subList(0, index)) to wrap(list.subList(index, list.size))
 
+    override fun with(index: Int, element: @UnsafeVariance E): PersistentList<E> =
+            wrap(list.toMutableList().apply { set(index, element) })
+
     override fun plus(element: E): PersistentList<E> =
             wrap(list + element)
 

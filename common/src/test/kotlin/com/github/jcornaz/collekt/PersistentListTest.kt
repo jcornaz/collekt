@@ -122,6 +122,33 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
+    fun withShouldReturnCollectionWithTheElementReplaced() {
+        val source = factory.of(1, 2, 3)
+        val result = source.with(1, 4)
+
+        assertEquals(4, result[1])
+        assertEquals(result, factory.of(1, 4, 3))
+
+        assertEquals(2, source[1])
+        assertEquals(source, factory.of(1, 2, 3))
+    }
+
+    @Test
+    fun withShouldThrowIndexOutOfBoundIfIndexIsOutOfBound() {
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.empty<Int>().with(0, 1)
+        }
+
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.of(1, 2, 3).with(-1, 0)
+        }
+
+        assertFailsWith<IndexOutOfBoundsException> {
+            factory.of(1, 2, 3).with(3, 0)
+        }
+    }
+
+    @Test
     fun plusAtIndexShouldReturnCollectionWithTheElement() {
         val list1 = factory.empty<Int>()
         val list2 = list1.plus(index = 0, element = 0)
