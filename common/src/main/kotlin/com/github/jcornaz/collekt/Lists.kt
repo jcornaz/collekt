@@ -28,24 +28,11 @@ public interface ImmutableList<out E> : ImmutableCollection<E>, List<E> {
  */
 public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<E> {
 
-    public override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E>
-    public override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>>
-
-    /** Returns a new list containing the same elements plus the given [element] appended at the end */
-    public override fun plus(element: @UnsafeVariance E): PersistentList<E>
-
     /** Returns a new list containing the same elements plus the given [element] inserted at the given [index] */
     public fun plus(index: Int, element: @UnsafeVariance E): PersistentList<E>
 
-    /** Returns a new list containing the same elements plus the given [elements] appended at the end */
-    public override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
-
     /** Returns a new list containing the same elements plus [elements] at [index] */
     public fun plus(index: Int, elements: Iterable<@UnsafeVariance E>): PersistentList<E>
-
-    public override fun minus(element: @UnsafeVariance E): PersistentList<E>
-
-    public override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
 
     /**
      * Returns a new list containing the same elements except the element at given [index]
@@ -53,4 +40,13 @@ public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<
      * @throws kotlin.IndexOutOfBoundsException if the index is < 0 or >= [size]
      */
     public fun minusIndex(index: Int): PersistentList<E>
+
+    public override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E>
+    public override fun split(index: Int): Pair<ImmutableList<E>, PersistentList<E>>
+
+    public override fun plus(element: @UnsafeVariance E): PersistentList<E>
+    public override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
+
+    public override fun minus(element: @UnsafeVariance E): PersistentList<E>
+    public override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
 }
