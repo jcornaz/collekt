@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 open class SplitAndSliceBenchmark {
 
     @Benchmark
-    fun slice(input: PersistentInput) = input.list.slice(input.middleRange.first, input.middleRange.endInclusive)
+    fun slice(input: PersistentInput) = input.list.subList(input.middleRange.first, input.middleRange.endInclusive)
 
     @Benchmark
     fun split(input: PersistentInput) = input.list.split(input.randomIndex)

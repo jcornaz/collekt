@@ -119,17 +119,17 @@ abstract class PersistentCollectionTest {
     }
 
     @Test
-    fun plusEmptyCollectionShouldReturnThis() {
+    fun plusEmptyCollectionShouldReturnAnEqualCollection() {
         val col = factory.of(1, 2, 3)
 
-        assertSame(col, col + factory.empty())
+        assertEquals(col, col + factory.empty())
     }
 
     @Test
-    fun minusEmptyCollectionShouldReturnThis() {
+    fun minusEmptyCollectionShouldReturnAnEqualCollection() {
         val col = factory.of(1, 2, 3)
 
-        assertSame(col, col - factory.empty())
+        assertEquals(col, col - factory.empty())
     }
 
     @Test

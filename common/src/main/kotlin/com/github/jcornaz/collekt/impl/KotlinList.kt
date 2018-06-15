@@ -45,19 +45,19 @@ internal class KotlinList<E>(private val list: List<E>) : AbstractList<E>(), Per
             wrap(list + element)
 
     override fun plus(elements: Iterable<E>): PersistentList<E> =
-            if (elements.none()) this else wrap(list + elements.unwrap())
+            wrap(list + elements.unwrap())
 
     override fun plus(index: Int, element: E): PersistentList<E> =
             wrap(list.subList(0, index) + element + list.subList(index, list.size))
 
     override fun plus(index: Int, elements: Iterable<E>): PersistentList<E> =
-            if (elements.none()) this else wrap(list.subList(0, index) + elements.unwrap() + list.subList(index, list.size))
+            wrap(list.subList(0, index) + elements.unwrap() + list.subList(index, list.size))
 
     override fun minus(element: E): PersistentList<E> =
             wrap(list - element)
 
     override fun minus(elements: Iterable<E>): PersistentList<E> =
-            if (elements.none()) this else wrap(list - elements.unwrap())
+            wrap(list - elements.unwrap())
 
     override fun minusIndex(index: Int): PersistentList<E> =
             wrap(list.subList(0, index) + list.subList(index + 1, list.size))

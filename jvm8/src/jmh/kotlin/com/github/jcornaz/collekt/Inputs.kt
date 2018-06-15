@@ -1,6 +1,9 @@
 package com.github.jcornaz.collekt
 
-import com.github.jcornaz.collekt.impl.*
+import com.github.jcornaz.collekt.impl.DexxVector
+import com.github.jcornaz.collekt.impl.PCollectionVector
+import com.github.jcornaz.collekt.impl.PaguroRRBTree
+import com.github.jcornaz.collekt.impl.VavrList
 import org.openjdk.jmh.annotations.*
 import java.util.*
 
@@ -17,7 +20,10 @@ enum class CollectionSize(private val size: Int) : Iterable<Int> {
 }
 
 enum class ListImplementation(val factory: PersistentListFactory) : PersistentListFactory by factory {
-    KOTLIN_LIST(KotlinList),
+    KOTLIN_LIST(object : PersistentListFactory {
+        override fun <E> empty(): PersistentList<E> = emptyPersistentList()
+        override fun <E> from(elements: Iterable<E>): PersistentList<E> = elements.asSequence().toPersistentList()
+    }),
 
     PAGURO_RRB_TREE(PaguroRRBTree),
 

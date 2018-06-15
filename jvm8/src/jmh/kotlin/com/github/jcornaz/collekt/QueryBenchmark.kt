@@ -16,7 +16,7 @@ open class QueryBenchmark {
     fun size(input: PersistentInput) = input.list.size
 
     @Benchmark
-    fun isEmpty(input: PersistentInput) = input.list.isEmpty
+    fun isEmpty(input: PersistentInput) = input.list.isEmpty()
 
     @Benchmark
     fun get(input: PersistentInput) = input.list[input.randomIndex]

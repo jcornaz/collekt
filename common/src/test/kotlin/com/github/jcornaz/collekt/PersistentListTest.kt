@@ -68,7 +68,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
 
     @Test
     fun reverseIterationShouldReturnElementsFromTheLastToTheFirst() {
-        val iterator = factory.of(1, 2, 3, 4).iterator(4)
+        val iterator = factory.of(1, 2, 3, 4).listIterator(4)
 
         assertTrue(iterator.hasPrevious())
         assertEquals(4, iterator.previous())
@@ -123,7 +123,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
 
     @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
-        val subList = factory.of(1, 2, 3, 4).slice(1, 3)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 3)
 
         assertEquals(factory.of(2, 3), subList)
         assertFalse(subList.isEmpty())
@@ -135,7 +135,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
 
     @Test
     fun emptySubListShouldReturnEmptyList() {
-        val subList = factory.of(1, 2, 3, 4).slice(1, 1)
+        val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
         assertTrue(subList.isEmpty())
         assertEquals(subList, factory.empty())
@@ -202,10 +202,10 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
-    fun plusEmpyCollectionAtIndexShouldReturnThis() {
+    fun plusEmpyCollectionAtIndexShouldReturnAnEqualCollection() {
         val col = factory.of(1, 2, 3)
 
-        assertSame(col, col.plus(1, factory.empty<Int>()))
+        assertEquals(col, col.plus(1, factory.empty()))
     }
 
     @Test
