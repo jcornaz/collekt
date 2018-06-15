@@ -35,6 +35,13 @@ public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<
     public fun plus(index: Int, elements: Iterable<@UnsafeVariance E>): PersistentList<E>
 
     /**
+     * Returns a new list containing the same elements, replacing the element at [index] by [element]
+     *
+     * @throws kotlin.IndexOutOfBoundsException if the index is < 0 or >= [size]
+     */
+    public fun with(index: Int, element: @UnsafeVariance E): PersistentList<E>
+
+    /**
      * Returns a new list containing the same elements except the element at given [index]
      *
      * @throws kotlin.IndexOutOfBoundsException if the index is < 0 or >= [size]
