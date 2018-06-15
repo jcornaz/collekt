@@ -7,8 +7,7 @@ abstract class PersistentCollectionTest {
 
     @Test
     fun emptyShouldNotContainsElement() {
-        assertTrue(factory.empty<Int>().isEmpty)
-        assertFalse(factory.empty<Int>().isNotEmpty)
+        assertTrue(factory.empty<Int>().isEmpty())
         assertEquals(0, factory.empty<Int>().size)
         assertFalse(factory.empty<Int>().iterator().hasNext())
     }
@@ -40,14 +39,12 @@ abstract class PersistentCollectionTest {
 
     @Test
     fun isEmptyShouldReturnsFalseIfThereIsElements() {
-        assertFalse(factory.of(1, 2, 3, 4).isEmpty)
-        assertTrue(factory.of(1, 2, 3, 4).isNotEmpty)
+        assertFalse(factory.of(1, 2, 3, 4).isEmpty())
     }
 
     @Test
     fun isEmptyShouldReturnTrueIfThereIsNoElement() {
-        assertTrue(factory.empty<Int>().isEmpty)
-        assertFalse(factory.empty<Int>().isNotEmpty)
+        assertTrue(factory.empty<Int>().isEmpty())
     }
 
     @Test
@@ -109,7 +106,7 @@ abstract class PersistentCollectionTest {
         val col2 = col1 + 0
         val col3 = col2 + 1
 
-        assertTrue(col1.isEmpty)
+        assertTrue(col1.isEmpty())
         assertEquals(factory.empty(), col1)
 
         assertTrue(col2.any { it == 0 })

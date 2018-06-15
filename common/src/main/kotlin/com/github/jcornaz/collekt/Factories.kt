@@ -50,15 +50,10 @@ public fun <E> persistentListOf(vararg values: E): PersistentList<E> =
  *
  * May create a defensive copy if necessary
  */
-public fun <E> Iterable<E>.toPersistentList(): PersistentList<E> = DefaultListFactory.from(this)
+public fun <E> Iterable<E>.toPersistentList(): PersistentList<E> =
+        this as? PersistentList<E> ?: DefaultListFactory.from(this)
 
 /**
  * Returns a new immutable list with all elements in this sequence (in the same order).
  */
 public fun <E> Sequence<E>.toPersistentList(): PersistentList<E> = DefaultListFactory.from(asIterable())
-
-/**
- * Returns an immutable list with all elements in this [Traversable].
- */
-public fun <E> Traversable<E>.toPersistentList(): PersistentList<E> =
-        this as? PersistentList<E> ?: DefaultListFactory.from(asIterable())

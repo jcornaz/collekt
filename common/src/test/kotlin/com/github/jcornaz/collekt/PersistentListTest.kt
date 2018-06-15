@@ -79,10 +79,34 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
+    fun equivalentListShouldBeEqualsStdList() {
+        assertEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 3, 4))
+        assertEquals(persistentListOf(1), listOf(1))
+        assertEquals(persistentListOf(), listOf<Int>())
+        assertEquals(emptyPersistentList(), emptyList<Int>())
+    }
+
+    @Test
+    fun differentListShouldNotEqualsStdList() {
+        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(4, 3, 2, 1))
+        assertNotEquals(persistentListOf(1, 2, 2, 3), listOf(1, 2, 3))
+        assertNotEquals(persistentListOf(1, 2, 3), listOf(1, 2, 3, 3))
+        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 4))
+        assertNotEquals(persistentListOf(1, 2, 3, 4), emptyList<Int>())
+        assertNotEquals(emptyPersistentList(), listOf(1))
+    }
+
+    @Test
+    fun hashCodeShouldBeConsistentWithStdList() {
+        assertEquals(listOf(1, 2, 3, 4).hashCode(), persistentListOf(1, 2, 3, 4).hashCode())
+        assertEquals(emptyList<Int>().hashCode(), emptyPersistentList<Int>().hashCode())
+    }
+
+    @Test
     fun subListShouldReturnElementsBetweenTheGivenIndexes() {
         val subList = factory.of(1, 2, 3, 4).subList(1, 3)
 
-        assertFalse(subList.isEmpty)
+        assertFalse(subList.isEmpty())
         assertFailsWith<IndexOutOfBoundsException> { subList[-1] }
         assertEquals(2, subList[0])
         assertEquals(3, subList[1])
@@ -93,7 +117,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
     fun emptySubListShouldReturnEmptyList() {
         val subList = factory.of(1, 2, 3, 4).subList(1, 1)
 
-        assertTrue(subList.isEmpty)
+        assertTrue(subList.isEmpty())
         assertEquals(subList, factory.empty())
     }
 
@@ -104,7 +128,7 @@ abstract class PersistentListTest : PersistentCollectionTest() {
         val list3 = list2.plus(index = 0, element = 1)
         val list4 = list3.plus(index = 1, element = 2)
 
-        assertTrue(list1.isEmpty)
+        assertTrue(list1.isEmpty())
 
         assertEquals(0, list2[0])
         assertEquals(0, list3[1])
