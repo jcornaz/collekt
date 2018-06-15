@@ -23,14 +23,23 @@ class VavrList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList
 
     override fun iterator(): Iterator<E> = list.iterator()
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
-            wrap(list.slice(fromIndex, toIndex))
+    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> {
+        if (fromIndex < 0 || toIndex > list.size() || toIndex < fromIndex) throw IndexOutOfBoundsException("fromIndex: $fromIndex, toIndex: $toIndex, size: ${list.size()}")
 
-    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
-            list.splitAt(index).let { wrap(it._1) to wrap(it._2) }
+        return wrap(list.slice(fromIndex, toIndex))
+    }
 
-    override fun with(index: Int, element: E): PersistentList<E> =
-            minusIndex(index) + element
+    override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> {
+        if (index < 0 || index > list.size()) throw IndexOutOfBoundsException("index: $index, size: ${list.size()}")
+
+        return list.splitAt(index).let { wrap(it._1) to wrap(it._2) }
+    }
+
+    override fun with(index: Int, element: E): PersistentList<E> {
+        if (index < 0 || index >= list.size()) throw IndexOutOfBoundsException("index: $index, size: ${list.size()}")
+
+        return wrap(list.removeAt(index).insert(index, element))
+    }
 
     override fun plus(element: E): PersistentList<E> =
             wrap(list.append(element))
