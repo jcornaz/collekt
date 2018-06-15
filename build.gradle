@@ -1,17 +1,22 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.18.0"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.6"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.30"
     }
 }
 
 subprojects {
     group 'com.github.jcornaz'
-    version '0.0.1-SNAPSHOT'
+    version = "$version"
 
     apply plugin: "com.github.ben-manes.versions"
 
