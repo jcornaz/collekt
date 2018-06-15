@@ -26,11 +26,13 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), Persiste
 
     override fun iterator(): Iterator<E> = vector.iterator()
 
-    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> =
-            wrap(vector.range(fromIndex, true, toIndex, false))
+    override fun subList(fromIndex: Int, toIndex: Int): PersistentList<E> {
+        if (fromIndex < 0 || toIndex > vector.size() || toIndex < fromIndex) throw IndexOutOfBoundsException("fromIndex: $fromIndex, toIndex: $toIndex, size: ${vector.size()}")
+        return wrap(vector.range(fromIndex, true, toIndex, false))
+    }
 
     override fun split(index: Int): Pair<PersistentList<E>, PersistentList<E>> =
-            subList(0, index) to subList(index, vector.size())
+            vector.split(index).let { wrap(it.first) to wrap(it.second) }
 
     override fun with(index: Int, element: E): PersistentList<E> =
             wrap(vector.set(index, element))
@@ -69,6 +71,8 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), Persiste
     }
 
     override fun minusIndex(index: Int): PersistentList<E> {
+        if (index < 0 || index >= vector.size()) throw IndexOutOfBoundsException("index: $index, size: ${vector.size()}")
+
         val (left, right) = vector.split(index)
 
         return wrap(left + right.range(0, false, right.size(), false))
@@ -82,7 +86,7 @@ class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), Persiste
 }
 
 private fun <E> Vector<E>.split(index: Int): Pair<Vector<E>, Vector<E>> {
-    if (index < 0 || index >= size()) throw IndexOutOfBoundsException("index: $index, size: ${size()}")
+    if (index < 0 || index > size()) throw IndexOutOfBoundsException("index: $index, size: ${size()}")
     return range(0, true, index, false) to range(index, true, size(), false)
 }
 
