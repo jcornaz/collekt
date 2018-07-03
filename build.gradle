@@ -20,4 +20,10 @@ subprojects {
     repositories {
         jcenter()
     }
+
+    task createDirs {
+        sourceSets.all { set ->
+            set.allSource.srcDirs.each { it.mkdirs() }
+        }
+    }
 }

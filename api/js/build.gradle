@@ -1,7 +1,7 @@
 apply plugin: 'kotlin-platform-js'
 
 dependencies {
-    expectedBy project(':collekt-common')
+    expectedBy project(':collekt-api-common')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
 
