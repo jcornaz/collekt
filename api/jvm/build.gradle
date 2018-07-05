@@ -1,18 +1,5 @@
-apply plugin: 'kotlin-platform-jvm'
-apply plugin: 'java'
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.6"
-    }
-}
+apply from: rootProject.file('gradle/jvm.gradle')
 
 dependencies {
     expectedBy project(':collekt-api-common')
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    testCompile "junit:junit:4.12"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

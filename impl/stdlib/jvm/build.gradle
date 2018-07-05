@@ -1,0 +1,7 @@
+apply from: rootProject.file('gradle/jvm.gradle')
+
+dependencies {
+    expectedBy project(':collekt-stdlib-common')
+
+    api project(':collekt-api-jvm')
+}

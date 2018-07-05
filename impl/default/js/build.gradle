@@ -1,0 +1,7 @@
+apply from: rootProject.file('gradle/js.gradle')
+
+dependencies {
+    compile project(':collekt-api-js')
+
+    compile project(':collekt-stdlib-js')
+}
