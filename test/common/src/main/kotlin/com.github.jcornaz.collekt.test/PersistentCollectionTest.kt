@@ -1,9 +1,11 @@
-package com.github.jcornaz.collekt.api
+package com.github.jcornaz.collekt.test
 
+import com.github.jcornaz.collekt.api.PersistentCollectionFactory
+import com.github.jcornaz.collekt.api.of
 import kotlin.test.*
 
-abstract class PersistentCollectionTest {
-    internal abstract val factory: PersistentCollectionFactory
+public abstract class PersistentCollectionTest {
+    public abstract val factory: PersistentCollectionFactory
 
     @Test
     fun emptyShouldNotContainsElement() {

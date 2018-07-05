@@ -4,4 +4,6 @@ dependencies {
     api project(':collekt-api-jvm')
 
     implementation 'io.vavr:vavr:0.9.2'
+
+    testCompile project(':collekt-test-jvm')
 }

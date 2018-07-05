@@ -19,6 +19,10 @@ include 'collekt-default-js'
 
 include 'collekt-benchmark'
 
+include 'collekt-test-common'
+include 'collekt-test-js'
+include 'collekt-test-jvm'
+
 project(':collekt-api-common').projectDir = file('api/common')
 project(':collekt-api-jvm').projectDir = file('api/jvm')
 project(':collekt-api-js').projectDir = file('api/js')
@@ -37,3 +41,7 @@ project(':collekt-default-jvm8').projectDir = file('impl/default/jvm8')
 project(':collekt-default-js').projectDir = file('impl/default/js')
 
 project(':collekt-benchmark').projectDir = file('benchmark')
+
+project(':collekt-test-common').projectDir = file('test/common')
+project(':collekt-test-js').projectDir = file('test/js')
+project(':collekt-test-jvm').projectDir = file('test/jvm')

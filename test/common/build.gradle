@@ -1,0 +1,8 @@
+apply from: rootProject.file('gradle/common.gradle')
+
+dependencies {
+    compile project(':collekt-api-common')
+
+    compile "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+}

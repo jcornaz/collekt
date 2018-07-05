@@ -4,4 +4,6 @@ dependencies {
     api project(':collekt-api-jvm')
 
     implementation 'org.organicdesign:Paguro:3.0.19'
+
+    testCompile project(':collekt-test-jvm')
 }

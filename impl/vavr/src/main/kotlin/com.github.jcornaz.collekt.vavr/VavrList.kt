@@ -4,7 +4,7 @@ import com.github.jcornaz.collekt.api.PersistentList
 import com.github.jcornaz.collekt.api.PersistentListFactory
 import io.vavr.collection.List
 
-class VavrList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList<E> {
+public class VavrList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList<E> {
 
     companion object Factory : PersistentListFactory {
         private val empty = VavrList(List.empty<Nothing>())

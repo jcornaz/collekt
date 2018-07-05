@@ -4,4 +4,6 @@ dependencies {
     api project(':collekt-api-jvm')
 
     implementation 'org.pcollections:pcollections:3.0.2'
+
+    testCompile project(':collekt-test-jvm')
 }

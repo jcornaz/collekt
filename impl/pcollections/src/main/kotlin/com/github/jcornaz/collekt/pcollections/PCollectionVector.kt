@@ -5,7 +5,7 @@ import com.github.jcornaz.collekt.api.PersistentListFactory
 import org.pcollections.PVector
 import org.pcollections.TreePVector
 
-class PCollectionVector<E>(private val vector: PVector<E>) : AbstractList<E>(), PersistentList<E> {
+public class PCollectionVector<E>(private val vector: PVector<E>) : AbstractList<E>(), PersistentList<E> {
     companion object Factory : PersistentListFactory {
         private val empty = PCollectionVector(TreePVector.empty<Nothing>())
 

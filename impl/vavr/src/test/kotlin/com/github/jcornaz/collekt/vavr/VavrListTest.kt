@@ -1,4 +1,8 @@
 package com.github.jcornaz.collekt.vavr
 
-class VavrListTest {
+import com.github.jcornaz.collekt.api.PersistentListFactory
+import com.github.jcornaz.collekt.test.PersistentListTest
+
+class VavrListTest : PersistentListTest() {
+    override val factory: PersistentListFactory get() = VavrList
 }

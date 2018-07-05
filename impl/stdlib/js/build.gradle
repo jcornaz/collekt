@@ -4,4 +4,6 @@ dependencies {
     expectedBy project(':collekt-stdlib-common')
 
     compile project(':collekt-api-js')
+
+    testCompile project(':collekt-test-js')
 }

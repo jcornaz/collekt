@@ -1,9 +1,13 @@
-package com.github.jcornaz.collekt.api
+package com.github.jcornaz.collekt.test
 
+import com.github.jcornaz.collekt.api.PersistentListFactory
+import com.github.jcornaz.collekt.api.emptyPersistentList
+import com.github.jcornaz.collekt.api.of
+import com.github.jcornaz.collekt.api.persistentListOf
 import kotlin.test.*
 
-abstract class PersistentListTest : PersistentCollectionTest() {
-    abstract override val factory: PersistentListFactory
+public abstract class PersistentListTest : PersistentCollectionTest() {
+    public abstract override val factory: PersistentListFactory
 
     @Test
     fun shouldSupportDuplicateElements() {
