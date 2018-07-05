@@ -1,9 +1,11 @@
-package com.github.jcornaz.collekt.api
+package com.github.jcornaz.collekt.benchmark
 
+import com.github.jcornaz.collekt.api.PersistentList
+import com.github.jcornaz.collekt.api.PersistentListFactory
 import com.github.jcornaz.collekt.dexx.DexxVector
-import com.github.jcornaz.collekt.stdlib.StdlibList
-import com.github.jcornaz.collekt.pcollections.PCollectionVector
 import com.github.jcornaz.collekt.paguro.PaguroRRBTree
+import com.github.jcornaz.collekt.pcollections.PCollectionVector
+import com.github.jcornaz.collekt.stdlib.StdlibList
 import com.github.jcornaz.collekt.vavr.VavrList
 import org.openjdk.jmh.annotations.*
 import java.util.*
@@ -21,24 +23,14 @@ enum class CollectionSize(private val size: Int) : Iterable<Int> {
 }
 
 enum class ListImplementation(val factory: PersistentListFactory) : PersistentListFactory by factory {
-    KOTLIN_LIST(object : PersistentListFactory {
-        override fun <E> empty(): PersistentList<E> = emptyPersistentList()
-        override fun <E> from(elements: Iterable<E>): PersistentList<E> = elements.asSequence().toPersistentList()
-    }),
 
+    STDLIB_LIST(StdlibList),
     PAGURO_RRB_TREE(PaguroRRBTree),
-
     VAVR_LIST(VavrList),
-
     PCOLLECTION_VECTOR(PCollectionVector),
-
     DEXX_VECTOR(DexxVector),
 
     ;
-
-    // Use fold instead of delegating to factory.from() in order to create unbalanced data structure when relevant
-    override fun <E> from(elements: Iterable<E>): PersistentList<E> =
-            elements.fold(factory.empty()) { result, element -> result + element }
 }
 
 @State(Scope.Benchmark)

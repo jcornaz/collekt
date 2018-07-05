@@ -1,4 +1,4 @@
-package com.github.jcornaz.collekt.api.impl
+package com.github.jcornaz.collekt.vavr
 
 import com.github.jcornaz.collekt.api.PersistentList
 import com.github.jcornaz.collekt.api.PersistentListFactory

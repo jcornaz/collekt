@@ -1,4 +1,4 @@
-apply from: rootProject.file('gradle/jvm.gradle')
+apply from: rootProject.file('gradle/jvm8.gradle')
 
 dependencies {
     api project(':collekt-api-jvm')
