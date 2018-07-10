@@ -1,9 +1,7 @@
 package com.github.jcornaz.collekt.test
 
 import com.github.jcornaz.collekt.api.PersistentListFactory
-import com.github.jcornaz.collekt.api.emptyPersistentList
 import com.github.jcornaz.collekt.api.of
-import com.github.jcornaz.collekt.api.persistentListOf
 import kotlin.test.*
 
 public abstract class PersistentListTest : PersistentCollectionTest() {
@@ -103,26 +101,26 @@ public abstract class PersistentListTest : PersistentCollectionTest() {
 
     @Test
     fun equivalentListShouldBeEqualsStdList() {
-        assertEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 3, 4))
-        assertEquals(persistentListOf(1), listOf(1))
-        assertEquals(persistentListOf(), listOf<Int>())
-        assertEquals(emptyPersistentList(), emptyList<Int>())
+        assertEquals(factory.of(1, 2, 3, 4), listOf(1, 2, 3, 4))
+        assertEquals(factory.of(1), listOf(1))
+        assertEquals(factory.of(), listOf<Int>())
+        assertEquals(factory.empty(), emptyList<Int>())
     }
 
     @Test
     fun differentListShouldNotEqualsStdList() {
-        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(4, 3, 2, 1))
-        assertNotEquals(persistentListOf(1, 2, 2, 3), listOf(1, 2, 3))
-        assertNotEquals(persistentListOf(1, 2, 3), listOf(1, 2, 3, 3))
-        assertNotEquals(persistentListOf(1, 2, 3, 4), listOf(1, 2, 4))
-        assertNotEquals(persistentListOf(1, 2, 3, 4), emptyList<Int>())
-        assertNotEquals(emptyPersistentList(), listOf(1))
+        assertNotEquals(factory.of(1, 2, 3, 4), listOf(4, 3, 2, 1))
+        assertNotEquals(factory.of(1, 2, 2, 3), listOf(1, 2, 3))
+        assertNotEquals(factory.of(1, 2, 3), listOf(1, 2, 3, 3))
+        assertNotEquals(factory.of(1, 2, 3, 4), listOf(1, 2, 4))
+        assertNotEquals(factory.of(1, 2, 3, 4), emptyList<Int>())
+        assertNotEquals(factory.empty(), listOf(1))
     }
 
     @Test
     fun hashCodeShouldBeConsistentWithStdList() {
-        assertEquals(listOf(1, 2, 3, 4).hashCode(), persistentListOf(1, 2, 3, 4).hashCode())
-        assertEquals(emptyList<Int>().hashCode(), emptyPersistentList<Int>().hashCode())
+        assertEquals(listOf(1, 2, 3, 4).hashCode(), factory.of(1, 2, 3, 4).hashCode())
+        assertEquals(emptyList<Int>().hashCode(), factory.empty<Int>().hashCode())
     }
 
     @Test
