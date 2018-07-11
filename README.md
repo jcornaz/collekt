@@ -24,7 +24,7 @@ The current implementations are delegated to:
 
 | Platform   | Library                                                                                               | Author                                               |
 |------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| JVM 6      | [dexx](https://github.com/andrewoma/dexx)                                                             | [Andrew O'Malley](https://github.com/andrewoma)      |
+| JVM 6      | [Dexx](https://github.com/andrewoma/dexx)                                                             | [Andrew O'Malley](https://github.com/andrewoma)      |
 | JVM 8      | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
 | JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
@@ -36,7 +36,7 @@ The current known challengers for a JVM implementation are:
 * [Paguro](https://github.com/GlenKPeterson/Paguro)
 * [vavr.io](http://www.vavr.io/)
 * [pcollections](https://pcollections.org/)
-* [dexx](https://github.com/andrewoma/dexx)
+* [Dexx](https://github.com/andrewoma/dexx)
 * [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable)
 
 For Javascript the only known challenger is:
