@@ -5,7 +5,7 @@ package com.github.jcornaz.collekt.api
  *
  * It is for instance never needed to create a "defensive copy".
  */
-public interface ImmutableList<out E> : com.github.jcornaz.collekt.api.ImmutableCollection<E>, List<E> {
+public interface ImmutableList<out E> : ImmutableCollection<E>, List<E> {
 
     /**
      * Returns the sublist from [fromIndex] (inclusive) to [toIndex] (exclusive)
@@ -26,7 +26,7 @@ public interface ImmutableList<out E> : com.github.jcornaz.collekt.api.Immutable
  * Typically a persistent collection is optimized to share as much data as possible between other instances,
  * reducing memory usage, and providing good performance of the *mutation methods*
  */
-public interface PersistentList<out E> : com.github.jcornaz.collekt.api.PersistentCollection<E>, ImmutableList<E> {
+public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<E> {
 
     /** Returns a new list containing the same elements plus the given [element] inserted at the given [index] */
     public fun plus(index: Int, element: @UnsafeVariance E): PersistentList<E>
