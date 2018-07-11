@@ -5,5 +5,7 @@
 * Add persistent interfaces: `PersistentCollection` and `PersistentList`
 * Add `+` and `-` operators
 * Add `with` to replace elements
-* add `emptyPersistentList()` and `emptyPersistentSet()`
+* Add `emptyPersistentList()` and `emptyPersistentSet()`
 * Add `persistentListOf()`, `Iterable.toPersistentList()`, `Sequence.toPersistentList()`
+* Use paguro as a default implementation for the JVM
+* Use standard kotlin library as a default implementaiton for JavaScript
