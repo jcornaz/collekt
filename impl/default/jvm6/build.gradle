@@ -1,6 +1,8 @@
 apply from: rootProject.file('gradle/jvm.gradle')
 
 dependencies {
+    expectedBy project(':collekt-default-common')
+
     api project(':collekt-api-jvm')
 
     implementation project(':collekt-dexx')

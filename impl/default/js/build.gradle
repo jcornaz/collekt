@@ -1,6 +1,8 @@
 apply from: rootProject.file('gradle/js.gradle')
 
 dependencies {
+    expectedBy project(':collekt-default-common')
+
     compile project(':collekt-api-js')
 
     compile project(':collekt-stdlib-js')
