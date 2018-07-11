@@ -20,10 +20,16 @@ In order to choose the actual implementation collekt do performance tests an cho
 
 If performance tests show that an new implementation is faster, then the actual implementation will be delegated to the new faster one. That way, as a user of collekt, you only have to update the version of collekt to get the fastest state-of-the-art persistent collection. And as the api stay the same, swapping to a faster implementation do not incur any refactoring overhead.
 
-The current JVM implementations are backed by [Paguro](https://github.com/GlenKPeterson/Paguro) (author: [Glen K. Peterson](https://github.com/GlenKPeterson))
+The current implementations are delegated to:
+| Platform   | Library                                                                                               | Author                                               |
+|------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| JVM 6      | [dexx](https://github.com/andrewoma/dexx)                                                             | [Andrew O'Malley](https://github.com/andrewoma)      |
+| JVM 8      | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
+| JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
 ### State of development
-Currently the main effort is put on the API, not on the performance. The current implementations will stay the same (paguro for JVM and kotlin stdlib for Javascript) until the API become stable. More performance tests will be performed and the backed implementation may be swapped then if it appears that others implementations are faster.
+Currently the main effort is put on the API, not on the performance. The current implementations will stay the same until the API become stable.
+More performance tests will be performed and the backed implementation may be swapped if it appears that others implementations are faster.
 
 The current known challengers for a JVM implementation are:
 * [Paguro](https://github.com/GlenKPeterson/Paguro)
