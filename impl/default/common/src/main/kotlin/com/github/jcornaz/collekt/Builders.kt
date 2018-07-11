@@ -1,9 +1,6 @@
 package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.api.PersistentList
-import com.github.jcornaz.collekt.api.PersistentListFactory
-
-public expect var DefaultListFactory: PersistentListFactory
 
 /**
  * Returns an empty [PersistentList]
