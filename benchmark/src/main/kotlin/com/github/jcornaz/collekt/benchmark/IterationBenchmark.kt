@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 open class IterationBenchmark {
 
     @Benchmark
-    fun iteration(input: PersistentInput, blackhole: Blackhole) {
-        input.list.forEach { blackhole.consume(it) }
+    fun iteration(input: PersistentInput, blackHole: Blackhole) {
+        input.list.forEach { blackHole.consume(it) }
     }
 }

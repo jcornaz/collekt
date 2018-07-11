@@ -2,7 +2,12 @@ package com.github.jcornaz.collekt.test
 
 import com.github.jcornaz.collekt.api.PersistentListFactory
 import com.github.jcornaz.collekt.api.of
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 public abstract class PersistentListTest : PersistentCollectionTest() {
     public abstract override val factory: PersistentListFactory
@@ -94,7 +99,7 @@ public abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
-    fun differentOccurenceCountOfElementShouldNotBeEquals() {
+    fun differentOccurrenceCountOfElementShouldNotBeEquals() {
         assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 3))
         assertNotEquals(factory.of(1, 2, 3, 3), factory.of(1, 2, 2, 3))
     }
@@ -245,7 +250,7 @@ public abstract class PersistentListTest : PersistentCollectionTest() {
     }
 
     @Test
-    fun plusEmpyCollectionAtIndexShouldReturnAnEqualCollection() {
+    fun plusEmptyCollectionAtIndexShouldReturnAnEqualCollection() {
         val col = factory.of(1, 2, 3)
 
         assertEquals(col, col.plus(1, factory.empty()))

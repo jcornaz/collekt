@@ -8,17 +8,17 @@ Persistent collections for Kotlin
 
 The goal of this library is to provide a kotlin API for using persistent (immutable) collections, backed by the fastest known 3rd party implementation.
 
-### Use it in multiplatform project
+### Use it in m multiplatofrm project
 Unlike [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable) collekt is usable from common, javascript and jvm kotlin modules.
 
-**IMPORTANT:** Currenttly the default javascript implementation is currently backed by the standard kotlin library which provide very poor mutation performance, as everything has to be copied each time. It is planned to use [Immutable.js](https://facebook.github.io/immutable-js) in the future.
+**IMPORTANT:** Currently the default javascript implementation is backed by the standard kotlin library which provide very poor mutation performance, as everything has to be copied each time. It is planned to use [Immutable.js](https://facebook.github.io/immutable-js) in the future.
 
 ### Always get the fastest implementation available, without the need to refactor your code
-collekt don't implement the persistent datastructure itself. It is always delegated to an open-source 3rd party.
+collekt don't implement the persistent data-structure itself. It is always delegated to an open-source 3rd party.
 
 In order to choose the actual implementation collekt do performance tests an choose the fastest implementation.
 
-If performance tests show that an new implementation is faster, then the actual implementation will be delegated to the new faster one. That way, as a user of collekt, you only have to update the version of collekt to get the fastest state-of-the-art persistent collection. And as the api stay the same, swaping to a faster implementation do not incur any refactoring overhead.
+If performance tests show that an new implementation is faster, then the actual implementation will be delegated to the new faster one. That way, as a user of collekt, you only have to update the version of collekt to get the fastest state-of-the-art persistent collection. And as the api stay the same, swapping to a faster implementation do not incur any refactoring overhead.
 
 The current JVM implementations are backed by [Paguro](https://github.com/GlenKPeterson/Paguro) (author: [Glen K. Peterson](https://github.com/GlenKPeterson))
 

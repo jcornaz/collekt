@@ -7,5 +7,6 @@
 * Add `with` to replace elements
 * Add `emptyPersistentList()` and `emptyPersistentSet()`
 * Add `persistentListOf()`, `Iterable.toPersistentList()`, `Sequence.toPersistentList()`
-* Use paguro as a default implementation for the JVM
-* Use standard kotlin library as a default implementaiton for JavaScript
+* Provide default implementations
+    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro)) for the JVM
+    * Backed by the kotlin standard library for Javascript

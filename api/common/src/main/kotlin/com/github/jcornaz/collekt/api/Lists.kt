@@ -15,7 +15,7 @@ public interface ImmutableList<out E> : com.github.jcornaz.collekt.api.Immutable
     public override fun subList(fromIndex: Int, toIndex: Int): ImmutableList<E>
 
     /**
-     * Returns two sublists. The first from 0 (inclusive) and [index] (exclusive). The second from [index] (inclusive) and [size] (exclusive)
+     * Returns two sub-lists. The first from 0 (inclusive) and [index] (exclusive). The second from [index] (inclusive) and [size] (exclusive)
      */
     public fun split(index: Int): Pair<ImmutableList<E>, ImmutableList<E>>
 }
