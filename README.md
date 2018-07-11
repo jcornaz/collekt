@@ -29,8 +29,9 @@ The current implementations are delegated to:
 | JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
 ### State of development
-Currently the main effort is put on the API, not on the performance. The current implementations will stay the same until the API become stable.
-More performance tests will be performed and the backed implementation may be swapped if it appears that others implementations are faster.
+Currently the effort is mainly put on the API, less on performances. The current implementations will stay the same until the API become stable.
+
+In the future more performance tests will be performed and the backed implementation may be swapped for faster implementations.
 
 The current known challengers for a JVM implementation are:
 * [Paguro](https://github.com/GlenKPeterson/Paguro)
