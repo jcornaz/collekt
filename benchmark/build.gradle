@@ -1,0 +1,12 @@
+apply from: rootProject.file('gradle/jvm.gradle')
+
+dependencies {
+    compile project(':collekt-paguro')
+    compile project(':collekt-dexx')
+    compile project(':collekt-vavr')
+    compile project(':collekt-pcollections')
+    compile project(':collekt-stdlib-jvm')
+
+    compile 'org.openjdk.jmh:jmh-core:1.14.1'
+    compile 'org.openjdk.jmh:jmh-generator-annprocess:1.14.1'
+}

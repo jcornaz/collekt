@@ -1,9 +1,49 @@
 rootProject.name = 'collekt'
 
+include 'collekt-api-common'
+include 'collekt-api-jvm'
+include 'collekt-api-js'
+
 include 'collekt-common'
-include 'collekt-jvm'
+include 'collekt-jvm6'
+include 'collekt-jvm8'
 include 'collekt-js'
 
-project(':collekt-common').projectDir = file('common')
-project(':collekt-jvm').projectDir = file('jvm')
-project(':collekt-js').projectDir = file('js')
+include 'collekt-stdlib-common'
+include 'collekt-stdlib-jvm'
+include 'collekt-stdlib-js'
+
+include 'collekt-paguro'
+include 'collekt-dexx'
+include 'collekt-vavr'
+include 'collekt-pcollections'
+
+include 'collekt-test-common'
+include 'collekt-test-js'
+include 'collekt-test-jvm'
+
+include 'collekt-benchmark'
+
+project(':collekt-api-common').projectDir = file('api/common')
+project(':collekt-api-jvm').projectDir = file('api/jvm')
+project(':collekt-api-js').projectDir = file('api/js')
+
+project(':collekt-stdlib-common').projectDir = file('impl/stdlib/common')
+project(':collekt-stdlib-jvm').projectDir = file('impl/stdlib/jvm')
+project(':collekt-stdlib-js').projectDir = file('impl/stdlib/js')
+
+project(':collekt-paguro').projectDir = file('impl/paguro')
+project(':collekt-dexx').projectDir = file('impl/dexx')
+project(':collekt-vavr').projectDir = file('impl/vavr')
+project(':collekt-pcollections').projectDir = file('impl/pcollections')
+
+project(':collekt-common').projectDir = file('default/common')
+project(':collekt-jvm6').projectDir = file('default/jvm6')
+project(':collekt-jvm8').projectDir = file('default/jvm8')
+project(':collekt-js').projectDir = file('default/js')
+
+project(':collekt-benchmark').projectDir = file('benchmark')
+
+project(':collekt-test-common').projectDir = file('test/common')
+project(':collekt-test-js').projectDir = file('test/js')
+project(':collekt-test-jvm').projectDir = file('test/jvm')

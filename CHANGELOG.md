@@ -5,5 +5,8 @@
 * Add persistent interfaces: `PersistentCollection` and `PersistentList`
 * Add `+` and `-` operators
 * Add `with` to replace elements
-* add `emptyPersistentList()` and `emptyPersistentSet()`
+* Add `emptyPersistentList()` and `emptyPersistentSet()`
 * Add `persistentListOf()`, `Iterable.toPersistentList()`, `Sequence.toPersistentList()`
+* Provide default implementations
+    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro)) for the JVM
+    * Backed by the kotlin standard library for Javascript
