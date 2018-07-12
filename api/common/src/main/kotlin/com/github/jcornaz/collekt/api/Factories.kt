@@ -6,10 +6,10 @@ package com.github.jcornaz.collekt.api
 public interface PersistentCollectionFactory {
 
     /** Returns an empty [PersistentCollection] */
-    fun <E> empty(): com.github.jcornaz.collekt.api.PersistentCollection<E>
+    fun <E> empty(): PersistentCollection<E>
 
     /** Returns a [PersistentCollection] containing [elements]*/
-    fun <E> from(elements: Iterable<E>): com.github.jcornaz.collekt.api.PersistentCollection<E>
+    fun <E> from(elements: Iterable<E>): PersistentCollection<E>
 }
 
 /**
@@ -25,7 +25,7 @@ public interface PersistentListFactory : PersistentCollectionFactory {
 }
 
 /** Returns a [PersistentCollection] containing [elements] */
-public fun <E> PersistentCollectionFactory.of(vararg elements: E): com.github.jcornaz.collekt.api.PersistentCollection<E> =
+public fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentCollection<E> =
         if (elements.isEmpty()) empty() else from(elements.asIterable())
 
 /** Returns a [PersistentList] containing [elements] */
