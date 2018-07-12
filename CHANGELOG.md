@@ -11,3 +11,4 @@
     * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for JVM 6
     * Backed by [Dexx](https://github.com/andrewoma/dexx) for JVM 8
     * Backed by the kotlin standard library for Javascript
+* Add `filter`, `filterNotNull`, `filterIsInstance`, `map`, `mapNotNull` and `flatMap` operators for immutable collections
