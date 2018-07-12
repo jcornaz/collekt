@@ -18,7 +18,7 @@ public fun <T : Any> ImmutableCollection<T?>.filterNotNull(): PersistentList<T> 
 /**
  * Returns a persistent list containing all elements that are instances of specified type parameter R.
  */
-public inline fun <T, reified R> ImmutableCollection<T>.filterIsInstance(): PersistentList<R> =
+public inline fun <reified R> ImmutableCollection<*>.filterIsInstance(): PersistentList<R> =
         asSequence().filterIsInstance<R>().toPersistentList()
 
 /**

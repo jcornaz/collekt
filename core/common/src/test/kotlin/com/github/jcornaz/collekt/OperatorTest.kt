@@ -60,7 +60,11 @@ class FilterNotNullTest : PersistentOperatorTest() {
 }
 
 
-class FilterIsInstance {
+class FilterIsInstance : PersistentOperatorTest() {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+            filterIsInstance<Any>() as PersistentCollection<E>
 
     @Test
     fun testFilterIsInstance() {
