@@ -104,7 +104,7 @@ class FlatMapTest : PersistentOperatorTest() {
 
     @Test
     fun testFlatMap() {
-        val result = persistentListOf(10, 20, 30).flatMap { x -> listOf(1, 2, 3).map { y -> x + y } }
+        val result = persistentListOf(10, 20, 30).flatMap { x -> persistentListOf(x + 1, x + 2, x + 3) }
 
         assertEquals(listOf(11, 12, 13, 21, 22, 23, 31, 32, 33), result)
     }
