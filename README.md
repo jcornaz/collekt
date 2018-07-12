@@ -1,6 +1,7 @@
 # Collekt
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Project status](https://img.shields.io/badge/status-incubating-orange.svg)](https://gist.githubusercontent.com/jcornaz/46736c3d1f21b4c929bd97549b7406b2/raw/ProjectStatusFlow)
+[![JitPack](https://jitpack.io/v/jcornaz/collekt.svg)](https://jitpack.io/#jcornaz/collekt)
 [![Build Status](https://travis-ci.org/jcornaz/collekt.svg?branch=master)](https://travis-ci.org/jcornaz/collekt)
 [![Code quality](https://codebeat.co/badges/0f15406e-7cc2-4dfa-9b21-204d1653e558)](https://codebeat.co/projects/github-com-jcornaz-collekt-master)
 
@@ -27,6 +28,32 @@ The current implementations are delegated to:
 | JVM 6      | [Dexx](https://github.com/andrewoma/dexx)                                                             | [Andrew O'Malley](https://github.com/andrewoma)      |
 | JVM 8      | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
 | JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
+
+### How to try it
+
+You can get the artifacts for maven or gradle from [Jitpack](jitpack.io):
+
+```groovy
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    
+    // For Java 6/7
+    compile 'com.github.jcornaz.collekt:collekt-core-jvm6:0.0.1'
+    
+    // For Java 8+
+    compile 'com.github.jcornaz.collekt:collekt-core-jvm8:0.0.1'
+    
+    // For common module
+    compile 'com.github.jcornaz.collekt:collekt-core-common:0.0.1'
+    
+    // For javascript (implementation is not efficient yet)
+    compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.1'
+}
+```
 
 ### State of development
 Currently the effort is mainly put on the API, less on performances. The current implementations will stay the same until the API become stable.
