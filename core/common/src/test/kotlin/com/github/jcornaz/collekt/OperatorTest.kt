@@ -40,7 +40,7 @@ class FilterTest : PersistentOperatorTest() {
     fun testFilter() {
         val result: PersistentList<Int> = persistentListOf(1, 2, 3, 4).filter { it.rem(2) == 0 }
 
-        assertFalse(2 in result)
+        assertFalse(1 in result)
         assertTrue(2 in result)
         assertFalse(3 in result)
         assertTrue(4 in result)
@@ -67,9 +67,7 @@ class FilterNotNullTest : PersistentOperatorTest() {
     }
 }
 
-class FilterIsInstance : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
-            filterIsInstance()
+class FilterIsInstance {
 
     @Test
     fun testFilterIsInstance() {
