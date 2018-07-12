@@ -40,12 +40,7 @@ class FilterTest : PersistentOperatorTest() {
     fun testFilter() {
         val result: PersistentList<Int> = persistentListOf(1, 2, 3, 4).filter { it.rem(2) == 0 }
 
-        assertFalse(1 in result)
-        assertTrue(2 in result)
-        assertFalse(3 in result)
-        assertTrue(4 in result)
-
-        assertEquals(2, result.size)
+        assertEquals(listOf(2, 4), result)
     }
 }
 
@@ -60,12 +55,10 @@ class FilterNotNullTest : PersistentOperatorTest() {
     fun testFilteNotNull() {
         val result: PersistentList<String> = persistentListOf("hello", null, "world", null).filterNotNull()
 
-        assertFalse(null in (result as PersistentList<String?>))
-        assertTrue("hello" in result)
-        assertTrue("world" in result)
-        assertEquals(2, result.size)
+        assertEquals(listOf("hello", "world"), result)
     }
 }
+
 
 class FilterIsInstance {
 
@@ -73,13 +66,46 @@ class FilterIsInstance {
     fun testFilterIsInstance() {
         val result: PersistentList<Double> = persistentListOf<Number>(1, 2, 3, 4.0, 5.0, 6.0).filterIsInstance()
 
-        assertFalse(1 in (result as PersistentList<Number>))
-        assertFalse(2 in (result as PersistentList<Number>))
-        assertFalse(3 in (result as PersistentList<Number>))
-        assertTrue(4.0 in result)
-        assertTrue(5.0 in result)
-        assertTrue(6.0 in result)
+        assertEquals(listOf(4.0, 5.0, 6.0), result)
+    }
+}
 
-        assertEquals(3, result.size)
+
+class MapTest : PersistentOperatorTest() {
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> = map { it }
+
+    @Test
+    fun testMap() {
+        val result = persistentListOf(1, 2, 3).map { it * 2 }.map { it.toString() }
+
+        assertEquals(listOf("2", "4", "6"), result)
+    }
+}
+
+class MapNotNullTest : PersistentOperatorTest() {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+            mapNotNull<E, Any> { it } as PersistentList<E>
+
+    @Test
+    fun testMapNotNull() {
+        val result = persistentListOf(1, 2, 3, 4).mapNotNull {
+            if (it.rem(2) == 0) null else it.toString()
+        }
+
+        assertEquals(listOf("1", "3"), result)
+    }
+}
+
+class FlatMapTest : PersistentOperatorTest() {
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+            flatMap { listOf(it) }
+
+    @Test
+    fun testFlatMap() {
+        val result = persistentListOf(10, 20, 30).flatMap { x -> listOf(1, 2, 3).map { y -> x + y } }
+
+        assertEquals(listOf(11, 12, 13, 21, 22, 23, 31, 32, 33), result)
     }
 }
