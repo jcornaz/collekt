@@ -13,7 +13,7 @@ buildscript {
 
 subprojects {
     group 'com.github.jcornaz'
-    version '0.0.1'
+    version '0.0.2-SNAPSHOT'
 
     apply plugin: "com.github.ben-manes.versions"
 
