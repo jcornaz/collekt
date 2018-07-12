@@ -4,3 +4,9 @@ apply plugin: 'java-library'
 dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
+
+test {
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+}
