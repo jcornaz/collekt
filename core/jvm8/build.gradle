@@ -1,11 +1,11 @@
 apply from: rootProject.file('gradle/jvm.gradle')
 
 dependencies {
-    expectedBy project(':collekt-common')
+    expectedBy project(':collekt-core-common')
 
     api project(':collekt-api-jvm')
-
-    implementation project(':collekt-dexx')
+    
+    implementation project(':collekt-paguro')
 
     testCompile project(':collekt-test-jvm')
 }

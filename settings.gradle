@@ -4,10 +4,16 @@ include 'collekt-api-common'
 include 'collekt-api-jvm'
 include 'collekt-api-js'
 
-include 'collekt-common'
-include 'collekt-jvm6'
-include 'collekt-jvm8'
-include 'collekt-js'
+include 'collekt-core-common'
+include 'collekt-core-jvm6'
+include 'collekt-core-jvm8'
+include 'collekt-core-js'
+
+include 'collekt-test-common'
+include 'collekt-test-js'
+include 'collekt-test-jvm'
+
+include 'collekt-benchmark'
 
 include 'collekt-stdlib-common'
 include 'collekt-stdlib-jvm'
@@ -18,15 +24,20 @@ include 'collekt-dexx'
 include 'collekt-vavr'
 include 'collekt-pcollections'
 
-include 'collekt-test-common'
-include 'collekt-test-js'
-include 'collekt-test-jvm'
-
-include 'collekt-benchmark'
-
 project(':collekt-api-common').projectDir = file('api/common')
 project(':collekt-api-jvm').projectDir = file('api/jvm')
 project(':collekt-api-js').projectDir = file('api/js')
+
+project(':collekt-core-common').projectDir = file('core/common')
+project(':collekt-core-jvm6').projectDir = file('core/jvm6')
+project(':collekt-core-jvm8').projectDir = file('core/jvm8')
+project(':collekt-core-js').projectDir = file('core/js')
+
+project(':collekt-test-common').projectDir = file('test/common')
+project(':collekt-test-js').projectDir = file('test/js')
+project(':collekt-test-jvm').projectDir = file('test/jvm')
+
+project(':collekt-benchmark').projectDir = file('benchmark')
 
 project(':collekt-stdlib-common').projectDir = file('impl/stdlib/common')
 project(':collekt-stdlib-jvm').projectDir = file('impl/stdlib/jvm')
@@ -36,14 +47,3 @@ project(':collekt-paguro').projectDir = file('impl/paguro')
 project(':collekt-dexx').projectDir = file('impl/dexx')
 project(':collekt-vavr').projectDir = file('impl/vavr')
 project(':collekt-pcollections').projectDir = file('impl/pcollections')
-
-project(':collekt-common').projectDir = file('default/common')
-project(':collekt-jvm6').projectDir = file('default/jvm6')
-project(':collekt-jvm8').projectDir = file('default/jvm8')
-project(':collekt-js').projectDir = file('default/js')
-
-project(':collekt-benchmark').projectDir = file('benchmark')
-
-project(':collekt-test-common').projectDir = file('test/common')
-project(':collekt-test-js').projectDir = file('test/js')
-project(':collekt-test-jvm').projectDir = file('test/jvm')

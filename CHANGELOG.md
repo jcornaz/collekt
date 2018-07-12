@@ -4,9 +4,10 @@
 * Add immutable interfaces `ImmutableCollection` and `ImmutableList`
 * Add persistent interfaces: `PersistentCollection` and `PersistentList`
 * Add `+` and `-` operators
-* Add `with` to replace elements
+* Add `with` operator to replace elements
 * Add `emptyPersistentList()` and `emptyPersistentSet()`
 * Add `persistentListOf()`, `Iterable.toPersistentList()`, `Sequence.toPersistentList()`
 * Provide default implementations
-    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro)) for the JVM
+    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for JVM 6
+    * Backed by [Dexx](https://github.com/andrewoma/dexx) for JVM 8
     * Backed by the kotlin standard library for Javascript
