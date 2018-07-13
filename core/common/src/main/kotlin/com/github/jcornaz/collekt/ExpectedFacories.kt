@@ -11,4 +11,4 @@ public expect var DefaultListFactory: PersistentListFactory
 /**
  * Default [PersistentListFactory]
  */
-public var DefaultSetFactory: PersistentSetFactory = TODO()
+public expect var DefaultSetFactory: PersistentSetFactory

@@ -6,6 +6,7 @@ dependencies {
     api project(':collekt-api-jvm')
     
     implementation project(':collekt-paguro')
+    implementation project(':collekt-stdlib-jvm')
 
     testCompile project(':collekt-test-jvm')
 }
