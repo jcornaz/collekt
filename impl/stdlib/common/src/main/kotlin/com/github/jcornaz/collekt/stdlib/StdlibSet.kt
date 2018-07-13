@@ -11,6 +11,8 @@ class StdlibSet<E>(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E>
         override fun <E> empty(): PersistentSet<E> = empty
 
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> {
+            if (elements is StdlibSet<E>) return elements
+
             val set = elements.toHashSet()
 
             return if (set.isEmpty()) empty else StdlibSet(set)

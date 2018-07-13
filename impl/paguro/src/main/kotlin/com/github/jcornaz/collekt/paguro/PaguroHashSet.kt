@@ -13,8 +13,9 @@ class PaguroHashSet<E>(private val set: ImSet<E>) : AbstractSet<E>(), Persistent
         override fun <E> empty(): PersistentSet<E> = empty
 
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> {
-            val set = PersistentHashSet.of(elements)
+            if (elements is PaguroHashSet<E>) return elements
 
+            val set = elements as? PersistentHashSet<E> ?: PersistentHashSet.of(elements)
             return if (set.isEmpty()) empty else PaguroHashSet(set)
         }
     }
@@ -39,7 +40,7 @@ class PaguroHashSet<E>(private val set: ImSet<E>) : AbstractSet<E>(), Persistent
 
     override fun minus(elements: Iterable<E>): PersistentSet<E> =
             wrap(elements.fold(set) { acc, elt -> acc.without(elt) })
-    
+
     private fun wrap(newSet: ImSet<E>): PersistentSet<E> = when {
         set === newSet -> this
         newSet.isEmpty() -> empty
