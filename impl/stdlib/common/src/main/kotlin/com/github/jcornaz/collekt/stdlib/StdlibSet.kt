@@ -3,7 +3,14 @@ package com.github.jcornaz.collekt.stdlib
 import com.github.jcornaz.collekt.api.PersistentSet
 import com.github.jcornaz.collekt.api.PersistentSetFactory
 
-class StdlibSet<E>(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E> {
+/**
+ * Naive implementation using kotlin standard lists and operators.
+ *
+ * This is the worse persistent implementation possible, and performances of all mutation method are expected to be really bad.
+ *
+ * It is only useful for comparison purposes with other persistent implementations
+ */
+public class StdlibSet<E>(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E> {
 
     companion object Factory : PersistentSetFactory {
         private val empty = StdlibSet<Nothing>(emptySet())

@@ -5,7 +5,7 @@ import com.github.jcornaz.collekt.api.PersistentSetFactory
 import org.organicdesign.fp.collections.ImSet
 import org.organicdesign.fp.collections.PersistentHashSet
 
-class PaguroHashSet<E>(private val set: ImSet<E>) : AbstractSet<E>(), PersistentSet<E> {
+public class PaguroHashSet<E>(private val set: ImSet<E>) : AbstractSet<E>(), PersistentSet<E> {
 
     companion object Factory : PersistentSetFactory {
         private val empty = PaguroHashSet<Nothing>(PersistentHashSet.empty())
