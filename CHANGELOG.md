@@ -1,7 +1,8 @@
 # Change log
 
 ## 0.0.2-SNAPSHOT (Unreleased)
-
+* Add `ImmutableSet` and `PersistentSet`
+* Provide default implementation for persistent set
 
 ## 0.0.1 (2018-07-12)
 Persistent lists with implementation backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for Java 8+ and [Dexx](https://github.com/andrewoma/dexx) for Java 6/7.

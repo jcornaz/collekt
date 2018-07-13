@@ -4,7 +4,7 @@ import com.github.andrewoma.dexx.collection.Vector
 import com.github.jcornaz.collekt.api.PersistentList
 import com.github.jcornaz.collekt.api.PersistentListFactory
 
-class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), PersistentList<E> {
+public class DexxVector<E>(private val vector: Vector<E>) : AbstractList<E>(), PersistentList<E> {
 
     companion object Factory : PersistentListFactory {
         private val empty = DexxVector(Vector.empty<Nothing>())

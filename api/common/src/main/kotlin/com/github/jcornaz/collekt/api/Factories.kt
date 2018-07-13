@@ -24,6 +24,18 @@ public interface PersistentListFactory : PersistentCollectionFactory {
     override fun <E> from(elements: Iterable<E>): PersistentList<E>
 }
 
+/**
+ * Factory responsible for the creation of [PersistentSet]
+ */
+public interface PersistentSetFactory : PersistentCollectionFactory {
+
+    /** Returns an empty [PersistentSet] */
+    override fun <E> empty(): PersistentSet<E>
+
+    /** Returns a [PersistentList] containing [elements] */
+    override fun <E> from(elements: Iterable<E>): PersistentSet<E>
+}
+
 /** Returns a [PersistentCollection] containing [elements] */
 public fun <E> PersistentCollectionFactory.of(vararg elements: E): PersistentCollection<E> =
         if (elements.isEmpty()) empty() else from(elements.asIterable())

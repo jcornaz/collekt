@@ -5,7 +5,7 @@ import com.github.jcornaz.collekt.api.PersistentListFactory
 import org.organicdesign.fp.StaticImports
 import org.organicdesign.fp.collections.RrbTree
 
-class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractList<E>(), PersistentList<E> {
+public class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractList<E>(), PersistentList<E> {
 
     companion object Factory : PersistentListFactory {
         private val empty = PaguroRRBTree(StaticImports.rrb<Nothing>())

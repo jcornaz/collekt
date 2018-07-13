@@ -1,24 +1,23 @@
 package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.api.ImmutableCollection
-import com.github.jcornaz.collekt.api.PersistentCollection
-import com.github.jcornaz.collekt.api.PersistentCollectionFactory
 import com.github.jcornaz.collekt.api.PersistentList
-import com.github.jcornaz.collekt.test.PersistentCollectionTest
+import com.github.jcornaz.collekt.api.PersistentListFactory
+import com.github.jcornaz.collekt.test.PersistentListTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-abstract class PersistentOperatorTest : PersistentCollectionTest() {
+abstract class PersistentOperatorTest : PersistentListTest() {
 
-    abstract fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E>
+    abstract fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E>
 
-    final override val factory = object : PersistentCollectionFactory {
-        override fun <E> empty(): PersistentCollection<E> =
+    final override val factory = object : PersistentListFactory {
+        override fun <E> empty(): PersistentList<E> =
                 emptyPersistentList<E>().applyOperator()
 
-        override fun <E> from(elements: Iterable<E>): PersistentCollection<E> =
+        override fun <E> from(elements: Iterable<E>): PersistentList<E> =
                 elements.toPersistentList().applyOperator()
     }
 
@@ -33,7 +32,7 @@ abstract class PersistentOperatorTest : PersistentCollectionTest() {
 }
 
 class FilterTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
             filter { true }
 
     @Test
@@ -47,8 +46,8 @@ class FilterTest : PersistentOperatorTest() {
 class FilterNotNullTest : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
-            filterNotNull<Any>() as PersistentCollection<E>
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+            filterNotNull<Any>() as PersistentList<E>
 
 
     @Test
@@ -63,8 +62,8 @@ class FilterNotNullTest : PersistentOperatorTest() {
 class FilterIsInstance : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
-            filterIsInstance<Any>() as PersistentCollection<E>
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+            filterIsInstance<Any>() as PersistentList<E>
 
     @Test
     fun testFilterIsInstance() {
@@ -76,7 +75,7 @@ class FilterIsInstance : PersistentOperatorTest() {
 
 
 class MapTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> = map { it }
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> = map { it }
 
     @Test
     fun testMap() {
@@ -89,7 +88,7 @@ class MapTest : PersistentOperatorTest() {
 class MapNotNullTest : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
             mapNotNull<E, Any> { it } as PersistentList<E>
 
     @Test
@@ -103,7 +102,7 @@ class MapNotNullTest : PersistentOperatorTest() {
 }
 
 class FlatMapTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentCollection<E> =
+    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
             flatMap { listOf(it) }
 
     @Test
