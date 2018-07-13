@@ -1,5 +1,6 @@
 package com.github.jcornaz.collekt.test
 
+import com.github.jcornaz.collekt.api.PersistentCollection
 import com.github.jcornaz.collekt.api.PersistentCollectionFactory
 import com.github.jcornaz.collekt.api.of
 import kotlin.test.*
@@ -154,5 +155,22 @@ public abstract class PersistentCollectionTest {
         assertFalse(result.any { it == 2 })
         assertEquals(factory.of(1, 2, 3), col)
         assertEquals(factory.of(1, 3), result)
+    }
+
+
+    @Test
+    fun nullElementsShouldBeSupported() {
+        val collection: PersistentCollection<Int?> = factory.of(1, 2, null, 4)
+
+        assertEquals(4, collection.size)
+        assertEquals(factory.of(1, 2, null, 4), collection)
+        assertNotEquals(factory.of(1, 2, 4), collection)
+
+        assertTrue(null in collection)
+        assertTrue(4 in collection)
+        assertFalse(0 in collection)
+
+        assertEquals(setOf(1, 2, null, 4), collection.toSet())
+        assertEquals(17, collection.sumBy { it ?: 10 })
     }
 }
