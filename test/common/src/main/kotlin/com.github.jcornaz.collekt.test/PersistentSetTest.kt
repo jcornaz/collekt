@@ -15,4 +15,11 @@ abstract class PersistentSetTest : PersistentCollectionTest() {
         assertEquals(3, result.size)
         assertEquals(factory.of(1, 2, 3), result)
     }
+
+    @Test
+    fun shouldNotAddExistingValue() {
+        assertEquals(factory.of(1, 2, 3), factory.of(1, 2, 3) + 2)
+
+        assertEquals(3, (factory.of(1, 2, 3) + 2).size)
+    }
 }

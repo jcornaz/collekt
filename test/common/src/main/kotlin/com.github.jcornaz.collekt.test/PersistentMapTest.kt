@@ -52,6 +52,23 @@ abstract class PersistentMapTest : PersistentSetTest() {
         assertEquals(4, result.size)
         assertTrue(4 in result)
         assertTrue(result.containsValue("four"))
+        assertEquals("four", result[4])
+    }
+
+    @Test
+    fun shouldReplaceEntry() {
+        val map = mapFactory.of(
+                1 to "one",
+                2 to "two",
+                3 to "three"
+        )
+
+        val result = map + (2 to "four")
+
+        assertEquals(3, result.size)
+        assertTrue(2 in result)
+        assertTrue(result.containsValue("four"))
+        assertEquals("four", result[2])
     }
 
     @Test
