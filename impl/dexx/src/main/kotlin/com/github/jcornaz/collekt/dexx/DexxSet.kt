@@ -5,6 +5,7 @@ import com.github.andrewoma.dexx.collection.Sets
 import com.github.jcornaz.collekt.api.PersistentSet
 import com.github.jcornaz.collekt.api.PersistentSetFactory
 
+@Deprecated("Doesn't support null elements")
 public class DexxSet<E>(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E> {
     companion object Factory : PersistentSetFactory {
         private val empty = DexxSet<Nothing>(Sets.of())
