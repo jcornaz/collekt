@@ -5,6 +5,7 @@ import com.github.jcornaz.collekt.api.PersistentListFactory
 import org.pcollections.PVector
 import org.pcollections.TreePVector
 
+@Deprecated("Doesn't support null elements")
 public class PCollectionVector<E>(private val vector: PVector<E>) : AbstractList<E>(), PersistentList<E> {
     companion object Factory : PersistentListFactory {
         private val empty = PCollectionVector(TreePVector.empty<Nothing>())

@@ -2,24 +2,14 @@ package com.github.jcornaz.collekt
 
 import com.github.jcornaz.collekt.api.ImmutableCollection
 import com.github.jcornaz.collekt.api.PersistentList
-import com.github.jcornaz.collekt.api.PersistentListFactory
-import com.github.jcornaz.collekt.test.PersistentListTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-abstract class PersistentOperatorTest : PersistentListTest() {
+abstract class PersistentOperatorTest {
 
     abstract fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E>
-
-    final override val factory = object : PersistentListFactory {
-        override fun <E> empty(): PersistentList<E> =
-                emptyPersistentList<E>().applyOperator()
-
-        override fun <E> from(elements: Iterable<E>): PersistentList<E> =
-                elements.toPersistentList().applyOperator()
-    }
 
     @Test
     fun emptyCollectionShouldStayEmpty() {
@@ -48,7 +38,6 @@ class FilterNotNullTest : PersistentOperatorTest() {
     @Suppress("UNCHECKED_CAST")
     override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
             filterNotNull<Any>() as PersistentList<E>
-
 
     @Test
     fun testFilteNotNull() {
