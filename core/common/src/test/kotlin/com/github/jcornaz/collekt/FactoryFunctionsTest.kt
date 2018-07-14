@@ -21,7 +21,7 @@ class PersistentListOfTest : PersistentListTest() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <E> from(elements: Iterable<E>): PersistentList<E> =
-                persistentListOf(*elements.filterIsInstance<Any>().toTypedArray()) as PersistentList<E>
+                persistentListOf(*elements.map { it as Any? }.toTypedArray()) as PersistentList<E>
     }
 }
 
@@ -38,6 +38,6 @@ class PersistentSetOfTest : PersistentSetTest() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> =
-                persistentSetOf(*elements.filterIsInstance<Any>().toTypedArray()) as PersistentSet<E>
+                persistentSetOf(*elements.map { it as Any? }.toTypedArray()) as PersistentSet<E>
     }
 }

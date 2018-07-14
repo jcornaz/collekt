@@ -2,12 +2,7 @@ package com.github.jcornaz.collekt.test
 
 import com.github.jcornaz.collekt.api.PersistentListFactory
 import com.github.jcornaz.collekt.api.of
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 public abstract class PersistentListTest : PersistentCollectionTest() {
     public abstract override val factory: PersistentListFactory

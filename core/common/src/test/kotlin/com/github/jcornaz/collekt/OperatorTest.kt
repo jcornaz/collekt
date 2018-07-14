@@ -38,7 +38,7 @@ class FilterNotNullTest : PersistentOperatorTest() {
     @Suppress("UNCHECKED_CAST")
     override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
             filterNotNull<Any>() as PersistentList<E>
-    
+
     @Test
     fun testFilteNotNull() {
         val result: PersistentList<String> = persistentListOf("hello", null, "world", null).filterNotNull()

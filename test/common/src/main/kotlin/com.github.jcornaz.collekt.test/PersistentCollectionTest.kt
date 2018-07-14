@@ -157,9 +157,8 @@ public abstract class PersistentCollectionTest {
         assertEquals(factory.of(1, 3), result)
     }
 
-
     @Test
-    fun nullElementsShouldBeSupported() {
+    fun nullElementsShouldBeSupportedAtCreation() {
         val collection: PersistentCollection<Int?> = factory.of(1, 2, null, 4)
 
         assertEquals(4, collection.size)
@@ -172,5 +171,40 @@ public abstract class PersistentCollectionTest {
 
         assertEquals(setOf(1, 2, null, 4), collection.toSet())
         assertEquals(17, collection.sumBy { it ?: 10 })
+    }
+
+    @Test
+    fun nullElementsShouldBeSupportedForAddition() {
+        val collection: PersistentCollection<Int?> = factory.of<Int?>(1, 2, 4) + null
+
+
+        assertEquals(4, collection.size)
+        assertEquals(factory.of(1, 2, 4, null), collection)
+        assertNotEquals(factory.of(1, 2, 4), collection)
+
+        assertTrue(null in collection)
+        assertTrue(4 in collection)
+        assertFalse(0 in collection)
+
+        assertEquals(setOf(1, 2, null, 4), collection.toSet())
+        assertEquals(17, collection.sumBy { it ?: 10 })
+    }
+
+    @Test
+    fun nullElementsShouldBeSupportedForRemoval() {
+        val collection: PersistentCollection<Int?> = factory.of(1, 2, null, 4) - null
+
+
+        assertEquals(3, collection.size)
+        assertEquals(factory.of(1, 2, 4), collection)
+        assertNotEquals(factory.of(1, 2, null, 4), collection)
+        assertEquals(factory.of(1, 2, 4), collection)
+
+        assertFalse(null in collection)
+        assertTrue(4 in collection)
+        assertFalse(0 in collection)
+
+        assertNotEquals(setOf(1, 2, null, 4), collection.toSet())
+        assertEquals(7, collection.sumBy { it ?: 10 })
     }
 }
