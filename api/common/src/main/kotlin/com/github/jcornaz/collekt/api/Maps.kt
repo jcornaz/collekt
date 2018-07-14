@@ -24,4 +24,5 @@ public interface PersistentMap<K, out V> : ImmutableMap<K, V> {
     operator fun plus(map: Map<K, @UnsafeVariance V>)
 
     operator fun minus(key: K): PersistentMap<K, V>
+    operator fun minus(keys: Iterable<K>): PersistentMap<K, V>
 }
