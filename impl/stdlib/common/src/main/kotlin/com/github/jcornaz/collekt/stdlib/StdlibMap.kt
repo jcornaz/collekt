@@ -2,7 +2,7 @@ package com.github.jcornaz.collekt.stdlib
 
 import com.github.jcornaz.collekt.api.*
 
-public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>) : AbstractMap<K, V>(), PersistentMap<K, V> {
+public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>) : PersistentMap<K, V> {
     companion object Factory : PersistentMapFactory {
         private val empty = StdlibMap<Any?, Nothing>(emptyMap())
 
@@ -26,6 +26,8 @@ public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>)
 
     override fun isEmpty(): Boolean = map.isEmpty()
 
+    override fun get(key: K): V? = map[key]
+
     override fun containsKey(key: K): Boolean = map.containsKey(key)
     override fun containsValue(value: @UnsafeVariance V): Boolean = map.containsValue(value)
 
@@ -42,6 +44,18 @@ public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>)
 
     override fun minus(keys: Iterable<K>): PersistentMap<K, V> =
             wrap(map - keys)
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        if (other !is Map<*, *>) return false
+        if (other.size != size) return false
+
+        return other.entries.all { (key, value) -> value == map[key] }
+    }
+
+    override fun hashCode(): Int = entries.hashCode()
+
+    override fun toString(): String = entries.joinToString(", ", "{", "}")
 
     private fun wrap(newMap: Map<K, @UnsafeVariance V>): PersistentMap<K, V> = when {
         newMap === map -> this

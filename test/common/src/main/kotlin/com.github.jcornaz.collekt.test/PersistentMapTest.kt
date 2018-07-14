@@ -7,8 +7,9 @@ abstract class PersistentMapTest : PersistentSetTest() {
     abstract val mapFactory: PersistentMapFactory
 
     final override val factory: PersistentSetFactory = object : PersistentSetFactory {
-        override fun <E> empty(): PersistentSet<E> =
-                SetFromMap(mapFactory.empty<E, Any?>())
+        private val empty by lazy { SetFromMap(mapFactory.empty<Nothing, Unit>()) }
+
+        override fun <E> empty(): PersistentSet<E> = empty
 
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> =
                 SetFromMap(mapFactory.from(elements.associate { it to Unit }))
@@ -119,14 +120,14 @@ abstract class PersistentMapTest : PersistentSetTest() {
                 3 to "three"
         )
         val map2 = mapFactory.of(
-                1 to "one",
                 2 to "two",
+                1 to "one",
                 3 to "three"
         )
         val map3 = mapOf(
-                1 to "one",
                 2 to "two",
-                3 to "three"
+                3 to "three",
+                1 to "one"
         )
 
         assertEquals(map1.hashCode(), map2.hashCode())
