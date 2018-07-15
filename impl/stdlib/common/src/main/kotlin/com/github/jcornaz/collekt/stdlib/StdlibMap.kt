@@ -10,11 +10,18 @@ public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>)
         override fun <K, V> empty(): PersistentMap<K, V> =
                 empty as PersistentMap<K, V>
 
-        override fun <K, V> from(entries: Map<K, V>): PersistentMap<K, V> {
-            if (entries is StdlibMap) return entries
-            if (entries.isEmpty()) return empty()
+        override fun <K, V> from(entries: Iterable<Pair<K, V>>): PersistentMap<K, V> {
+            val map = entries.toMap()
 
-            return StdlibMap(entries as? ImmutableMap ?: entries.toMap())
+            return if (map.isEmpty()) empty() else StdlibMap(map)
+        }
+
+        override fun <K, V> from(map: Map<K, V>): PersistentMap<K, V> {
+            if (map is StdlibMap) return map
+            if (map.isEmpty()) return empty()
+            if (map is ImmutableMap<K, V>) return StdlibMap(map)
+
+            return from(map.entries)
         }
     }
 

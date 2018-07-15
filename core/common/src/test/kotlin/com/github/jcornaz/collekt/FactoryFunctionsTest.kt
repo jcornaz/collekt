@@ -1,13 +1,11 @@
 package com.github.jcornaz.collekt
 
-import com.github.jcornaz.collekt.api.PersistentList
-import com.github.jcornaz.collekt.api.PersistentListFactory
-import com.github.jcornaz.collekt.api.PersistentSet
-import com.github.jcornaz.collekt.api.PersistentSetFactory
+import com.github.jcornaz.collekt.api.*
 import com.github.jcornaz.collekt.test.PersistentListTest
+import com.github.jcornaz.collekt.test.PersistentMapTest
 import com.github.jcornaz.collekt.test.PersistentSetTest
 
-class ListFactoryTest : PersistentListTest() {
+class PersistentListFactoryTest : PersistentListTest() {
     override val factory = object : PersistentListFactory {
         override fun <E> empty(): PersistentList<E> = emptyPersistentList()
 
@@ -25,7 +23,7 @@ class PersistentListOfTest : PersistentListTest() {
     }
 }
 
-class SetFactoryTest : PersistentSetTest() {
+class PersistentSetFactoryTest : PersistentSetTest() {
     override val factory = object : PersistentSetFactory {
         override fun <E> empty(): PersistentSet<E> = emptyPersistentSet()
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> =
@@ -39,5 +37,28 @@ class PersistentSetOfTest : PersistentSetTest() {
         @Suppress("UNCHECKED_CAST")
         override fun <E> from(elements: Iterable<E>): PersistentSet<E> =
                 persistentSetOf(*elements.map { it as Any? }.toTypedArray()) as PersistentSet<E>
+    }
+}
+
+class PersistentMapFactoryTest : PersistentMapTest() {
+    override val mapFactory = object : PersistentMapFactory {
+        override fun <K, V> empty(): PersistentMap<K, V> = emptyPersistentMap()
+
+        override fun <K, V> from(entries: Iterable<Pair<K, V>>): PersistentMap<K, V> =
+                entries.toMap().toPersistentMap()
+
+        override fun <K, V> from(map: Map<K, V>): PersistentMap<K, V> =
+                map.toPersistentMap()
+    }
+}
+
+class PersistentMapOfTest : PersistentMapTest() {
+    override val mapFactory = object : PersistentMapFactory by DefaultMapFactory {
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <K, V> from(entries: Iterable<Pair<K, V>>): PersistentMap<K, V> =
+                persistentMapOf(*entries.toList().toTypedArray())
+
+        override fun <K, V> from(map: Map<K, V>): PersistentMap<K, V> = from(map.entries)
     }
 }
