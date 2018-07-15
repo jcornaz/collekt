@@ -30,7 +30,6 @@ The current implementations are delegated to:
 | JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
 ### How to try it
-
 You can get the artifacts for maven or gradle from [Jitpack](jitpack.io):
 
 ```groovy
@@ -41,17 +40,17 @@ repositories {
 
 dependencies {
     
-    // For Java 6/7
-    compile 'com.github.jcornaz.collekt:collekt-core-jvm6:0.0.1'
-    
     // For Java 8+
     compile 'com.github.jcornaz.collekt:collekt-core-jvm8:0.0.1'
     
+    // For Java 6/7 (some implementations are not efficient yet)
+    compile 'com.github.jcornaz.collekt:collekt-core-jvm6:0.0.1'
+        
+    // For javascript (implementations are not efficient yet)
+    compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.1'
+        
     // For common module
     compile 'com.github.jcornaz.collekt:collekt-core-common:0.0.1'
-    
-    // For javascript (implementation is not efficient yet)
-    compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.1'
 }
 ```
 
