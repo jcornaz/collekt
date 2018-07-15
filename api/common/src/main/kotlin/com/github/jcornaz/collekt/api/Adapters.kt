@@ -23,13 +23,51 @@ public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
 public fun <E> Set<E>.asImmutableSet(): ImmutableSet<E> =
         this as? ImmutableSet ?: ImmutableSetAdapter(this)
 
-private class ImmutableCollectionAdapter<out E>(private val actualCollection: Collection<E>) : AbstractCollection<E>(), ImmutableCollection<E>, Collection<E> by actualCollection {
-    override fun contains(element: @UnsafeVariance E): Boolean = actualCollection.contains(element)
+/**
+ * Adapter which allows to use a [PersistentMap] as a [PersistentSet]
+ */
+public class SetFromMap<out E>(private val map: PersistentMap<E, *>) : AbstractSet<E>(), PersistentSet<E> {
+
+    override val size: Int get() = map.size
+
+    override fun contains(element: @UnsafeVariance E): Boolean = element in map
+    override fun isEmpty(): Boolean = map.isEmpty()
+
+    override fun iterator(): Iterator<E> = map.keys.iterator()
+
+    override fun plus(element: @UnsafeVariance E): PersistentSet<E> =
+            SetFromMap(map.plus(element, Unit))
+
+    override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
+            SetFromMap(elements.fold(map) { acc, elt -> acc.plus(elt, Unit) })
+
+    override fun minus(element: @UnsafeVariance E): PersistentSet<E> =
+            if (element !in map) this else SetFromMap(map - element)
+
+    override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
+            SetFromMap(map - elements)
+}
+
+private class ImmutableCollectionAdapter<out E>(private val actualCollection: Collection<E>) : AbstractCollection<E>(), ImmutableCollection<E> {
+    override val size: Int get() = actualCollection.size
     override fun isEmpty(): Boolean = actualCollection.isEmpty()
+
+    override fun iterator(): Iterator<E> = actualCollection.iterator()
+
+    override fun contains(element: @UnsafeVariance E): Boolean = actualCollection.contains(element)
     override fun containsAll(elements: Collection<@UnsafeVariance E>): Boolean = actualCollection.containsAll(elements)
 }
 
-private class ImmutableListAdapter<out E>(private val actualList: List<E>) : AbstractList<E>(), ImmutableList<E>, List<E> by actualList {
+private class ImmutableListAdapter<out E>(private val actualList: List<E>) : AbstractList<E>(), ImmutableList<E> {
+    override val size: Int get() = actualList.size
+
+    override fun isEmpty(): Boolean = actualList.isEmpty()
+
+    override fun get(index: Int): E = actualList[index]
+
+    override fun iterator(): Iterator<E> = actualList.iterator()
+    override fun listIterator(): ListIterator<E> = actualList.listIterator()
+    override fun listIterator(index: Int): ListIterator<E> = actualList.listIterator(index)
 
     override fun subList(fromIndex: Int, toIndex: Int): ImmutableList<E> =
             ImmutableListAdapter(actualList.subList(fromIndex, toIndex))
@@ -37,49 +75,15 @@ private class ImmutableListAdapter<out E>(private val actualList: List<E>) : Abs
     override fun split(index: Int): Pair<ImmutableList<E>, ImmutableList<E>> =
             subList(0, index) to subList(index, actualList.size)
 
-    override fun contains(element: @UnsafeVariance E): Boolean {
-        return actualList.contains(element)
-    }
-
-    override fun containsAll(elements: Collection<@UnsafeVariance E>): Boolean {
-        return actualList.containsAll(elements)
-    }
-
-    override fun indexOf(element: @UnsafeVariance E): Int {
-        return actualList.indexOf(element)
-    }
-
-    override fun isEmpty(): Boolean {
-        return actualList.isEmpty()
-    }
-
-    override fun iterator(): Iterator<E> {
-        return actualList.iterator()
-    }
-
-    override fun lastIndexOf(element: @UnsafeVariance E): Int {
-        return actualList.lastIndexOf(element)
-    }
-
-    override fun listIterator(): ListIterator<E> {
-        return actualList.listIterator()
-    }
-
-    override fun listIterator(index: Int): ListIterator<E> {
-        return actualList.listIterator(index)
-    }
+    override fun contains(element: @UnsafeVariance E): Boolean = actualList.contains(element)
 }
 
-private class ImmutableSetAdapter<out E>(private val actualSet: Set<E>) : AbstractSet<E>(), ImmutableSet<E>, Set<E> by actualSet {
-    override fun contains(element: @UnsafeVariance E): Boolean {
-        return actualSet.contains(element)
-    }
+private class ImmutableSetAdapter<out E>(private val actualSet: Set<E>) : AbstractSet<E>(), ImmutableSet<E> {
+    override val size: Int get() = actualSet.size
 
-    override fun containsAll(elements: Collection<@UnsafeVariance E>): Boolean {
-        return actualSet.containsAll(elements)
-    }
+    override fun isEmpty(): Boolean = actualSet.isEmpty()
 
-    override fun isEmpty(): Boolean {
-        return actualSet.isEmpty()
-    }
+    override fun contains(element: @UnsafeVariance E): Boolean = actualSet.contains(element)
+
+    override fun iterator(): Iterator<E> = actualSet.iterator()
 }
