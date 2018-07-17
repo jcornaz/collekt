@@ -26,3 +26,21 @@ public interface PersistentMap<K, out V> : ImmutableMap<K, V> {
     operator fun minus(key: K): PersistentMap<K, V>
     operator fun minus(keys: Iterable<K>): PersistentMap<K, V>
 }
+
+/**
+ * Provide [equals], [hashCode] and [toString] implementations for map
+ */
+public abstract class AbstractPersistentMap<K, out V> : PersistentMap<K, V> {
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        if (other !is Map<*, *>) return false
+        if (other.size != size) return false
+
+        return other.entries.all { (key, value) -> value == this[key] }
+    }
+
+    override fun hashCode(): Int = entries.hashCode()
+
+    override fun toString(): String = entries.joinToString(", ", "{", "}")
+}
