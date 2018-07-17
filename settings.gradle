@@ -22,7 +22,6 @@ include 'collekt-stdlib-js'
 include 'collekt-paguro'
 include 'collekt-dexx'
 include 'collekt-vavr'
-include 'collekt-pcollections'
 
 project(':collekt-api-common').projectDir = file('api/common')
 project(':collekt-api-jvm').projectDir = file('api/jvm')
@@ -46,4 +45,3 @@ project(':collekt-stdlib-js').projectDir = file('impl/stdlib/js')
 project(':collekt-paguro').projectDir = file('impl/paguro')
 project(':collekt-dexx').projectDir = file('impl/dexx')
 project(':collekt-vavr').projectDir = file('impl/vavr')
-project(':collekt-pcollections').projectDir = file('impl/pcollections')
