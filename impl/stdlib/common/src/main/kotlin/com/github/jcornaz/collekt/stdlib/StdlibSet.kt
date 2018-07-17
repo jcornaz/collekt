@@ -10,7 +10,7 @@ import com.github.jcornaz.collekt.api.PersistentSetFactory
  *
  * It is only useful for comparison purposes with other persistent implementations
  */
-public class StdlibSet<E>(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E> {
+public class StdlibSet<out E> internal constructor(private val set: Set<E>) : AbstractSet<E>(), PersistentSet<E> {
 
     companion object Factory : PersistentSetFactory {
         private val empty = StdlibSet<Nothing>(emptySet())
@@ -31,21 +31,21 @@ public class StdlibSet<E>(private val set: Set<E>) : AbstractSet<E>(), Persisten
 
     override fun isEmpty(): Boolean = set.isEmpty()
 
-    override fun contains(element: E): Boolean = set.contains(element)
-    override fun containsAll(elements: Collection<E>): Boolean = set.containsAll(elements)
+    override fun contains(element: @UnsafeVariance E): Boolean = set.contains(element)
+    override fun containsAll(elements: Collection<@UnsafeVariance E>): Boolean = set.containsAll(elements)
 
     override fun iterator(): Iterator<E> = set.iterator()
 
-    override fun plus(element: E): PersistentSet<E> =
+    override fun plus(element: @UnsafeVariance E): PersistentSet<E> =
             wrap(set + element)
 
-    override fun plus(elements: Iterable<E>): PersistentSet<E> =
+    override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
             wrap(set + elements)
 
-    override fun minus(element: E): PersistentSet<E> =
+    override fun minus(element: @UnsafeVariance E): PersistentSet<E> =
             wrap(set - element)
 
-    override fun minus(elements: Iterable<E>): PersistentSet<E> =
+    override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
             wrap(set - elements)
 
     private fun wrap(newSet: Set<E>): PersistentSet<E> = when {

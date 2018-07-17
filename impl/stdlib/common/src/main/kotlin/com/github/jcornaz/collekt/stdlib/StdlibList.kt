@@ -10,7 +10,7 @@ import com.github.jcornaz.collekt.api.PersistentListFactory
  *
  * It is only useful for comparison purposes with other persistent implementations
  */
-public class StdlibList<E>(private val list: List<E>) : AbstractList<E>(), PersistentList<E> {
+public class StdlibList<out E> internal constructor(private val list: List<E>) : AbstractList<E>(), PersistentList<E> {
 
     companion object Factory : PersistentListFactory {
         private val empty = StdlibList(emptyList<Nothing>())
@@ -46,22 +46,22 @@ public class StdlibList<E>(private val list: List<E>) : AbstractList<E>(), Persi
     override fun with(index: Int, element: @UnsafeVariance E): PersistentList<E> =
             wrap(list.toMutableList().apply { set(index, element) })
 
-    override fun plus(element: E): PersistentList<E> =
+    override fun plus(element: @UnsafeVariance E): PersistentList<E> =
             wrap(list + element)
 
-    override fun plus(elements: Iterable<E>): PersistentList<E> =
+    override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentList<E> =
             wrap(list + elements.unwrap())
 
-    override fun plus(index: Int, element: E): PersistentList<E> =
+    override fun plus(index: Int, element: @UnsafeVariance E): PersistentList<E> =
             wrap(list.subList(0, index) + element + list.subList(index, list.size))
 
-    override fun plus(index: Int, elements: Iterable<E>): PersistentList<E> =
+    override fun plus(index: Int, elements: Iterable<@UnsafeVariance E>): PersistentList<E> =
             wrap(list.subList(0, index) + elements.unwrap() + list.subList(index, list.size))
 
-    override fun minus(element: E): PersistentList<E> =
+    override fun minus(element: @UnsafeVariance E): PersistentList<E> =
             wrap(list - element)
 
-    override fun minus(elements: Iterable<E>): PersistentList<E> =
+    override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentList<E> =
             wrap(list - elements.unwrap())
 
     override fun minusIndex(index: Int): PersistentList<E> {
