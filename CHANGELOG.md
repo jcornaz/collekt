@@ -1,6 +1,7 @@
 # Change log
 
-## 0.0.2-SNAPSHOT (Unreleased)
+## 0.0.2 (2018-07-18)
+### Map and Set interfaces with default (non-efficient) implementations
 * Add `ImmutableSet` and `PersistentSet` with default implementations
 * Add `ImmutableMap` and `PersistentMap` with default implementations
 * Provide efficient persistent set for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
