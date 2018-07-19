@@ -1,11 +1,17 @@
 # Change log
 
+## 0.0.3-SNAPSHOT (Unreleased)
+Stack and Queue with default  implementations
+
 ## 0.0.2 (2018-07-18)
-### Map and Set interfaces with default (non-efficient) implementations
-* Add `ImmutableSet` and `PersistentSet` with default implementations
-* Add `ImmutableMap` and `PersistentMap` with default implementations
-* Provide efficient persistent set for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
-* Provide efficient persistent map for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
+Map and Set with default implementations
+
+### Added
+* `ImmutableSet` and `PersistentSet` with default implementations
+* `ImmutableMap` and `PersistentMap` with default implementations
+* Naive set and map implementations for Javascript and Java 6 using Kotlin standard library
+* Persistent set implementation for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
+* Persistent map implementation for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
 
 ## 0.0.1 (2018-07-12)
 Persistent lists with implementation backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for Java 8+ and [Dexx](https://github.com/andrewoma/dexx) for Java 6/7.
