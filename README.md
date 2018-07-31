@@ -94,9 +94,9 @@ dependencies {
 ## Implementation libraries
 The current known challengers for a JVM implementation are:
 * [Paguro](https://github.com/GlenKPeterson/Paguro) (currently used for all collection types in JVM 8)
-* [vavr.io](http://www.vavr.io/) (currently used for list in JVM 6)
+* [Dexx](https://github.com/andrewoma/dexx) (currently used for list in JVM 6)
 * [pcollections](https://pcollections.org/)
-* [Dexx](https://github.com/andrewoma/dexx)
+* [vavr.io](http://www.vavr.io/)
 * [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable)
 
 For Javascript the only known challenger is:
