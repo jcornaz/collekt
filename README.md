@@ -67,12 +67,12 @@ Here is the check list of persistent implementation to provide (sorted by implem
 
 ## How to get it
 
-If you want to test the project in its current state, you can get the artifacts for maven or gradle from [Jitpack](jitpack.io):
+If you want to test the project in its current state, you can get the artifacts for bintray:
 
 ```groovy
 repositories {
     jcenter()
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://dl.bintray.com/jcornaz/collekt' }
 }
 
 dependencies {
