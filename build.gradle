@@ -8,56 +8,16 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.18.0"
         classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.6"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
 subprojects {
     group 'com.github.jcornaz'
-    version '0.0.2'
+    version '0.0.3-SNAPSHOT'
 
     apply plugin: "com.github.ben-manes.versions"
-    apply plugin: 'com.jfrog.bintray'
-    apply plugin: 'maven-publish'
-    apply plugin: 'maven'
 
     repositories {
         jcenter()
-    }
-
-    bintray {
-        user = System.getenv('BINTRAY_USER')
-        key = System.getenv('BINTRAY_KEY')
-
-        publications = ['maven']
-
-        pkg {
-            repo = 'collekt'
-            name = project.name
-            licenses = ['MIT']
-            vcsUrl = 'https://github.com/jcornaz/collekt.git'
-
-            version {
-                name = project.version
-                released  = new Date()
-                vcsTag = project.version
-                attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
-            }
-        }
-    }
-
-    publishing {
-        repositories {
-            maven { url 'https://dl.bintray.com/jcornaz/collekt' }
-        }
-
-        publications {
-            maven(MavenPublication) {
-                from components.java
-                groupId project.group
-                artifactId project.name
-                version project.version
-            }
-        }
     }
 }
