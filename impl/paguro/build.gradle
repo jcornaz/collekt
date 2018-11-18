@@ -3,7 +3,7 @@ apply from: rootProject.file('gradle/jvm8.gradle')
 dependencies {
     api project(':collekt-api-jvm')
 
-    implementation 'org.organicdesign:Paguro:3.0.19'
+    implementation "org.organicdesign:Paguro:$paguro_version"
 
     testCompile project(':collekt-test-jvm')
 }

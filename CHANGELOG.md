@@ -1,7 +1,12 @@
 # Change log
 
 ## 0.0.3-SNAPSHOT (Unreleased)
-Stack and Queue with default  implementations
+
+### Dependencies
+Kotlin `1.2.51` -> `1.3.10`
+
+#### Implementations
+* Paguro `3.0.19` -> `3.1.0`
 
 ## 0.0.2 (2018-07-18)
 Map and Set with default implementations
