@@ -48,6 +48,8 @@ public class StdlibSet<out E> internal constructor(private val set: Set<E>) : Ab
     override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
             wrap(set - elements)
 
+    override fun empty(): PersistentSet<E> = empty
+
     private fun wrap(newSet: Set<E>): PersistentSet<E> = when {
         newSet === set -> this
         newSet.isEmpty() -> empty

@@ -41,6 +41,8 @@ public class PaguroHashSet<E>(private val set: ImSet<E>) : AbstractSet<E>(), Per
     override fun minus(elements: Iterable<E>): PersistentSet<E> =
             wrap(elements.fold(set) { acc, elt -> acc.without(elt) })
 
+    override fun empty(): PersistentSet<E> = empty
+
     private fun wrap(newSet: ImSet<E>): PersistentSet<E> = when {
         set === newSet -> this
         newSet.isEmpty() -> empty

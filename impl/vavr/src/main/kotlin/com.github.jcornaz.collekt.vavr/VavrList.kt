@@ -65,6 +65,8 @@ public class VavrList<E>(private val list: List<E>) : AbstractList<E>(), Persist
         return wrap(list.removeAt(index))
     }
 
+    override fun empty(): PersistentList<E> = empty
+
     private fun wrap(newList: List<E>): PersistentList<E> = when {
         newList === list -> this
         newList.isEmpty -> empty

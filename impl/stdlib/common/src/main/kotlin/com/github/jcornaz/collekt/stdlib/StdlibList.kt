@@ -69,4 +69,6 @@ public class StdlibList<out E> internal constructor(private val list: List<E>) :
 
         return wrap(list.subList(0, index) + list.subList(index + 1, list.size))
     }
+
+    override fun empty(): PersistentList<E> = empty
 }

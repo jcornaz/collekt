@@ -56,4 +56,7 @@ public interface PersistentList<out E> : PersistentCollection<E>, ImmutableList<
 
     public override fun minus(element: @UnsafeVariance E): PersistentList<E>
     public override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentList<E>
+
+    /** Returns an empty list */
+    override fun empty(): PersistentList<E>
 }
