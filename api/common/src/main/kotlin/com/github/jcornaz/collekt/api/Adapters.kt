@@ -23,6 +23,9 @@ public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
 public fun <E> Set<E>.asImmutableSet(): ImmutableSet<E> =
         this as? ImmutableSet ?: ImmutableSetAdapter(this)
 
+public fun <K, V> Map<K, V>.asImmutableMap(): ImmutableMap<K, V> =
+        this as? ImmutableMap<K, V> ?: ImmutableMapAdapter(this)
+
 /**
  * Adapter which allows to use a [PersistentMap] as a [PersistentSet]
  */
@@ -88,4 +91,10 @@ private class ImmutableSetAdapter<out E>(private val actualSet: Set<E>) : Abstra
     override fun contains(element: @UnsafeVariance E): Boolean = actualSet.contains(element)
 
     override fun iterator(): Iterator<E> = actualSet.iterator()
+}
+
+private class ImmutableMapAdapter<K, out V>(actualMap: Map<K, V>) : AbstractMap<K, V>(), ImmutableMap<K, V> {
+    override val entries: ImmutableSet<Map.Entry<K, V>> = actualMap.entries.asImmutableSet()
+    override val keys: ImmutableSet<K> = actualMap.keys.asImmutableSet()
+    override val values: ImmutableCollection<V> = actualMap.values.asImmutableCollection()
 }
