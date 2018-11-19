@@ -9,11 +9,11 @@ import kotlin.test.assertTrue
 
 abstract class PersistentOperatorTest {
 
-    abstract fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E>
+    abstract fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E>
 
     @Test
     fun emptyCollectionShouldStayEmpty() {
-        val result = emptyPersistentList<String>().applyOperator()
+        val result = emptyPersistentList<String>().identityOperator()
 
         assertTrue(result.isEmpty())
         assertEquals(0, result.size)
@@ -22,7 +22,7 @@ abstract class PersistentOperatorTest {
 }
 
 class FilterTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
             filter { true }
 
     @Test
@@ -33,10 +33,22 @@ class FilterTest : PersistentOperatorTest() {
     }
 }
 
+class FilterNotTest : PersistentOperatorTest() {
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
+            filterNot { false }
+
+    @Test
+    fun testFilterNot() {
+        val result: PersistentList<Int> = persistentListOf(1, 2, 3, 4).filterNot { it.rem(2) == 0 }
+
+        assertEquals(listOf(1, 3), result)
+    }
+}
+
 class FilterNotNullTest : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
             filterNotNull<Any>() as PersistentList<E>
 
     @Test
@@ -51,7 +63,7 @@ class FilterNotNullTest : PersistentOperatorTest() {
 class FilterIsInstance : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
             filterIsInstance<Any>() as PersistentList<E>
 
     @Test
@@ -64,7 +76,7 @@ class FilterIsInstance : PersistentOperatorTest() {
 
 
 class MapTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> = map { it }
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> = map { it }
 
     @Test
     fun testMap() {
@@ -77,7 +89,7 @@ class MapTest : PersistentOperatorTest() {
 class MapNotNullTest : PersistentOperatorTest() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
             mapNotNull<E, Any> { it } as PersistentList<E>
 
     @Test
@@ -91,7 +103,7 @@ class MapNotNullTest : PersistentOperatorTest() {
 }
 
 class FlatMapTest : PersistentOperatorTest() {
-    override fun <E> ImmutableCollection<E>.applyOperator(): PersistentList<E> =
+    override fun <E> ImmutableCollection<E>.identityOperator(): PersistentList<E> =
             flatMap { listOf(it) }
 
     @Test

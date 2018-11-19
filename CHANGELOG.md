@@ -1,6 +1,9 @@
 # Change log
 
 ## 0.0.3-SNAPSHOT (Unreleased)
+### Core
+* Add `filterNot` operator
+
 ### Drop support of Java6 platform
 * **[BREAKING]** Delete module `collekt-dexx`
 * **[BREAKING]** Delete module `collekt-core-jvm6`

@@ -10,6 +10,12 @@ public fun <T> ImmutableCollection<T>.filter(predicate: (T) -> Boolean): Persist
         asSequence().filter(predicate).toPersistentList()
 
 /**
+ * Returns a persistent list containing elements not matching the given [predicate].
+ */
+public fun <T> ImmutableCollection<T>.filterNot(predicate: (T) -> Boolean): PersistentList<T> =
+        asSequence().filterNot(predicate).toPersistentList()
+
+/**
  * Returns a persistent list containing all elements that are not null.
  */
 public fun <T : Any> ImmutableCollection<T?>.filterNotNull(): PersistentList<T> =
