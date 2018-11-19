@@ -24,3 +24,11 @@ allprojects {
         jcenter()
     }
 }
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "jcornaz_collekt"
+        property "sonar.organization", "jcornaz-github"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}

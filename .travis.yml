@@ -25,4 +25,4 @@ cache:
     - $HOME/.m2/repository
 
 script:
-  - sonar-scanner
+  - ./gradlew check sonarqube
