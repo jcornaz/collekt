@@ -3,7 +3,7 @@
 [![Project status](https://img.shields.io/badge/status-incubating-orange.svg)](https://gist.githubusercontent.com/jcornaz/46736c3d1f21b4c929bd97549b7406b2/raw/ProjectStatusFlow)
 [![JitPack](https://jitpack.io/v/jcornaz/collekt.svg)](https://jitpack.io/#jcornaz/collekt)
 [![Build Status](https://travis-ci.org/jcornaz/collekt.svg?branch=master)](https://travis-ci.org/jcornaz/collekt)
-[![Code quality](https://codebeat.co/badges/0f15406e-7cc2-4dfa-9b21-204d1653e558)](https://codebeat.co/projects/github-com-jcornaz-collekt-master)
+[![Technical dept](https://sonarcloud.io/api/project_badges/measure?project=jcornaz_collekt&metric=sqale_index)](https://sonarcloud.io/dashboard?id=jcornaz_collekt)
 
 Persistent collections for Kotlin
 

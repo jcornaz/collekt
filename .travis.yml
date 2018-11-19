@@ -1,5 +1,9 @@
 language: java
 
+addons:
+  sonarcloud:
+    organization: "jcornaz-github"
+
 branches:
   only:
     - master
@@ -19,3 +23,6 @@ cache:
     - $HOME/.gradle/caches
     - $HOME/.gradle/wrapper/dists
     - $HOME/.m2/repository
+
+script:
+  - ./gradlew check sonarqube
