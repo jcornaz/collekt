@@ -10,7 +10,7 @@
 * **[BREAKING]** Rename module `collekt-core-jvm8` to `collekt-core-jvm`
 
 ### Dependencies (potentially breaking)
-Kotlin `1.2.51` -> `1.3.10`
+* Kotlin `1.2.51` -> `1.3.10`
 
 #### Implementations
 * Paguro `3.0.19` -> `3.1.0`
@@ -35,7 +35,7 @@ Persistent lists with implementation backed by [Paguro](https://github.com/GlenK
 ### Core
 * Add `emptyPersistentList()`, `persistentListOf()`, `Iterable.toPersistentList()` and `Sequence.toPersistentList()`
 * Provide default implementations
-    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for JVM 6
-    * Backed by [Dexx](https://github.com/andrewoma/dexx) for JVM 8
+    * Backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for JVM 8
+    * Backed by [Dexx](https://github.com/andrewoma/dexx) for JVM 6
     * Backed by the kotlin standard library for Javascript
 * Add `filter`, `filterNotNull`, `filterIsInstance`, `map`, `mapNotNull` and `flatMap` operators for immutable collections

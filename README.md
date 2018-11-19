@@ -86,10 +86,13 @@ dependencies {
 ## Implementation libraries
 The current known challengers for a JVM implementation are:
 * [Paguro](https://github.com/GlenKPeterson/Paguro) (currently used for all collection types in JVM 8)
-* [Dexx](https://github.com/andrewoma/dexx) (currently used for list in JVM 6)
-* [pcollections](https://pcollections.org/)
 * [vavr.io](http://www.vavr.io/)
 * [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable)
+
+The following implementations are eligible candidates because they are discontinued and/or don't support null values: 
+* [Dexx](https://github.com/andrewoma/dexx)
+* [pcollections](https://pcollections.org/)
+* [Collider](https://github.com/rschmitt/collider)
 
 For Javascript the only known challenger is:
 * [Immutable.js](https://facebook.github.io/immutable-js)
