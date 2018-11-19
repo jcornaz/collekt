@@ -1,8 +1,12 @@
 # Change log
 
 ## 0.0.3-SNAPSHOT (Unreleased)
+### Drop support of Java6 platform
+* **[BREAKING]** Delete module `collekt-dexx`
+* **[BREAKING]** Delete module `collekt-core-jvm6`
+* **[BREAKING]** Rename module `collekt-core-jvm8` to `collekt-core-jvm`
 
-### Dependencies
+### Dependencies (potentially breaking)
 Kotlin `1.2.51` -> `1.3.10`
 
 #### Implementations
