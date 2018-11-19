@@ -52,6 +52,9 @@ public class StdlibMap<K, out V> private constructor(private val map: Map<K, V>)
     override fun minus(keys: Iterable<K>): PersistentMap<K, V> =
             wrap(map - keys)
 
+    override fun empty(): PersistentMap<K, V> = StdlibMap.
+            empty()
+
     private fun wrap(newMap: Map<K, @UnsafeVariance V>): PersistentMap<K, V> = when {
         newMap === map -> this
         newMap.isEmpty() -> empty()

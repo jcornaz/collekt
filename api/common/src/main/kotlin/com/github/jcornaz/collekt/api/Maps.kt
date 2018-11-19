@@ -25,6 +25,9 @@ public interface PersistentMap<K, out V> : ImmutableMap<K, V> {
 
     operator fun minus(key: K): PersistentMap<K, V>
     operator fun minus(keys: Iterable<K>): PersistentMap<K, V>
+
+    /** Returns an empty map */
+    public fun empty(): PersistentMap<K, V>
 }
 
 /**

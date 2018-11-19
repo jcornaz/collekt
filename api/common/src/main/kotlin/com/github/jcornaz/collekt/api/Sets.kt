@@ -14,8 +14,13 @@ public interface ImmutableSet<out E> : ImmutableCollection<E>, Set<E>
  * reducing memory usage, and providing good performance of the *mutation methods*
  */
 public interface PersistentSet<out E> : ImmutableSet<E>, PersistentCollection<E> {
+
   override fun plus(element: @UnsafeVariance E): PersistentSet<E>
   override fun plus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E>
+
   override fun minus(element: @UnsafeVariance E): PersistentSet<E>
   override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E>
+
+  /** Returns an empty set */
+  override fun empty(): PersistentSet<E>
 }

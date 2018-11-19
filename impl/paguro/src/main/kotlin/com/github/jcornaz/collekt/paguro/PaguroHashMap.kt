@@ -62,6 +62,8 @@ public class PaguroHashMap<K, out V>(private val backedMap: ImMap<K, V>) : Abstr
     override fun minus(keys: Iterable<K>): PersistentMap<K, V> =
             wrap(keys.fold(backedMap) { acc, key -> acc.without(key) })
 
+    override fun empty(): PersistentMap<K, V> = PaguroHashMap.empty()
+
     private fun wrap(newMap: ImMap<K, V>): PersistentMap<K, V> = when {
         newMap === backedMap -> this
         newMap.isEmpty() -> empty()

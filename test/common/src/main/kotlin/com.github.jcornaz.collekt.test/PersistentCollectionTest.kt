@@ -9,10 +9,19 @@ public abstract class PersistentCollectionTest {
     public abstract val factory: PersistentCollectionFactory
 
     @Test
-    fun emptyShouldNotContainsElement() {
+    fun emptyFromFactoryShouldNotContainsElement() {
         assertTrue(factory.empty<Int>().isEmpty())
         assertEquals(0, factory.empty<Int>().size)
         assertFalse(factory.empty<Int>().iterator().hasNext())
+    }
+
+    @Test
+    fun emptyFromInstanceShouldNotContainsElement() {
+        val empty = factory.of(1, 2, 3, 4).empty()
+
+        assertTrue(empty.isEmpty())
+        assertEquals(0, empty.size)
+        assertFalse(empty.iterator().hasNext())
     }
 
     @Test

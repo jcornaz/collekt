@@ -26,4 +26,7 @@ public interface PersistentCollection<out E> : ImmutableCollection<E> {
 
     /** Returns a new collection containing the same elements minus the given [elements] */
     public operator fun minus(elements: Iterable<@UnsafeVariance E>): PersistentCollection<E>
+
+    /** Returns an empty collection */
+    public fun empty(): PersistentCollection<E>
 }

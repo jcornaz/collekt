@@ -46,6 +46,8 @@ public class SetFromMap<out E>(private val map: PersistentMap<E, *>) : AbstractS
 
     override fun minus(elements: Iterable<@UnsafeVariance E>): PersistentSet<E> =
             SetFromMap(map - elements)
+
+    override fun empty(): PersistentSet<E> = if (isEmpty()) this else SetFromMap(map.empty())
 }
 
 private class ImmutableCollectionAdapter<out E>(private val actualCollection: Collection<E>) : AbstractCollection<E>(), ImmutableCollection<E> {

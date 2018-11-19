@@ -16,7 +16,23 @@ abstract class PersistentMapTest : PersistentSetTest() {
     }
 
     @Test
-    fun shouldReturnsValueAssocitedWithTheKey() {
+    fun emptyFromMapFactoryShouldNotContainsAnyValue() {
+        assertTrue(mapFactory.empty<Int, String>().isEmpty())
+        assertEquals(0, mapFactory.empty<Int, String>().size)
+        assertFalse(mapFactory.empty<Int, String>().iterator().hasNext())
+    }
+
+    @Test
+    fun emptyFromMapInstanceShouldNotContainsAnyValue() {
+        val map = mapFactory.of(1 to "one", 2 to "two", 3 to "three").empty()
+
+        assertTrue(map.isEmpty())
+        assertEquals(0, map.size)
+        assertFalse(map.iterator().hasNext())
+    }
+
+    @Test
+    fun shouldReturnsValueAssociatedWithTheKey() {
         val map = mapFactory.of(
                 1 to "one",
                 2 to "two",
@@ -29,7 +45,7 @@ abstract class PersistentMapTest : PersistentSetTest() {
     }
 
     @Test
-    fun shouldNotContiansOtherValues() {
+    fun shouldNotContainsOtherValues() {
         val map = mapFactory.of(
                 1 to "one",
                 2 to "two",
@@ -137,7 +153,7 @@ abstract class PersistentMapTest : PersistentSetTest() {
     }
 
     @Test
-    fun shouldNotEqualsDiffrentMap() {
+    fun shouldNotEqualsDifferentMap() {
 
         val map1 = mapFactory.of(
                 1 to "one",

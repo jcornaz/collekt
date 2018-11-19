@@ -1,6 +1,10 @@
 # Change log
 
 ## 0.0.3-SNAPSHOT (Unreleased)
+### API
+* **[BREAKING]** Add `empty()` function to persistent interfaces.
+    It allows to get an empty version of a collection without the need to have the related factory.
+ 
 ### Core
 * Add `filterNot` operator
 

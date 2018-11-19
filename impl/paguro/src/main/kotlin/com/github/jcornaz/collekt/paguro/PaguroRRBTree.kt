@@ -78,6 +78,8 @@ public class PaguroRRBTree<E>(private val tree: RrbTree<E>) : AbstractList<E>(),
     override fun minusIndex(index: Int): PersistentList<E> =
             wrap(tree.without(index))
 
+    override fun empty(): PersistentList<E> = empty
+
     private fun wrap(newTree: RrbTree<E>): PersistentList<E> = when {
         newTree === tree -> this
         newTree.isEmpty() -> empty
