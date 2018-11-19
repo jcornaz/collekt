@@ -2,7 +2,6 @@ package com.github.jcornaz.collekt.benchmark
 
 import com.github.jcornaz.collekt.api.PersistentList
 import com.github.jcornaz.collekt.api.PersistentListFactory
-import com.github.jcornaz.collekt.dexx.DexxVector
 import com.github.jcornaz.collekt.paguro.PaguroRRBTree
 import com.github.jcornaz.collekt.stdlib.StdlibList
 import com.github.jcornaz.collekt.vavr.VavrList
@@ -26,7 +25,6 @@ enum class ListImplementation(val factory: PersistentListFactory) : PersistentLi
     STDLIB_LIST(StdlibList),
     PAGURO_RRB_TREE(PaguroRRBTree),
     VAVR_LIST(VavrList),
-    DEXX_VECTOR(DexxVector),
 
     ;
 }

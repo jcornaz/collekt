@@ -3,7 +3,7 @@
 [![Project status](https://img.shields.io/badge/status-incubating-orange.svg)](https://gist.githubusercontent.com/jcornaz/46736c3d1f21b4c929bd97549b7406b2/raw/ProjectStatusFlow)
 [![JitPack](https://jitpack.io/v/jcornaz/collekt.svg)](https://jitpack.io/#jcornaz/collekt)
 [![Build Status](https://travis-ci.com/jcornaz/collekt.svg?branch=master)](https://travis-ci.com/jcornaz/collekt)
-[![Technical dept](https://sonarcloud.io/api/project_badges/measure?project=jcornaz_collekt&metric=sqale_index)](https://sonarcloud.io/dashboard?id=jcornaz_collekt)
+[![Technical debt](https://sonarcloud.io/api/project_badges/measure?project=jcornaz_collekt&metric=sqale_index)](https://sonarcloud.io/dashboard?id=jcornaz_collekt)
 
 Persistent collections for Kotlin
 
@@ -22,11 +22,10 @@ If performance tests show that an new implementation is faster, then the actual 
 
 The current implementations are delegated to:
 
-| Platform   | Library                                                                                               | Author                                               |
-|------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| JVM 6      | [Dexx](https://github.com/andrewoma/dexx)                                                             | [Andrew O'Malley](https://github.com/andrewoma)      |
-| JVM 8      | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
-| JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
+| Platform      | Library                                                                                               | Author                                               |
+|---------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| JVM (Java 8+) | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
+| JavaScript    | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
 ### Usage
 The Persistent interfaces provide `+` and `-` operator aside other useful methods.
@@ -52,14 +51,10 @@ The JVM-8 module provide efficient persistent data structure for all collection 
 But other modules may provide less efficient implementation.
 
 Here is the check list of persistent implementation to provide (sorted by implementation priority):
-* [X] JVM 8
+* [X] JVM (Java 8+)
     * [X] List
     * [X] Set
     * [X] Map
-* [ ] JVM 6
-    * [X] List
-    * [ ] Set
-    * [ ] Map
 * [ ] Javascript
     * [ ] List
     * [ ] Set
@@ -77,12 +72,9 @@ repositories {
 
 dependencies {
     
-    // For Java 8+
+    // For Java
     compile 'com.github.jcornaz.collekt:collekt-core-jvm8:0.0.2'
-    
-    // For Java 6/7 (some implementations are not efficient yet)
-    compile 'com.github.jcornaz.collekt:collekt-core-jvm6:0.0.2'
-        
+            
     // For javascript (implementations are not efficient yet)
     compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.2'
         

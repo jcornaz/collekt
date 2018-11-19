@@ -2,7 +2,6 @@ apply from: rootProject.file('gradle/jvm.gradle')
 
 dependencies {
     compile project(':collekt-paguro')
-    compile project(':collekt-dexx')
     compile project(':collekt-vavr')
     compile project(':collekt-stdlib-jvm')
 
