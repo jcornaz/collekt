@@ -49,6 +49,7 @@ class AdaptersTest {
         assertEquals(0, map.size)
         assertNull(map[0])
         assertFalse(0 in map)
+        assertTrue(map.entries.isEmpty())
         assertFailsWith<NoSuchElementException> { map.entries.first() }
         map.forEach { _ -> fail() }
         assertEquals(emptyMap<Int, String>(), map)
