@@ -13,17 +13,19 @@ class AdaptersTest {
         assertFailsWith<IndexOutOfBoundsException> { list[0] }
         list.forEach { _ -> fail() }
         assertEquals(emptyList<String>(), list)
+        assertEquals(emptyList<String>().toString(), list.toString())
     }
 
     @Test
     fun emptyImmutableCollectionShouldBeEmpty() {
-        val set: ImmutableCollection<String> = emptySet<String>().asImmutableCollection()
+        val col: ImmutableCollection<String> = emptySet<String>().asImmutableCollection()
 
-        assertTrue(set.isEmpty())
-        assertEquals(0, set.size)
-        assertFalse("" in set)
-        assertFailsWith<NoSuchElementException> { set.first() }
-        set.forEach { _ -> fail() }
+        assertTrue(col.isEmpty())
+        assertEquals(0, col.size)
+        assertFalse("" in col)
+        assertFailsWith<NoSuchElementException> { col.first() }
+        col.forEach { _ -> fail() }
+        assertEquals(emptySet<String>().toString(), col.toString())
     }
 
     @Test
@@ -36,6 +38,7 @@ class AdaptersTest {
         assertFailsWith<NoSuchElementException> { set.first() }
         set.forEach { _ -> fail() }
         assertEquals(emptySet<String>(), set)
+        assertEquals(emptySet<String>().toString(), set.toString())
     }
 
     @Test
@@ -49,6 +52,7 @@ class AdaptersTest {
         assertFailsWith<NoSuchElementException> { map.entries.first() }
         map.forEach { _ -> fail() }
         assertEquals(emptyMap<Int, String>(), map)
+        assertEquals(emptyMap<Int, String>().toString(), map.toString())
     }
 
     @Test
@@ -61,6 +65,18 @@ class AdaptersTest {
         input.indices.forEach {
             assertEquals(input[it], result[it])
         }
+        assertEquals(input.toString(), result.toString())
+    }
+
+    @Test
+    fun toImmutableCollectionShouldReturnEquivalentImmutableList() {
+        val input = setOf(1, 2, 42, 24)
+        val result: ImmutableCollection<Int> = input.asImmutableCollection()
+
+        assertEquals(input.size, result.size)
+        assertTrue(result.all { it in input })
+        assertTrue(input.all { it in result })
+        assertEquals(input.toString(), result.toString())
     }
 
     @Test
@@ -72,6 +88,7 @@ class AdaptersTest {
         assertEquals(input.size, result.size)
         assertTrue(result.all { it in input })
         assertTrue(input.all { it in result })
+        assertEquals(input.toString(), result.toString())
     }
 
     @Test
@@ -83,5 +100,6 @@ class AdaptersTest {
         assertEquals(input.size, result.size)
         assertTrue(result.all { it.key in input })
         assertTrue(input.all { it.key in result })
+        assertEquals(input.toString(), result.toString())
     }
 }
