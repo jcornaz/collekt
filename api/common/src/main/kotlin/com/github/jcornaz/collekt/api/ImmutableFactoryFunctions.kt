@@ -22,7 +22,7 @@ public fun <E> immutableListOf(vararg elements: E): ImmutableList<E> =
 public fun <E> immutableSetOf(vararg elements: E): ImmutableSet<E> =
         elements.toHashSet().asImmutableSet()
 
-/** Returns a new immutable set containing the given elements */
+/** Returns a new immutable map containing the given elements */
 public fun <K, V> immutableMapOf(vararg entries: Pair<K, V>): ImmutableMap<K, V> =
         hashMapOf(*entries).asImmutableMap()
 

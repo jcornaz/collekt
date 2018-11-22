@@ -3,14 +3,14 @@ package com.github.jcornaz.collekt.api
 /**
  * Returns an [ImmutableList] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual collection is never modified.
  */
 public fun <E> Collection<E>.asImmutableCollection(): ImmutableCollection<E> = ImmutableCollectionAdapter(this)
 
 /**
  * Returns an [ImmutableList] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual list is never modified.
  */
 public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
         this as? ImmutableList ?: ImmutableListAdapter(this)
@@ -18,11 +18,16 @@ public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
 /**
  * Returns an [ImmutableSet] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual set is never modified.
  */
 public fun <E> Set<E>.asImmutableSet(): ImmutableSet<E> =
         this as? ImmutableSet ?: ImmutableSetAdapter(this)
 
+/**
+ * Returns an [ImmutableMap] backed by this instance
+ *
+ * **ATTENTION:** Make sure the actual map is never modified.
+ */
 public fun <K, V> Map<K, V>.asImmutableMap(): ImmutableMap<K, V> =
         this as? ImmutableMap<K, V> ?: ImmutableMapAdapter(this)
 
