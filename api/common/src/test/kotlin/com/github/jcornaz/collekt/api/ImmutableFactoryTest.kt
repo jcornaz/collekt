@@ -6,37 +6,43 @@ class ImmutableFactoryTest {
 
     @Test
     fun emptyImmutableListShouldBeEmpty() {
-        assertTrue(emptyImmutableList<String>().isEmpty())
-        assertEquals(0, emptyImmutableList<String>().size)
-        assertFailsWith<IndexOutOfBoundsException> { emptyImmutableList<String>()[0] }
-        emptyImmutableList<String>().forEach { _ -> fail() }
-        assertEquals(emptyList<String>(), emptyImmutableList())
+        val list: ImmutableList<String> = emptyImmutableList()
+
+        assertTrue(list.isEmpty())
+        assertEquals(0, list.size)
+        assertFailsWith<IndexOutOfBoundsException> { list[0] }
+        list.forEach { _ -> fail() }
+        assertEquals(emptyList<String>(), list)
     }
 
     @Test
     fun emptyImmutableSetShouldBeEmpty() {
-        assertTrue(emptyImmutableSet<String>().isEmpty())
-        assertEquals(0, emptyImmutableSet<String>().size)
-        assertFalse("" in emptyImmutableSet<String>())
-        assertFailsWith<NoSuchElementException> { emptyImmutableSet<String>().first() }
-        emptyImmutableSet<String>().forEach { _ -> fail() }
-        assertEquals(emptySet<String>(), emptyImmutableSet())
+        val set: ImmutableSet<String> = emptyImmutableSet()
+
+        assertTrue(set.isEmpty())
+        assertEquals(0, set.size)
+        assertFalse("" in set)
+        assertFailsWith<NoSuchElementException> { set.first() }
+        set.forEach { _ -> fail() }
+        assertEquals(emptySet<String>(), set)
     }
 
     @Test
     fun emptyImmutableMapShouldBeEmpty() {
-        assertTrue(emptyImmutableMap<Int, String>().isEmpty())
-        assertEquals(0, emptyImmutableMap<Int, String>().size)
-        assertNull(emptyImmutableMap<Int, String>().get(0))
-        assertFalse(0 in emptyImmutableMap<Int, String>())
-        assertFailsWith<NoSuchElementException> { emptyImmutableMap<Int, String>().entries.first() }
-        emptyImmutableMap<Int, String>().forEach { _ -> fail() }
-        assertEquals(emptyMap<Int, String>(), emptyImmutableMap())
+        val map: ImmutableMap<Int, String> = emptyImmutableMap()
+
+        assertTrue(map.isEmpty())
+        assertEquals(0, map.size)
+        assertNull(map[0])
+        assertFalse(0 in map)
+        assertFailsWith<NoSuchElementException> { map.entries.first() }
+        map.forEach { _ -> fail() }
+        assertEquals(emptyMap<Int, String>(), map)
     }
 
     @Test
     fun immutableListOfShouldContainsAllElements() {
-        val list = immutableListOf(1, 2, 10, 12)
+        val list: ImmutableList<Int> = immutableListOf(1, 2, 10, 12)
         assertEquals(4, list.size)
 
         assertEquals(1, list[0])
@@ -53,7 +59,7 @@ class ImmutableFactoryTest {
 
     @Test
     fun immutableSetOfShouldContainsAllElements() {
-        val set = immutableSetOf(1, 2, 10, 12)
+        val set: ImmutableSet<Int> = immutableSetOf(1, 2, 10, 12)
         assertEquals(4, set.size)
 
         assertTrue(1 in set)
@@ -66,7 +72,7 @@ class ImmutableFactoryTest {
 
     @Test
     fun immutableMapOfShouldContainsAllEntries() {
-        val map = immutableMapOf(1 to "un", 2 to "deux", 10 to "dix", 12 to "douze")
+        val map: ImmutableMap<Int, String> = immutableMapOf(1 to "un", 2 to "deux", 10 to "dix", 12 to "douze")
         assertEquals(4, map.size)
 
         assertEquals("un", map[1])
@@ -80,5 +86,75 @@ class ImmutableFactoryTest {
         assertFalse(3 in map)
 
         assertNull(map[3])
+    }
+
+    @Test
+    fun toImmutableListShouldReturnEquivalentImmutableList() {
+        val input = listOf(1, 2, 42, 24)
+        val result: ImmutableList<Int> = input.toImmutableList()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        input.indices.forEach {
+            assertEquals(input[it], result[it])
+        }
+    }
+
+    @Test
+    fun toImmutableListFromSequenceShouldReturnEquivalentImmutableList() {
+        val input = listOf(1, 2, 42, 24)
+        val result: ImmutableList<Int> = input.asSequence().toImmutableList()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        input.indices.forEach {
+            assertEquals(input[it], result[it])
+        }
+    }
+
+    @Test
+    fun toImmutableSetShouldReturnEquivalentImmutableList() {
+        val input = setOf(1, 2, 42, 24)
+        val result: ImmutableSet<Int> = input.toImmutableSet()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        assertTrue(result.all { it in input })
+        assertTrue(input.all { it in result })
+    }
+
+    @Test
+    fun toImmutableSetFromSequenceShouldReturnEquivalentImmutableList() {
+        val input = setOf(1, 2, 42, 24)
+        val result: ImmutableSet<Int> = input.asSequence().toImmutableSet()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        assertTrue(result.all { it in input })
+        assertTrue(input.all { it in result })
+    }
+
+    @Test
+    fun toImmutableMapShouldReturnEquivalentImmutableList() {
+        val input = mapOf(1 to "un", 2 to "deux", 10 to "dix", 12 to "douze")
+        val result: ImmutableMap<Int, String> = input.toImmutableMap()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        assertTrue(result.all { it.key in input })
+        assertTrue(input.all { it.key in result })
+    }
+
+    @Test
+    fun toImmutableMapFromSequenceShouldReturnEquivalentImmutableList() {
+        val input = mapOf(1 to "un", 2 to "deux", 10 to "dix", 12 to "douze")
+        val result: ImmutableMap<Int, String> = input.asSequence().map { it.key to it.value }.toImmutableMap()
+
+        assertEquals(input, result)
+        assertEquals(input.size, result.size)
+        assertTrue(result.all { it.key in input })
+        assertTrue(result.all { it.value == input[it.key] })
+        assertTrue(input.all { it.key in result })
+        assertTrue(result.all { it.value == result[it.key] })
     }
 }
