@@ -98,8 +98,14 @@ private class ImmutableSetAdapter<out E>(private val actualSet: Set<E>) : Abstra
     override fun iterator(): Iterator<E> = actualSet.iterator()
 }
 
-private class ImmutableMapAdapter<K, out V>(actualMap: Map<K, V>) : AbstractMap<K, V>(), ImmutableMap<K, V> {
+private class ImmutableMapAdapter<K, out V>(private val actualMap: Map<K, V>) : AbstractMap<K, V>(), ImmutableMap<K, V> {
     override val entries: ImmutableSet<Map.Entry<K, V>> = actualMap.entries.asImmutableSet()
     override val keys: ImmutableSet<K> = actualMap.keys.asImmutableSet()
     override val values: ImmutableCollection<V> = actualMap.values.asImmutableCollection()
+
+    override val size: Int get() = actualMap.size
+
+    override fun containsKey(key: K): Boolean = actualMap.containsKey(key)
+    override fun get(key: K): V? = actualMap[key]
+    override fun isEmpty(): Boolean = actualMap.isEmpty()
 }
