@@ -117,7 +117,7 @@ private class ImmutableMapAdapter<K, out V>(private val actualMap: Map<K, V>) : 
         if (other !is Map<*, *>) return false
         if (size != other.size) return false
 
-        return other.all { it.key == actualMap && actualMap[it.key] == it.value }
+        return other.all { it.key in actualMap && actualMap[it.key] == it.value }
     }
 
     override fun hashCode(): Int = actualMap.hashCode()
