@@ -13,11 +13,11 @@ public fun <E> emptyPersistentSet(): PersistentSet<E> = DefaultSetFactory.empty(
 /** Returns an empty [PersistentMap] */
 public fun <K, V> emptyPersistentMap(): PersistentMap<K, V> = DefaultMapFactory.empty()
 
-/** Returns a new immutable list containing the given elements */
+/** Returns a new persistent list containing the given elements */
 public fun <E> persistentListOf(vararg elements: E): PersistentList<E> =
         DefaultListFactory.from(elements.asIterable())
 
-/** Returns a new immutable set containing the given elements */
+/** Returns a new persistent set containing the given elements */
 public fun <E> persistentSetOf(vararg elements: E): PersistentSet<E> =
         DefaultSetFactory.from(elements.asIterable())
 
@@ -50,16 +50,16 @@ public fun <K, V> Map<K, V>.toPersistentMap(): PersistentMap<K, V> =
         this as? PersistentMap<K, V> ?: DefaultMapFactory.from(this)
 
 /**
- * Returns a new immutable list with all elements in this sequence (in the same order).
+ * Returns a new persistent list with all elements in this sequence (in the same order).
  */
 public fun <E> Sequence<E>.toPersistentList(): PersistentList<E> = DefaultListFactory.from(asIterable())
 
 /**
- * Returns a new immutable set with all elements in this sequence (in the same order).
+ * Returns a new persistent set with all elements in this sequence (in the same order).
  */
 public fun <E> Sequence<E>.toPersistentSet(): PersistentSet<E> = DefaultSetFactory.from(asIterable())
 
 /**
- * Returns a new immutable set with all elements in this sequence (in the same order).
+ * Returns a new persistent set with all elements in this sequence (in the same order).
  */
 public fun <K, V> Sequence<Pair<K, V>>.toPersistentMap(): PersistentMap<K, V> = DefaultMapFactory.from(asIterable())

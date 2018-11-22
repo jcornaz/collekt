@@ -3,14 +3,15 @@ package com.github.jcornaz.collekt.api
 /**
  * Returns an [ImmutableList] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual collection is never modified.
  */
-public fun <E> Collection<E>.asImmutableCollection(): ImmutableCollection<E> = ImmutableCollectionAdapter(this)
+public fun <E> Collection<E>.asImmutableCollection(): ImmutableCollection<E> =
+        this as? ImmutableCollection ?: ImmutableCollectionAdapter(this)
 
 /**
  * Returns an [ImmutableList] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual list is never modified.
  */
 public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
         this as? ImmutableList ?: ImmutableListAdapter(this)
@@ -18,10 +19,18 @@ public fun <E> List<E>.asImmutableList(): ImmutableList<E> =
 /**
  * Returns an [ImmutableSet] backed by this instance
  *
- * **ATTENTION:** Make sure the actual list cannot be modified in any way.
+ * **ATTENTION:** Make sure the actual set is never modified.
  */
 public fun <E> Set<E>.asImmutableSet(): ImmutableSet<E> =
         this as? ImmutableSet ?: ImmutableSetAdapter(this)
+
+/**
+ * Returns an [ImmutableMap] backed by this instance
+ *
+ * **ATTENTION:** Make sure the actual map is never modified.
+ */
+public fun <K, V> Map<K, V>.asImmutableMap(): ImmutableMap<K, V> =
+        this as? ImmutableMap<K, V> ?: ImmutableMapAdapter(this)
 
 /**
  * Adapter which allows to use a [PersistentMap] as a [PersistentSet]
@@ -88,4 +97,29 @@ private class ImmutableSetAdapter<out E>(private val actualSet: Set<E>) : Abstra
     override fun contains(element: @UnsafeVariance E): Boolean = actualSet.contains(element)
 
     override fun iterator(): Iterator<E> = actualSet.iterator()
+}
+
+private class ImmutableMapAdapter<K, out V>(private val actualMap: Map<K, V>) : ImmutableMap<K, V> {
+    override val entries: ImmutableSet<Map.Entry<K, V>> = actualMap.entries.asImmutableSet()
+    override val keys: ImmutableSet<K> = actualMap.keys.asImmutableSet()
+    override val values: ImmutableCollection<V> = actualMap.values.asImmutableCollection()
+
+    override val size: Int get() = actualMap.size
+
+    override fun containsKey(key: K): Boolean = actualMap.containsKey(key)
+    override fun containsValue(value: @UnsafeVariance V): Boolean = actualMap.containsValue(value)
+
+    override fun get(key: K): V? = actualMap[key]
+    override fun isEmpty(): Boolean = actualMap.isEmpty()
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        if (other !is Map<*, *>) return false
+        if (size != other.size) return false
+
+        return other.all { it.key in actualMap && actualMap[it.key] == it.value }
+    }
+
+    override fun hashCode(): Int = actualMap.hashCode()
+    override fun toString(): String = actualMap.toString()
 }
