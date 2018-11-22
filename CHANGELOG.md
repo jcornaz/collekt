@@ -1,5 +1,8 @@
 # Change log
 
+## 0.1-SNAPSHOT (Unreleased)
+
+
 ## 0.0.3 (2018-11-22)
 `empty` member in persistent interface, factory functions for immutable types and end of support for Java 6 platform.
 
@@ -24,6 +27,7 @@
 #### Implementations
 * Paguro `3.0.19` -> `3.1.0`
 
+
 ## 0.0.2 (2018-07-18)
 Map and Set with default implementations
 
@@ -33,6 +37,7 @@ Map and Set with default implementations
 * Naive set and map implementations for Javascript and Java 6 using Kotlin standard library
 * Persistent set implementation for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
 * Persistent map implementation for Java 8 backed by [Paguro](https://github.com/GlenKPeterson/Paguro)
+
 
 ## 0.0.1 (2018-07-12)
 Persistent lists with implementation backed by [Paguro](https://github.com/GlenKPeterson/Paguro) for Java 8+ and [Dexx](https://github.com/andrewoma/dexx) for Java 6/7.
