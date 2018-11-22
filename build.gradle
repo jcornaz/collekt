@@ -16,7 +16,7 @@ apply plugin: 'org.sonarqube'
 
 allprojects {
     group 'com.github.jcornaz'
-    version '0.0.3-SNAPSHOT'
+    version '0.0.3'
 
     apply plugin: "com.github.ben-manes.versions"
 

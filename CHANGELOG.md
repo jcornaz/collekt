@@ -1,6 +1,8 @@
 # Change log
 
-## 0.0.3-SNAPSHOT (Unreleased)
+## 0.0.3 (2018-11-22)
+`empty` member in persistent interface, factory functions for immutable types and end of support for Java 6 platform.
+
 ### API
 * **[BREAKING]** Add `empty()` function to persistent interfaces.
     It allows to get an empty version of a collection without the need to have the related factory.
@@ -10,6 +12,8 @@
 * Add `filterNot` operator
 
 ### Drop support of Java6 platform
+(Java 8+ remains supported)
+
 * **[BREAKING]** Delete module `collekt-dexx`
 * **[BREAKING]** Delete module `collekt-core-jvm6`
 * **[BREAKING]** Rename module `collekt-core-jvm8` to `collekt-core-jvm`

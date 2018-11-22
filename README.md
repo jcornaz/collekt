@@ -22,10 +22,10 @@ If performance tests show that an new implementation is faster, then the actual 
 
 The current implementations are delegated to:
 
-| Platform      | Library                                                                                               | Author                                               |
-|---------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| JVM (Java 8+) | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
-| JavaScript    | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
+| Platform   | Library                                                                                               | Author                                               |
+|------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| Java (8+)  | [Paguro](https://github.com/GlenKPeterson/Paguro)                                                     | [Glen K. Peterson](https://github.com/GlenKPeterson) |
+| JavaScript | [Kotlin standard library](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index.html) | [JetBrains](https://jetbrains.com/)                  |
 
 ### Usage
 The Persistent interfaces provide `+` and `-` operator aside other useful methods.
@@ -36,22 +36,23 @@ Mutation are provided in the form of operator/functions which return a new insta
 val list1 = persistentListOf("Hello", "world")
 val list2 = list1 - "world"
 val list3 = list2 + "everybody"
+val list4 = list2.with(1, "you")
 
 println(list1) // ["Hello", "world"]
 println(list2) // ["Hello"]
 println(list3) // ["Hello", "everybody"]
+println(list4) // ["Hello", "you"]
 ```
 
 In most cases it will look exactly the same as if you'd use the standard library.
 But unlike the `+` and `-` operator of the standard library, the collections are not copied, and most of the data is shared making them much faster and less memory consuming.  
 
 ### Current state of the project
-Currently the effort is mainly put on the API and less on performance.
-The JVM-8 module provide efficient persistent data structure for all collection types.
-But other modules may provide less efficient implementation.
+This library is still incubating. The JVM module already provide efficient persistent data structure for all collection types,
+but the javascript module do not (yet).
 
 Here is the check list of persistent implementation to provide (sorted by implementation priority):
-* [X] JVM (Java 8+)
+* [X] Java
     * [X] List
     * [X] Set
     * [X] Map
@@ -72,24 +73,24 @@ repositories {
 
 dependencies {
     
-    // For Java
-    compile 'com.github.jcornaz.collekt:collekt-core-jvm8:0.0.2'
+    // For Java (JDK 8+)
+    compile 'com.github.jcornaz.collekt:collekt-core-jvm:0.0.3'
             
     // For javascript (implementations are not efficient yet)
-    compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.2'
+    compile 'com.github.jcornaz.collekt:collekt-core-js:0.0.3'
         
     // For common module
-    compile 'com.github.jcornaz.collekt:collekt-core-common:0.0.2'
+    compile 'com.github.jcornaz.collekt:collekt-core-common:0.0.3'
 }
 ```
 
 ## Implementation libraries
 The current known challengers for a JVM implementation are:
-* [Paguro](https://github.com/GlenKPeterson/Paguro) (currently used for all collection types in JVM 8)
+* [Paguro](https://github.com/GlenKPeterson/Paguro) (currently used for all collection types)
 * [vavr.io](http://www.vavr.io/)
 * [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable)
 
-The following implementations are eligible candidates because they are discontinued and/or don't support null values: 
+The following libraries are not eligible because they are discontinued and/or don't support null values: 
 * [Dexx](https://github.com/andrewoma/dexx)
 * [pcollections](https://pcollections.org/)
 * [Collider](https://github.com/rschmitt/collider)
