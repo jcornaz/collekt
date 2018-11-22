@@ -2,4 +2,8 @@ apply from: rootProject.file('gradle/jvm.gradle')
 
 dependencies {
     expectedBy project(':collekt-api-common')
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
