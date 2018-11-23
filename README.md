@@ -36,7 +36,7 @@ Mutation are provided in the form of operator/functions which return a new insta
 val list1 = persistentListOf("Hello", "world")
 val list2 = list1 - "world"
 val list3 = list2 + "everybody"
-val list4 = list2.with(1, "you")
+val list4 = list3.with(1, "you")
 
 println(list1) // ["Hello", "world"]
 println(list2) // ["Hello"]
