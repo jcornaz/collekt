@@ -4,6 +4,9 @@ addons:
   sonarcloud:
     organization: "jcornaz-github"
 
+git:
+  depth: false
+  
 branches:
   only:
     - master
