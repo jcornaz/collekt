@@ -7,7 +7,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0"
-        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.6"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.7"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
     }
 }
