@@ -1,6 +1,6 @@
 # Collekt
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Project status](https://img.shields.io/badge/status-incubating-orange.svg)](https://gist.githubusercontent.com/jcornaz/46736c3d1f21b4c929bd97549b7406b2/raw/ProjectStatusFlow)
+[![Project status](https://img.shields.io/badge/status-discontinued-lightgray.svg)](https://gist.githubusercontent.com/jcornaz/46736c3d1f21b4c929bd97549b7406b2/raw/ProjectStatusFlow)
 [![JitPack](https://jitpack.io/v/jcornaz/collekt.svg)](https://jitpack.io/#jcornaz/collekt)
 [![Build Status](https://travis-ci.com/jcornaz/collekt.svg?branch=master)](https://travis-ci.com/jcornaz/collekt)
 [![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=jcornaz_collekt&metric=alert_status)](https://sonarcloud.io/dashboard?id=jcornaz_collekt)
@@ -9,9 +9,20 @@ Persistent collections for Kotlin
 
 The goal of this library is to provide a kotlin API for using persistent (immutable) collections, backed by the fastest known 3rd party implementation.
 
+### Current state of the project
+This library is discontinued. And no support will be provided. I encourage you to use [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable) instead.
+
+I created this library, mainly because no other available library was both nice to use from Kotlin and efficient (with state-of-the-art implementations).
+
+But the developement of [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable) started again, and:
+* they published a version which is no longer backed by `PCollections`
+* they benchmarked and improved performances of their implementation
+* they used state-of-the-art algorithms
+* they plan to support Kotlin mutliplatform and they can do it more easily and reliably than I could.
+
+Whith all of that I don't think `collekt` has much more value than `kotlinx.collections.immutable`. So I prefer invest my time on the developement [kwik](https://kwik.readthedocs.io/en/latest/) and other more valuable open source projects (maybe even `kotlinx.collections.immutable`).
+
 ## Features
-### Use it in multiplatofrm project
-Unlike [kotlinx.collections.immutable](https://github.com/Kotlin/kotlinx.collections.immutable) Collekt is usable from common, javascript and jvm kotlin modules.
 
 ### Always get the fastest implementation available, without the need to refactor your code
 Collekt doesn't implement the persistent data-structure itself. It is always delegated to an open-source 3rd party.
@@ -46,20 +57,6 @@ println(list4) // ["Hello", "you"]
 
 In most cases it will look exactly the same as if you'd use the standard library.
 But unlike the `+` and `-` operator of the standard library, the collections are not copied, and most of the data is shared making them much faster and less memory consuming.  
-
-### Current state of the project
-This library is still incubating. The JVM module already provide efficient persistent data structure for all collection types,
-but the javascript module do not (yet).
-
-Here is the check list of persistent implementation to provide (sorted by implementation priority):
-* [X] Java
-    * [X] List
-    * [X] Set
-    * [X] Map
-* [ ] Javascript
-    * [ ] List
-    * [ ] Set
-    * [ ] Map
 
 ## How to get it
 
